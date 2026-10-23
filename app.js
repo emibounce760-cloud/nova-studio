@@ -52,15 +52,30 @@ const products = [
 ];
 
 // 2. CHARGEMENT DU PANIER DEPUIS LA MÉMOIRE DU NAVIGATEUR
-let cart = JSON.parse(localStorage.getItem("nova_cart")) || [];
+let cart = JSON.parse(localStorage.getItem("rodis_cart")) || [];
 let currentCategory = "tous";
+let searchQuery = ""; // NOUVEAU : garde en mémoire ce que le client tape
 
-// 3. AFFICHER LES PRODUITS À L'ÉCRAN
+// NOUVELLE FONCTION : Déclenchée à chaque lettre tapée
+function handleSearch(value) {
+  searchQuery = value.toLowerCase().trim();
+  renderProducts();
+}
+
+// 3. AFFICHER LES PRODUITS À L'ÉCRAN (Catégorie + Recherche combinées)
 function renderProducts() {
   const grid = document.getElementById("product-grid");
-  const filtered = currentCategory === "tous"
-    ? products
-    : products.filter(p => p.category === currentCategory);
+  
+  const filtered = products.filter(p => {
+    const matchCategory = currentCategory === "tous" || p.category === currentCategory;
+    const matchSearch = p.name.toLowerCase().includes(searchQuery);
+    return matchCategory && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-12 text-sm">Aucun article ne correspond à "${searchQuery}".</p>`;
+    return;
+  }
 
   grid.innerHTML = filtered.map(product => `
     <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs flex flex-col justify-between">
