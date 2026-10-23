@@ -183,7 +183,7 @@ function buildWhatsAppMessage() {
   if (cart.length === 0) return "Ajoute un article pour voir l'aperçu du message WhatsApp...";
 
   const lines = cart.map(i => `• ${i.quantity}x ${i.name} (${(i.price * i.quantity).toLocaleString("fr-FR")} FCFA)`).join("\n");
-  return `Bonjour NOVA STUDIO 👋\nJe souhaite passer commande :\n\n${lines}\n\n💰 *TOTAL : ${total.toLocaleString("fr-FR")} FCFA*\n👤 Client : ${name}\n📍 Livraison : ${address}`;
+  return `Bonjour Rodis STUDIO 👋\nJe souhaite passer commande :\n\n${lines}\n\n💰 *TOTAL : ${total.toLocaleString("fr-FR")} FCFA*\n👤 Client : ${name}\n📍 Livraison : ${address}`;
 }
 
 function updateWhatsAppPreview() {
