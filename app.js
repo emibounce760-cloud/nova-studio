@@ -82,7 +82,7 @@ function renderProducts() {
       <div>
         <img src="${product.image}" alt="${product.name}" class="w-full h-44 object-cover bg-stone-100">
         <div class="p-3">
-          <h3 class="font-bold text-sm text-stone-900 line-clamp-1">${product.name}</h3>
+          <h3 class="font-bold text-xs sm:text-sm text-stone-900 leading-tight h-8 flex items-center">${product.name}</h3>
           <p class="text-emerald-700 font-black text-sm mt-1">${product.price.toLocaleString("fr-FR")} FCFA</p>
         </div>
       </div>
