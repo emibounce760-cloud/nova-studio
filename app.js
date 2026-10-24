@@ -1,4 +1,4 @@
-// 1. CATALOGUE DE BASE + SAUVEGARDE DES NOUVEAUX PRODUITS AJOUTÉS
+// 1. CATALOGUE DE BASE + ÉTAT DES PERMISSIONS
 const defaultProducts = [
   { id: 1, name: "Oversize Hoodie Noir", category: "vetements", price: 18000, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500" },
   { id: 2, name: "Montre Chrono Acier", category: "accessoires", price: 25000, image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500" },
@@ -9,17 +9,43 @@ const defaultProducts = [
   { id: 7, name: "Lunettes de Soleil Minimal", category: "accessoires", price: 10000, image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500" }
 ];
 
+const ADMIN_PIN = "1234"; // Code secret du vendeur
+let isAdmin = false;      // Par défaut, le visiteur est un simple client
+
 let products = JSON.parse(localStorage.getItem("rodis_products")) || defaultProducts;
 let cart = JSON.parse(localStorage.getItem("nova_cart")) || [];
 let currentCategory = "tous";
 let searchQuery = "";
+
+// 2. SYSTÈME D'AUTHENTIFICATION & PERMISSIONS VENDEUR
+function unlockAdmin() {
+  const code = prompt("🔐 Entrez le code PIN Vendeur (par défaut : 1234) :");
+  if (code === ADMIN_PIN) {
+    isAdmin = true;
+    updateAdminUI();
+  } else if (code !== null) {
+    alert("❌ Code PIN incorrect ! Accès refusé.");
+  }
+}
+
+function logoutAdmin() {
+  isAdmin = false;
+  updateAdminUI();
+}
+
+function updateAdminUI() {
+  document.getElementById("admin-banner").classList.toggle("hidden", !isAdmin);
+  document.getElementById("add-product-btn").classList.toggle("hidden", !isAdmin);
+  document.getElementById("admin-lock-btn").classList.toggle("hidden", isAdmin);
+  renderProducts(); // Recharge la grille pour afficher ou cacher la corbeille de suppression
+}
 
 function handleSearch(value) {
   searchQuery = value.toLowerCase().trim();
   renderProducts();
 }
 
-// 2. AFFICHAGE DES PRODUITS (AVEC TITRES COMPLETS SUR 2 LIGNES)
+// 3. AFFICHAGE DES PRODUITS (AVEC BOUTON SUPPRIMER SI ADMIN = TRUE)
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const filtered = products.filter(p => {
@@ -34,7 +60,12 @@ function renderProducts() {
   }
 
   grid.innerHTML = filtered.map(product => `
-    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs flex flex-col justify-between">
+    <div class="relative bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs flex flex-col justify-between">
+      ${isAdmin ? `
+        <button onclick="deleteProduct(${product.id})" class="absolute top-2 right-2 bg-red-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-md hover:bg-red-700">
+          🗑️ Supprimer
+        </button>
+      ` : ""}
       <div>
         <img src="${product.image}" alt="${product.name}" class="w-full h-44 object-cover bg-stone-100">
         <div class="p-3">
@@ -51,7 +82,7 @@ function renderProducts() {
   `).join("");
 }
 
-// 3. FONCTIONS DU MODE VENDEUR (AJOUTER UN PRODUIT SANS CODE)
+// 4. CRÉER ET SUPPRIMER UN PRODUIT (CRUD VENDEUR)
 function toggleAdmin(show) {
   document.getElementById("admin-modal").classList.toggle("hidden", !show);
 }
@@ -68,7 +99,7 @@ function addNewProduct() {
   }
 
   const newProduct = { id: Date.now(), name, category, price, image };
-  products.unshift(newProduct); // Ajoute le produit tout en haut de la boutique !
+  products.unshift(newProduct);
   localStorage.setItem("rodis_products", JSON.stringify(products));
 
   document.getElementById("new-name").value = "";
@@ -78,7 +109,14 @@ function addNewProduct() {
   renderProducts();
 }
 
-// 4. GESTION DES CATÉGORIES ET DU PANIER
+function deleteProduct(productId) {
+  if (!confirm("Voulez-vous vraiment retirer cet article de la boutique ?")) return;
+  products = products.filter(p => p.id !== productId);
+  localStorage.setItem("rodis_products", JSON.stringify(products));
+  renderProducts();
+}
+
+// 5. GESTION DES CATÉGORIES ET DU PANIER
 function filterCategory(category) {
   currentCategory = category;
   document.querySelectorAll(".cat-btn").forEach(btn => {

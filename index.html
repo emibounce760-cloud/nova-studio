@@ -8,6 +8,16 @@
 </head>
 <body class="bg-stone-50 text-stone-900 min-h-screen pb-24">
 
+  <!-- BANDEAU MODE ADMIN (CACHÉ POUR LES CLIENTS) -->
+  <div id="admin-banner" class="hidden bg-amber-500 text-stone-950 px-4 py-2 text-xs font-bold">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <span>🔓 MODE VENDEUR ACTIF : Tu peux ajouter ou supprimer des articles</span>
+      <button onclick="logoutAdmin()" class="bg-stone-950 text-white px-2.5 py-1 rounded-md text-[11px]">
+        Verrouiller 🔒
+      </button>
+    </div>
+  </div>
+
   <!-- EN-TÊTE DE LA BOUTIQUE -->
   <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-stone-200">
     <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -16,8 +26,12 @@
         <h1 class="text-xl font-black tracking-tight">Rodis STUDIO</h1>
       </div>
       <div class="flex items-center gap-2">
-        <!-- NOUVEAU : BOUTON MODE VENDEUR -->
-        <button onclick="toggleAdmin(true)" class="border border-stone-300 bg-white text-stone-800 px-3 py-2 rounded-full text-xs font-bold hover:bg-stone-100 transition">
+        <!-- BOUTON CADENAS VENDEUR -->
+        <button id="admin-lock-btn" onclick="unlockAdmin()" class="border border-stone-300 bg-stone-100 text-stone-700 px-3 py-2 rounded-full text-xs font-bold hover:bg-stone-200 transition">
+          🔒 Vendeur
+        </button>
+        <!-- BOUTON + PRODUIT (VISIBLE UNIQUEMENT SI DÉVERROUILLÉ) -->
+        <button id="add-product-btn" onclick="toggleAdmin(true)" class="hidden bg-amber-500 text-stone-950 px-3 py-2 rounded-full text-xs font-extrabold hover:bg-amber-400 transition">
           + Produit
         </button>
         <button onclick="toggleCart(true)" class="relative flex items-center gap-2 bg-stone-900 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-stone-800 transition">
@@ -52,7 +66,7 @@
     <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
   </main>
 
-  <!-- NOUVEAU : FENÊTRE MODE VENDEUR (AJOUTER UN ARTICLE) -->
+  <!-- FENÊTRE D'AJOUT DE PRODUIT (MODE VENDEUR) -->
   <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
     <div class="relative bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-3 z-10">
