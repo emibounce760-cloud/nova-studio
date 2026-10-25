@@ -1,23 +1,36 @@
-// 1. CATALOGUE DE BASE + ÉTAT DES PERMISSIONS
-const defaultProducts = [
-  { id: 1, name: "Oversize Hoodie Noir", category: "vetements", price: 18000, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500" },
-  { id: 2, name: "Montre Chrono Acier", category: "accessoires", price: 25000, image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500" },
-  { id: 3, name: "Sac Cabas Cuir Minimal", category: "sacs", price: 22000, image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500" },
-  { id: 4, name: "Sneakers Urbaines Blanc", category: "chaussures", price: 30000, image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500" },
-  { id: 5, name: "Chemise Lin Beige", category: "vetements", price: 15000, image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500" },
-  { id: 6, name: "Bracelet Maille Argent", category: "accessoires", price: 8500, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500" },
-  { id: 7, name: "Lunettes de Soleil Minimal", category: "accessoires", price: 10000, image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500" }
-];
+// 1. CONNEXION À TA BASE DE DONNÉES CLOUD SUPABASE
+const SUPABASE_URL = "https://ehicifgwmpyyaoxvzezw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_AJuaJ5zv3NZpOspUtVcZCg_6kIYGZRX";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const ADMIN_PIN = "1234"; // Code secret du vendeur
-let isAdmin = false;      // Par défaut, le visiteur est un simple client
+const ADMIN_PIN = "1234";
+let isAdmin = false;
 
-let products = JSON.parse(localStorage.getItem("rodis_products")) || defaultProducts;
+let products = [];
 let cart = JSON.parse(localStorage.getItem("nova_cart")) || [];
 let currentCategory = "tous";
 let searchQuery = "";
 
-// 2. SYSTÈME D'AUTHENTIFICATION & PERMISSIONS VENDEUR
+// 2. CHARGER LES PRODUITS EN DIRECT DEPUIS LE CLOUD
+async function loadProducts() {
+  const grid = document.getElementById("product-grid");
+  grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-12 text-sm">⏳ Chargement des articles depuis le Cloud...</p>`;
+
+  const { data, error } = await db
+    .from("products")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    grid.innerHTML = `<p class="col-span-full text-center text-red-600 py-12 text-sm font-bold">⚠️ Erreur Cloud : Assure-toi d'avoir exécuté le script SQL dans Supabase (${error.message})</p>`;
+    return;
+  }
+
+  products = data;
+  renderProducts();
+}
+
+// 3. SYSTÈME D'AUTHENTIFICATION & PERMISSIONS VENDEUR
 function unlockAdmin() {
   const code = prompt("🔐 Entrez le code PIN Vendeur (par défaut : 1234) :");
   if (code === ADMIN_PIN) {
@@ -37,7 +50,7 @@ function updateAdminUI() {
   document.getElementById("admin-banner").classList.toggle("hidden", !isAdmin);
   document.getElementById("add-product-btn").classList.toggle("hidden", !isAdmin);
   document.getElementById("admin-lock-btn").classList.toggle("hidden", isAdmin);
-  renderProducts(); // Recharge la grille pour afficher ou cacher la corbeille de suppression
+  renderProducts();
 }
 
 function handleSearch(value) {
@@ -45,7 +58,7 @@ function handleSearch(value) {
   renderProducts();
 }
 
-// 3. AFFICHAGE DES PRODUITS (AVEC BOUTON SUPPRIMER SI ADMIN = TRUE)
+// 4. AFFICHAGE DES PRODUITS
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const filtered = products.filter(p => {
@@ -55,7 +68,7 @@ function renderProducts() {
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-12 text-sm">Aucun article ne correspond à "${searchQuery}".</p>`;
+    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-12 text-sm">Aucun article trouvé.</p>`;
     return;
   }
 
@@ -82,12 +95,12 @@ function renderProducts() {
   `).join("");
 }
 
-// 4. CRÉER ET SUPPRIMER UN PRODUIT (CRUD VENDEUR)
+// 5. AJOUTER ET SUPPRIMER DANS LE CLOUD SUPABASE
 function toggleAdmin(show) {
   document.getElementById("admin-modal").classList.toggle("hidden", !show);
 }
 
-function addNewProduct() {
+async function addNewProduct() {
   const name = document.getElementById("new-name").value.trim();
   const price = parseInt(document.getElementById("new-price").value, 10);
   const category = document.getElementById("new-category").value;
@@ -98,25 +111,39 @@ function addNewProduct() {
     return;
   }
 
-  const newProduct = { id: Date.now(), name, category, price, image };
-  products.unshift(newProduct);
-  localStorage.setItem("rodis_products", JSON.stringify(products));
+  const { error } = await db
+    .from("products")
+    .insert([{ name, category, price, image }]);
+
+  if (error) {
+    alert("Erreur Cloud : " + error.message);
+    return;
+  }
 
   document.getElementById("new-name").value = "";
   document.getElementById("new-price").value = "";
   document.getElementById("new-image").value = "";
   toggleAdmin(false);
-  renderProducts();
+  await loadProducts();
 }
 
-function deleteProduct(productId) {
-  if (!confirm("Voulez-vous vraiment retirer cet article de la boutique ?")) return;
-  products = products.filter(p => p.id !== productId);
-  localStorage.setItem("rodis_products", JSON.stringify(products));
-  renderProducts();
+async function deleteProduct(productId) {
+  if (!confirm("Voulez-vous vraiment supprimer cet article pour tous les clients ?")) return;
+
+  const { error } = await db
+    .from("products")
+    .delete()
+    .eq("id", productId);
+
+  if (error) {
+    alert("Erreur lors de la suppression : " + error.message);
+    return;
+  }
+
+  await loadProducts();
 }
 
-// 5. GESTION DES CATÉGORIES ET DU PANIER
+// 6. GESTION DES CATÉGORIES ET DU PANIER WHATSAPP
 function filterCategory(category) {
   currentCategory = category;
   document.querySelectorAll(".cat-btn").forEach(btn => {
@@ -196,5 +223,5 @@ function checkoutWhatsApp() {
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`, "_blank");
 }
 
-renderProducts();
+loadProducts();
 saveAndRefreshCart();
