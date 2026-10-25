@@ -71,6 +71,7 @@
   </main>
 
   <!-- FENÊTRE D'AJOUT DE PRODUIT (MODE VENDEUR) -->
+  
   <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
     <div class="relative bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-3 z-10">
@@ -86,8 +87,17 @@
         <option value="sacs">Catégorie : Sacs</option>
         <option value="chaussures">Catégorie : Chaussures</option>
       </select>
-      <input id="new-image" type="text" placeholder="Lien photo (ou laisse vide pour photo auto)" class="w-full px-3 py-2 text-sm border border-stone-300 rounded-xl">
-      <button onclick="addNewProduct()" class="w-full bg-stone-900 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm transition">
+
+      <!-- NOUVEAU : SÉLECTEUR DE PHOTO DEPUIS LA GALERIE OU L'APPAREIL PHOTO -->
+      <div class="border-2 border-dashed border-stone-300 rounded-xl p-3 text-center bg-stone-50">
+        <label class="cursor-pointer block">
+          <span class="text-xs font-bold text-emerald-700 block mb-1.5">📸 Choisir une photo sur le téléphone</span>
+          <input id="new-image-file" type="file" accept="image/*" onchange="previewSelectedImage(this)" class="text-xs text-stone-500 w-full file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-stone-900 file:text-white">
+        </label>
+        <img id="image-preview" class="hidden w-full h-32 object-cover rounded-lg mt-2 border border-stone-200" alt="Aperçu de l'article">
+      </div>
+
+      <button id="publish-btn" onclick="addNewProduct()" class="w-full bg-stone-900 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm transition">
         Publier dans la boutique
       </button>
     </div>

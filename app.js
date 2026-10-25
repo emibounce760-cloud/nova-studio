@@ -96,36 +96,87 @@ function renderProducts() {
 }
 
 // 5. AJOUTER ET SUPPRIMER DANS LE CLOUD SUPABASE
+// 5. AJOUTER (AVEC PHOTO DU TÉLÉPHONE) ET SUPPRIMER DANS SUPABASE
+let selectedImageData = ""; // Garde en mémoire la photo choisie
+
 function toggleAdmin(show) {
   document.getElementById("admin-modal").classList.toggle("hidden", !show);
+}
+
+// Compresse automatiquement la photo du téléphone pour qu'elle charge vite
+function previewSelectedImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement("canvas");
+      const maxWidth = 500;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxWidth) {
+        height = Math.round((height * maxWidth) / width);
+        width = maxWidth;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Transforme l'image compressée en texte léger prêt pour Supabase
+      selectedImageData = canvas.toDataURL("image/jpeg", 0.75);
+
+      const preview = document.getElementById("image-preview");
+      preview.src = selectedImageData;
+      preview.classList.remove("hidden");
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 async function addNewProduct() {
   const name = document.getElementById("new-name").value.trim();
   const price = parseInt(document.getElementById("new-price").value, 10);
   const category = document.getElementById("new-category").value;
-  const image = document.getElementById("new-image").value.trim() || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500";
+  const image = selectedImageData || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500";
 
   if (!name || !price) {
     alert("Indique au moins le nom et le prix de l'article !");
     return;
   }
 
+  const btn = document.getElementById("publish-btn");
+  btn.textContent = "⏳ Publication en cours...";
+  btn.disabled = true;
+
   const { error } = await db
     .from("products")
     .insert([{ name, category, price, image }]);
+
+  btn.textContent = "Publier dans la boutique";
+  btn.disabled = false;
 
   if (error) {
     alert("Erreur Cloud : " + error.message);
     return;
   }
 
+  // Réinitialiser le formulaire
   document.getElementById("new-name").value = "";
   document.getElementById("new-price").value = "";
-  document.getElementById("new-image").value = "";
+  document.getElementById("new-image-file").value = "";
+  document.getElementById("image-preview").classList.add("hidden");
+  selectedImageData = "";
+
   toggleAdmin(false);
   await loadProducts();
 }
+
 
 async function deleteProduct(productId) {
   if (!confirm("Voulez-vous vraiment supprimer cet article pour tous les clients ?")) return;
