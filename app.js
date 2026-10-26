@@ -93,9 +93,14 @@ function renderProducts() {
   grid.innerHTML = filtered.map(product => `
     <div class="relative bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs flex flex-col justify-between">
       ${isAdmin ? `
-        <button onclick="deleteProduct(${product.id})" class="absolute top-2 right-2 bg-red-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-md hover:bg-red-700">
-          🗑️ Supprimer
-        </button>
+        <div class="absolute top-2 right-2 flex gap-1">
+          <button onclick="editPrice(${product.id}, ${product.price})" class="bg-amber-500 text-stone-950 text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-md hover:bg-amber-400">
+            ✏️ Prix
+          </button>
+          <button onclick="deleteProduct(${product.id})" class="bg-red-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-md hover:bg-red-700">
+            🗑️
+          </button>
+        </div>
       ` : ""}
       <div>
         <img src="${product.image}" alt="${product.name}" class="w-full h-44 object-cover bg-stone-100">
@@ -203,7 +208,29 @@ async function deleteProduct(productId) {
   }
 
   await loadProducts();
+}async function editPrice(productId, currentPrice) {
+  const input = prompt(`💰 Nouveau prix en ${SHOP_CONFIG.currency} :`, currentPrice);
+  if (input === null) return;
+
+  const newPrice = parseInt(input, 10);
+  if (!newPrice || newPrice <= 0) {
+    alert("Veuillez entrer un prix valide !");
+    return;
+  }
+
+  const { error } = await db
+    .from("products")
+    .update({ price: newPrice })
+    .eq("id", productId);
+
+  if (error) {
+    alert("Erreur lors de la modification : " + error.message);
+    return;
+  }
+
+  await loadProducts();
 }
+
 
 // 7. GESTION DU PANIER ET ENVOI WHATSAPP DIRECT
 function filterCategory(category) {
