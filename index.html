@@ -3,19 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rodis STUDIO — Boutique Express WhatsApp</title>
-  <script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.tailwindcss.com"></script>
-  <!-- NOUVEAU : CONNEXION AU MOTEUR SUPABASE CLOUD -->
+  <title id="page-title">Rodis STUDIO — Boutique Express WhatsApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-
 </head>
 <body class="bg-stone-50 text-stone-900 min-h-screen pb-24">
 
   <!-- BANDEAU MODE ADMIN (CACHÉ POUR LES CLIENTS) -->
   <div id="admin-banner" class="hidden bg-amber-500 text-stone-950 px-4 py-2 text-xs font-bold">
     <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <span>🔓 MODE VENDEUR ACTIF : Tu peux ajouter ou supprimer des articles</span>
+      <span>🔓 MODE VENDEUR ACTIF : Ajoute ou supprime tes articles</span>
       <button onclick="logoutAdmin()" class="bg-stone-950 text-white px-2.5 py-1 rounded-md text-[11px]">
         Verrouiller 🔒
       </button>
@@ -26,15 +23,13 @@
   <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-stone-200">
     <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
       <div>
-        <span class="text-[11px] font-extrabold tracking-widest uppercase text-emerald-600">Livraison en 24h</span>
-        <h1 class="text-xl font-black tracking-tight">Rodis STUDIO</h1>
+        <span id="shop-tagline" class="text-[11px] font-extrabold tracking-widest uppercase text-emerald-600">Livraison en 24h</span>
+        <h1 id="shop-name" class="text-xl font-black tracking-tight">Rodis STUDIO</h1>
       </div>
       <div class="flex items-center gap-2">
-        <!-- BOUTON CADENAS VENDEUR -->
         <button id="admin-lock-btn" onclick="unlockAdmin()" class="border border-stone-300 bg-stone-100 text-stone-700 px-3 py-2 rounded-full text-xs font-bold hover:bg-stone-200 transition">
           🔒 Vendeur
         </button>
-        <!-- BOUTON + PRODUIT (VISIBLE UNIQUEMENT SI DÉVERROUILLÉ) -->
         <button id="add-product-btn" onclick="toggleAdmin(true)" class="hidden bg-amber-500 text-stone-950 px-3 py-2 rounded-full text-xs font-extrabold hover:bg-amber-400 transition">
           + Produit
         </button>
@@ -62,7 +57,7 @@
         id="search-input" 
         type="text" 
         oninput="handleSearch(this.value)" 
-        placeholder="🔍 Rechercher un article (ex: montre, sac, hoodie...)" 
+        placeholder="🔍 Rechercher un article (ex: pull, montre, sac...)" 
         class="w-full bg-white border border-stone-300 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 shadow-xs"
       >
     </div>
@@ -71,7 +66,6 @@
   </main>
 
   <!-- FENÊTRE D'AJOUT DE PRODUIT (MODE VENDEUR) -->
-  
   <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
     <div class="relative bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-3 z-10">
@@ -88,7 +82,6 @@
         <option value="chaussures">Catégorie : Chaussures</option>
       </select>
 
-      <!-- NOUVEAU : SÉLECTEUR DE PHOTO DEPUIS LA GALERIE OU L'APPAREIL PHOTO -->
       <div class="border-2 border-dashed border-stone-300 rounded-xl p-3 text-center bg-stone-50">
         <label class="cursor-pointer block">
           <span class="text-xs font-bold text-emerald-700 block mb-1.5">📸 Choisir une photo sur le téléphone</span>
@@ -103,7 +96,7 @@
     </div>
   </div>
 
-  <!-- TIROIR DU PANIER -->
+  <!-- TIROIR DU PANIER (SANS CHAMP NUMÉRO VENDEUR VISIBLE PAR LE CLIENT) -->
   <div id="cart-modal" class="fixed inset-0 z-50 hidden">
     <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
     <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
@@ -114,10 +107,9 @@
       <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
       <div class="p-4 bg-stone-50 border-t border-stone-200 space-y-3">
         <div class="grid grid-cols-2 gap-2">
-          <input id="client-name" type="text" oninput="updateWhatsAppPreview()" placeholder="Ton prénom *" class="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg">
-          <input id="client-address" type="text" oninput="updateWhatsAppPreview()" placeholder="Quartier / Ville *" class="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg">
+          <input id="client-name" type="text" oninput="updateWhatsAppPreview()" placeholder="Ton prénom *" class="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg bg-white">
+          <input id="client-address" type="text" oninput="updateWhatsAppPreview()" placeholder="Quartier / Lieu *" class="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg bg-white">
         </div>
-        <input id="vendor-phone" type="text" value="22890000000" oninput="updateWhatsAppPreview()" placeholder="Numéro WhatsApp vendeur" class="w-full px-3 py-2 text-xs border border-stone-300 rounded-lg bg-white text-stone-600">
         <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-stone-800 font-mono whitespace-pre-line max-h-32 overflow-y-auto" id="whatsapp-preview"></div>
         <div class="flex items-center justify-between pt-1">
           <span class="text-sm text-stone-600">Total à payer :</span>

@@ -1,20 +1,38 @@
-// 1. CONNEXION À TA BASE DE DONNÉES CLOUD SUPABASE
+// ==========================================
+// 1. CONFIGURATION CLIENT (MARQUE BLANCHE)
+// Modifie ces 5 lignes pour personnaliser la boutique pour n'importe quel client !
+// ==========================================
+const SHOP_CONFIG = {
+  name: "Rodis STUDIO",
+  tagline: "Livraison Express à Lomé",
+  whatsappPhone: "22890000000", // <-- Mets ton vrai numéro WhatsApp ici (avec 228, sans le +)
+  adminPin: "1234",
+  currency: "FCFA"
+};
+
+// 2. CONNEXION AU CLOUD SUPABASE
 const SUPABASE_URL = "https://ehicifgwmpyyaoxvzezw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_AJuaJ5zv3NZpOspUtVcZCg_6kIYGZRX";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const ADMIN_PIN = "1234";
 let isAdmin = false;
-
 let products = [];
 let cart = JSON.parse(localStorage.getItem("nova_cart")) || [];
 let currentCategory = "tous";
 let searchQuery = "";
+let selectedImageData = "";
 
-// 2. CHARGER LES PRODUITS EN DIRECT DEPUIS LE CLOUD
+// Applique automatiquement la configuration de la boutique au chargement
+function initShopBranding() {
+  document.getElementById("shop-name").textContent = SHOP_CONFIG.name;
+  document.getElementById("shop-tagline").textContent = SHOP_CONFIG.tagline;
+  document.getElementById("page-title").textContent = `${SHOP_CONFIG.name} — Boutique Express WhatsApp`;
+}
+
+// 3. CHARGER LES PRODUITS DEPUIS SUPABASE
 async function loadProducts() {
   const grid = document.getElementById("product-grid");
-  grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-12 text-sm">⏳ Chargement des articles depuis le Cloud...</p>`;
+  grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-12 text-sm">⏳ Chargement des articles...</p>`;
 
   const { data, error } = await db
     .from("products")
@@ -22,7 +40,7 @@ async function loadProducts() {
     .order("id", { ascending: false });
 
   if (error) {
-    grid.innerHTML = `<p class="col-span-full text-center text-red-600 py-12 text-sm font-bold">⚠️ Erreur Cloud : Assure-toi d'avoir exécuté le script SQL dans Supabase (${error.message})</p>`;
+    grid.innerHTML = `<p class="col-span-full text-center text-red-600 py-12 text-sm font-bold">⚠️ Erreur Cloud : ${error.message}</p>`;
     return;
   }
 
@@ -30,14 +48,14 @@ async function loadProducts() {
   renderProducts();
 }
 
-// 3. SYSTÈME D'AUTHENTIFICATION & PERMISSIONS VENDEUR
+// 4. MODE VENDEUR & PERMISSIONS
 function unlockAdmin() {
-  const code = prompt("🔐 Entrez le code PIN Vendeur (par défaut : 1234) :");
-  if (code === ADMIN_PIN) {
+  const code = prompt("🔐 Code PIN Vendeur :");
+  if (code === SHOP_CONFIG.adminPin) {
     isAdmin = true;
     updateAdminUI();
   } else if (code !== null) {
-    alert("❌ Code PIN incorrect ! Accès refusé.");
+    alert("❌ Code PIN incorrect !");
   }
 }
 
@@ -58,7 +76,7 @@ function handleSearch(value) {
   renderProducts();
 }
 
-// 4. AFFICHAGE DES PRODUITS
+// 5. AFFICHAGE DE LA GRILLE PRODUITS
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const filtered = products.filter(p => {
@@ -83,7 +101,7 @@ function renderProducts() {
         <img src="${product.image}" alt="${product.name}" class="w-full h-44 object-cover bg-stone-100">
         <div class="p-3">
           <h3 class="font-bold text-xs sm:text-sm text-stone-900 leading-snug min-h-[2.25rem] flex items-center">${product.name}</h3>
-          <p class="text-emerald-700 font-black text-sm mt-1">${product.price.toLocaleString("fr-FR")} FCFA</p>
+          <p class="text-emerald-700 font-black text-sm mt-1">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
         </div>
       </div>
       <div class="p-3 pt-0">
@@ -95,15 +113,11 @@ function renderProducts() {
   `).join("");
 }
 
-// 5. AJOUTER ET SUPPRIMER DANS LE CLOUD SUPABASE
-// 5. AJOUTER (AVEC PHOTO DU TÉLÉPHONE) ET SUPPRIMER DANS SUPABASE
-let selectedImageData = ""; // Garde en mémoire la photo choisie
-
+// 6. AJOUT (AVEC COMPRESSION PHOTO) ET SUPPRESSION SUPABASE
 function toggleAdmin(show) {
   document.getElementById("admin-modal").classList.toggle("hidden", !show);
 }
 
-// Compresse automatiquement la photo du téléphone pour qu'elle charge vite
 function previewSelectedImage(input) {
   const file = input.files[0];
   if (!file) return;
@@ -127,7 +141,6 @@ function previewSelectedImage(input) {
       const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, width, height);
 
-      // Transforme l'image compressée en texte léger prêt pour Supabase
       selectedImageData = canvas.toDataURL("image/jpeg", 0.75);
 
       const preview = document.getElementById("image-preview");
@@ -166,7 +179,6 @@ async function addNewProduct() {
     return;
   }
 
-  // Réinitialiser le formulaire
   document.getElementById("new-name").value = "";
   document.getElementById("new-price").value = "";
   document.getElementById("new-image-file").value = "";
@@ -177,9 +189,8 @@ async function addNewProduct() {
   await loadProducts();
 }
 
-
 async function deleteProduct(productId) {
-  if (!confirm("Voulez-vous vraiment supprimer cet article pour tous les clients ?")) return;
+  if (!confirm("Supprimer définitivement cet article de la boutique ?")) return;
 
   const { error } = await db
     .from("products")
@@ -194,7 +205,7 @@ async function deleteProduct(productId) {
   await loadProducts();
 }
 
-// 6. GESTION DES CATÉGORIES ET DU PANIER WHATSAPP
+// 7. GESTION DU PANIER ET ENVOI WHATSAPP DIRECT
 function filterCategory(category) {
   currentCategory = category;
   document.querySelectorAll(".cat-btn").forEach(btn => {
@@ -227,7 +238,7 @@ function saveAndRefreshCart() {
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   document.getElementById("cart-badge").textContent = totalCount;
-  document.getElementById("cart-total").textContent = `${totalPrice.toLocaleString("fr-FR")} FCFA`;
+  document.getElementById("cart-total").textContent = `${totalPrice.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`;
 
   const container = document.getElementById("cart-items");
   container.innerHTML = cart.length === 0
@@ -238,7 +249,7 @@ function saveAndRefreshCart() {
           <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
           <div>
             <h4 class="text-xs font-bold text-stone-900">${item.name}</h4>
-            <p class="text-xs text-emerald-700 font-bold">${(item.price * item.quantity).toLocaleString("fr-FR")} FCFA</p>
+            <p class="text-xs text-emerald-700 font-bold">${(item.price * item.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
@@ -257,11 +268,11 @@ function toggleCart(show) {
 
 function buildWhatsAppMessage() {
   const name = document.getElementById("client-name").value.trim() || "Client";
-  const address = document.getElementById("client-address").value.trim() || "Non précisé";
+  const address = document.getElementById("client-address").value.trim() || "À préciser";
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  if (cart.length === 0) return "Ajoute un article pour voir l'aperçu...";
-  const lines = cart.map(i => `• ${i.quantity}x ${i.name} (${(i.price * i.quantity).toLocaleString("fr-FR")} FCFA)`).join("\n");
-  return `Bonjour Rodis STUDIO 👋\nJe souhaite commander :\n\n${lines}\n\n💰 *TOTAL : ${total.toLocaleString("fr-FR")} FCFA*\n👤 Client : ${name}\n📍 Livraison : ${address}`;
+  if (cart.length === 0) return "Ajoute un article pour voir l'aperçu de ta commande...";
+  const lines = cart.map(i => `• ${i.quantity}x ${i.name} (${(i.price * i.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency})`).join("\n");
+  return `Bonjour ${SHOP_CONFIG.name} 👋\nJe souhaite commander :\n\n${lines}\n\n💰 *TOTAL : ${total.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}*\n👤 Client : ${name}\n📍 Quartier : ${address}`;
 }
 
 function updateWhatsAppPreview() {
@@ -270,9 +281,10 @@ function updateWhatsAppPreview() {
 
 function checkoutWhatsApp() {
   if (cart.length === 0) return alert("Ton panier est vide !");
-  const phone = document.getElementById("vendor-phone").value.replace(/\D/g, "");
+  const phone = SHOP_CONFIG.whatsappPhone.replace(/\D/g, "");
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`, "_blank");
 }
 
+initShopBranding();
 loadProducts();
 saveAndRefreshCart();
