@@ -22,9 +22,12 @@ let searchQuery = "";
 let selectedImageData = "";
 
 function initShopBranding() {
-  document.getElementById("shop-name").textContent = SHOP_CONFIG.name;
-  document.getElementById("shop-tagline").textContent = SHOP_CONFIG.tagline;
-  document.getElementById("page-title").textContent = `${SHOP_CONFIG.name} — Collection Privée`;
+  const nameEl = document.getElementById("shop-name");
+  const taglineEl = document.getElementById("shop-tagline");
+  const titleEl = document.getElementById("page-title");
+  if (nameEl) nameEl.textContent = SHOP_CONFIG.name;
+  if (taglineEl) taglineEl.textContent = SHOP_CONFIG.tagline;
+  if (titleEl) titleEl.textContent = `${SHOP_CONFIG.name} — Collection Privée`;
 }
 
 // 3. CHARGER LES PIÈCES DEPUIS SUPABASE
@@ -74,7 +77,7 @@ function handleSearch(value) {
   renderProducts();
 }
 
-// 5. AFFICHAGE DES CARTES PRODUITS LUXE
+// 5. AFFICHAGE DES CARTES PRODUITS LUXE (AVEC ZOOM AU CLIC)
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const filtered = products.filter(p => {
@@ -100,20 +103,18 @@ function renderProducts() {
           </button>
         </div>
       ` : `
-        <span class="absolute top-3 left-3 z-10 bg-stone-950/85 backdrop-blur-xs text-[#C5A059] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-medium">
+        <span class="absolute top-3 left-3 z-10 bg-stone-950/85 backdrop-blur-xs text-[#C5A059] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-medium pointer-events-none">
           Édition Prestige
         </span>
       `}
       <div>
-        <div class="overflow-hidden bg-stone-100 h-56 sm:h-64"> <div onclick="openProductModal(${product.id})" class="cursor-pointer overflow-hidden bg-stone-100 h-56 sm:h-64 relative">
+        <div onclick="openProductModal(${product.id})" class="cursor-pointer overflow-hidden bg-stone-100 h-56 sm:h-64 relative">
           <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out">
-          <span class="absolute bottom-2 right-2 bg-stone-950/75 text-white text-[9px] uppercase tracking-widest px-2 py-0.5 opacity-0 group-hover:opacity-100 transition">
+          <span class="absolute bottom-2 right-2 bg-stone-950/80 text-[#C5A059] text-[9px] uppercase tracking-widest px-2.5 py-1 font-semibold shadow-sm">
             🔍 Voir de près
           </span>
         </div>
-          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out">
-        </div>
-        <div class="p-4 text-center">
+        <div onclick="openProductModal(${product.id})" class="p-4 text-center cursor-pointer">
           <h3 class="font-luxury text-lg sm:text-xl font-bold text-stone-950 tracking-wide line-clamp-1">${product.name}</h3>
           <div class="w-8 h-[1px] bg-[#C5A059] mx-auto my-2"></div>
           <p class="text-stone-800 font-semibold text-xs sm:text-sm tracking-widest uppercase">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
@@ -128,7 +129,61 @@ function renderProducts() {
   `).join("");
 }
 
-// 6. CRUD SUPABASE (AJOUT, MODIFICATION PRIX, SUPPRESSION)
+// 6. VUE ÉCRIN (ZOOM PHOTO HAUTE DÉFINITION AUTO-INJECTÉ)
+function ensureProductModalExists() {
+  if (document.getElementById("product-modal")) return;
+  const modalHTML = `
+    <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+      <div onclick="closeProductModal()" class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
+      <div class="relative bg-stone-950 text-white max-w-md w-full overflow-hidden border border-[#C5A059]/40 shadow-2xl z-10">
+        <button onclick="closeProductModal()" class="absolute top-3 right-3 z-20 bg-stone-950/80 text-[#C5A059] border border-[#C5A059]/40 w-8 h-8 flex items-center justify-center text-xs font-bold hover:bg-[#C5A059] hover:text-stone-950 transition">
+          ✕
+        </button>
+        <div class="bg-stone-900 h-80 sm:h-96 overflow-hidden">
+          <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6 text-center space-y-3">
+          <span class="text-[9px] uppercase tracking-[0.3em] text-[#C5A059] block">✦ Pièce Certifiée • Collection Privée ✦</span>
+          <h3 id="modal-title" class="font-luxury text-2xl sm:text-3xl font-bold tracking-wide text-white"></h3>
+          <p id="modal-price" class="text-[#C5A059] font-semibold text-sm tracking-widest uppercase"></p>
+          <div class="pt-2">
+            <button id="modal-add-btn" class="w-full bg-[#C5A059] hover:opacity-90 text-stone-950 text-xs uppercase tracking-[0.2em] font-bold py-3.5 transition">
+              + Ajouter à ma Sélection
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+}
+
+function openProductModal(productId) {
+  ensureProductModalExists();
+  const product = products.find(p => p.id == productId);
+  if (!product) return;
+
+  document.getElementById("modal-img").src = product.image;
+  document.getElementById("modal-img").alt = product.name;
+  document.getElementById("modal-title").textContent = product.name;
+  document.getElementById("modal-price").textContent = `${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`;
+
+  const addBtn = document.getElementById("modal-add-btn");
+  addBtn.onclick = function() {
+    addToCart(product.id);
+    closeProductModal();
+    toggleCart(true);
+  };
+
+  document.getElementById("product-modal").classList.remove("hidden");
+}
+
+function closeProductModal() {
+  const modal = document.getElementById("product-modal");
+  if (modal) modal.classList.add("hidden");
+}
+
+// 7. CRUD SUPABASE (AJOUT, MODIFICATION PRIX, SUPPRESSION)
 function toggleAdmin(show) {
   document.getElementById("admin-modal").classList.toggle("hidden", !show);
 }
@@ -243,7 +298,7 @@ async function deleteProduct(productId) {
   await loadProducts();
 }
 
-// 7. GESTION DES COLLECTIONS ET DE LA CONCIERGERIE WHATSAPP
+// 8. GESTION DES COLLECTIONS ET DE LA CONCIERGERIE WHATSAPP
 function filterCategory(category) {
   currentCategory = category;
   document.querySelectorAll(".cat-btn").forEach(btn => {
@@ -255,18 +310,18 @@ function filterCategory(category) {
 }
 
 function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  const existing = cart.find(item => item.id === productId);
+  const product = products.find(p => p.id == productId);
+  const existing = cart.find(item => item.id == productId);
   if (existing) existing.quantity += 1;
   else cart.push({ ...product, quantity: 1 });
   saveAndRefreshCart();
 }
 
 function updateQuantity(productId, change) {
-  const item = cart.find(i => i.id === productId);
+  const item = cart.find(i => i.id == productId);
   if (!item) return;
   item.quantity += change;
-  if (item.quantity <= 0) cart = cart.filter(i => i.id !== productId);
+  if (item.quantity <= 0) cart = cart.filter(i => i.id != productId);
   saveAndRefreshCart();
 }
 
@@ -322,28 +377,7 @@ function checkoutWhatsApp() {
   const phone = SHOP_CONFIG.whatsappPhone.replace(/\D/g, "");
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`, "_blank");
 }
-function openProductModal(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
 
-  document.getElementById("modal-img").src = product.image;
-  document.getElementById("modal-img").alt = product.name;
-  document.getElementById("modal-title").textContent = product.name;
-  document.getElementById("modal-price").textContent = `${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`;
-
-  const addBtn = document.getElementById("modal-add-btn");
-  addBtn.onclick = function() {
-    addToCart(product.id);
-    closeProductModal();
-    toggleCart(true); // Ouvre directement le tiroir de sélection VIP
-  };
-
-  document.getElementById("product-modal").classList.remove("hidden");
-}
-
-function closeProductModal() {
-  document.getElementById("product-modal").classList.add("hidden");
-}
 initShopBranding();
 loadProducts();
 saveAndRefreshCart();
