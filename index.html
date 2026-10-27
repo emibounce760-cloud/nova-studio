@@ -298,7 +298,28 @@
       </div>
     </div>
   </div>
-
+<!-- FENÊTRE ZOOM "VUE ÉCRIN" (DÉTAIL D'UNE PIÈCE) -->
+  <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="closeProductModal()" class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
+    <div class="relative bg-stone-950 text-white max-w-md w-full overflow-hidden border border-[#C5A059]/40 shadow-2xl z-10">
+      <button onclick="closeProductModal()" class="absolute top-3 right-3 z-20 bg-stone-950/80 text-[#C5A059] border border-[#C5A059]/40 w-8 h-8 flex items-center justify-center text-xs font-bold hover:bg-[#C5A059] hover:text-stone-950 transition">
+        ✕
+      </button>
+      <div class="bg-stone-900 h-80 sm:h-96 overflow-hidden">
+        <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+      </div>
+      <div class="p-6 text-center space-y-3">
+        <span class="text-[9px] uppercase tracking-[0.3em] gold-text block">✦ Pièce Certifiée • Collection Privée ✦</span>
+        <h3 id="modal-title" class="font-luxury text-2xl sm:text-3xl font-bold tracking-wide text-white"></h3>
+        <p id="modal-price" class="text-[#C5A059] font-semibold text-sm tracking-widest uppercase"></p>
+        <div class="pt-2">
+          <button id="modal-add-btn" class="w-full gold-bg hover:opacity-90 text-stone-950 text-xs uppercase tracking-[0.2em] font-bold py-3.5 transition">
+            + Ajouter à ma Sélection
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>

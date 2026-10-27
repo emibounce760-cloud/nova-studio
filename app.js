@@ -105,7 +105,12 @@ function renderProducts() {
         </span>
       `}
       <div>
-        <div class="overflow-hidden bg-stone-100 h-56 sm:h-64">
+        <div class="overflow-hidden bg-stone-100 h-56 sm:h-64"> <div onclick="openProductModal(${product.id})" class="cursor-pointer overflow-hidden bg-stone-100 h-56 sm:h-64 relative">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out">
+          <span class="absolute bottom-2 right-2 bg-stone-950/75 text-white text-[9px] uppercase tracking-widest px-2 py-0.5 opacity-0 group-hover:opacity-100 transition">
+            🔍 Voir de près
+          </span>
+        </div>
           <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out">
         </div>
         <div class="p-4 text-center">
@@ -317,7 +322,28 @@ function checkoutWhatsApp() {
   const phone = SHOP_CONFIG.whatsappPhone.replace(/\D/g, "");
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`, "_blank");
 }
+function openProductModal(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
 
+  document.getElementById("modal-img").src = product.image;
+  document.getElementById("modal-img").alt = product.name;
+  document.getElementById("modal-title").textContent = product.name;
+  document.getElementById("modal-price").textContent = `${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`;
+
+  const addBtn = document.getElementById("modal-add-btn");
+  addBtn.onclick = function() {
+    addToCart(product.id);
+    closeProductModal();
+    toggleCart(true); // Ouvre directement le tiroir de sélection VIP
+  };
+
+  document.getElementById("product-modal").classList.remove("hidden");
+}
+
+function closeProductModal() {
+  document.getElementById("product-modal").classList.add("hidden");
+}
 initShopBranding();
 loadProducts();
 saveAndRefreshCart();

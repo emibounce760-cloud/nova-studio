@@ -16,3 +16,7 @@
 2. **Sécurité :** Ne jamais exposer de clé `sb_secret` dans le code frontend. Utiliser uniquement la clé publiable (`sb_publishable`).
 3. **Performance Mobile :** Toute photo ajoutée depuis un téléphone doit être compressée via `<canvas>` (max 500px, JPEG 0.75) avant l'envoi vers Supabase.
 4. **Configuration Client :** Toutes les informations du commerçant (Nom, WhatsApp, PIN, Slogan) doivent être centralisées dans l'objet `SHOP_CONFIG` en haut de `app.js`.
+## 4. Design System — Édition Prestige (Luxe)
+- **Palette :** Fond Ivoire (`#FAF8F5`), Noir Obsidienne (`#0A0A0A`), Or Champagne (`#C5A059`).
+- **Typographie :** Titres en `Cormorant Garamond` (serif luxe), textes et boutons en `Montserrat`.
+- **Expérience Client :** Ton éditorial haut de gamme ("Collection Privée", "Conciergerie WhatsApp", "Vue Écrin" au clic sur l'image).
