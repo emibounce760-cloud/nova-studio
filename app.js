@@ -4,7 +4,7 @@
 const SHOP_CONFIG = {
   name: "RODIS MAISON",
   tagline: "Haute Horlogerie & Prêt-à-Porter",
-  whatsappPhone: "22890000000", // <-- Mets ton numéro ou celui du client ici
+  whatsappPhone: "22890000000",
   adminPin: "1234",
   currency: "FCFA"
 };
@@ -77,7 +77,7 @@ function handleSearch(value) {
   renderProducts();
 }
 
-// 5. AFFICHAGE DES CARTES PRODUITS LUXE (AVEC ZOOM AU CLIC)
+// 5. AFFICHAGE DES CARTES PRODUITS (OPTIMISÉ TACTILE IPHONE)
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const filtered = products.filter(p => {
@@ -87,41 +87,42 @@ function renderProducts() {
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-16 text-xs uppercase tracking-widest">Aucune pièce ne correspond à votre recherche.</p>`;
+    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-16 text-xs uppercase tracking-widest">Aucune pièce trouvée.</p>`;
     return;
   }
 
   grid.innerHTML = filtered.map(product => `
-    <div class="group relative bg-white border border-stone-200/90 flex flex-col justify-between transition duration-300 hover:shadow-xl hover:border-stone-400">
+    <div class="relative bg-white border border-stone-200 flex flex-col justify-between shadow-2xs">
       ${isAdmin ? `
-        <div class="absolute top-3 right-3 z-20 flex gap-1.5">
-          <button onclick="editPrice(${product.id}, ${product.price})" class="bg-[#C5A059] text-stone-950 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 shadow-md">
+        <div class="absolute top-2 right-2 z-20 flex gap-1">
+          <button type="button" onclick="editPrice(${product.id}, ${product.price})" class="bg-[#C5A059] text-stone-950 text-[10px] font-bold uppercase px-2 py-1 shadow-md">
             ✏️ Prix
           </button>
-          <button onclick="deleteProduct(${product.id})" class="bg-stone-950 text-white text-[10px] font-bold px-2.5 py-1 shadow-md hover:bg-red-700">
+          <button type="button" onclick="deleteProduct(${product.id})" class="bg-stone-950 text-white text-[10px] font-bold px-2 py-1 shadow-md">
             🗑️
           </button>
         </div>
       ` : `
-        <span class="absolute top-3 left-3 z-10 bg-stone-950/85 backdrop-blur-xs text-[#C5A059] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-medium pointer-events-none">
+        <span class="absolute top-2.5 left-2.5 z-10 bg-stone-950/90 text-[#C5A059] text-[8px] uppercase tracking-[0.15em] px-2 py-1 font-semibold pointer-events-none">
           Édition Prestige
         </span>
       `}
       <div>
-        <div onclick="openProductModal(${product.id})" class="cursor-pointer overflow-hidden bg-stone-100 h-56 sm:h-64 relative">
-          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out">
-          <span class="absolute bottom-2 right-2 bg-stone-950/80 text-[#C5A059] text-[9px] uppercase tracking-widest px-2.5 py-1 font-semibold shadow-sm">
+        <!-- VRAI BOUTON TACTILE SUR L'IMAGE POUR OUVRIR LE ZOOM SUR IPHONE -->
+        <button type="button" onclick="openProductModal(${product.id})" class="block w-full text-left overflow-hidden bg-stone-100 h-52 sm:h-64 relative focus:outline-none">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+          <span class="absolute bottom-2 right-2 bg-stone-950/90 text-[#C5A059] border border-[#C5A059]/40 text-[9px] uppercase tracking-wider px-2 py-1 font-bold shadow-md">
             🔍 Voir de près
           </span>
-        </div>
-        <div onclick="openProductModal(${product.id})" class="p-4 text-center cursor-pointer">
-          <h3 class="font-luxury text-lg sm:text-xl font-bold text-stone-950 tracking-wide line-clamp-1">${product.name}</h3>
-          <div class="w-8 h-[1px] bg-[#C5A059] mx-auto my-2"></div>
-          <p class="text-stone-800 font-semibold text-xs sm:text-sm tracking-widest uppercase">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
+        </button>
+        <div onclick="openProductModal(${product.id})" class="p-3 sm:p-4 text-center cursor-pointer">
+          <h3 class="font-luxury text-base sm:text-xl font-bold text-stone-950 tracking-wide truncate">${product.name}</h3>
+          <div class="w-6 h-[1px] bg-[#C5A059] mx-auto my-1.5"></div>
+          <p class="text-stone-900 font-semibold text-xs sm:text-sm tracking-wider uppercase">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
         </div>
       </div>
-      <div class="px-4 pb-4">
-        <button onclick="addToCart(${product.id})" class="w-full bg-stone-950 hover:bg-[#C5A059] text-white hover:text-stone-950 text-[10px] uppercase tracking-[0.2em] font-semibold py-3 transition duration-300">
+      <div class="px-3 pb-3 sm:px-4 sm:pb-4">
+        <button type="button" onclick="addToCart(${product.id})" class="w-full bg-stone-950 active:bg-[#C5A059] text-white active:text-stone-950 text-[10px] uppercase tracking-[0.12em] font-semibold py-2.5 px-2 whitespace-nowrap transition">
           + Sélectionner
         </button>
       </div>
@@ -129,40 +130,12 @@ function renderProducts() {
   `).join("");
 }
 
-// 6. VUE ÉCRIN (ZOOM PHOTO HAUTE DÉFINITION AUTO-INJECTÉ)
-function ensureProductModalExists() {
-  if (document.getElementById("product-modal")) return;
-  const modalHTML = `
-    <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-      <div onclick="closeProductModal()" class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
-      <div class="relative bg-stone-950 text-white max-w-md w-full overflow-hidden border border-[#C5A059]/40 shadow-2xl z-10">
-        <button onclick="closeProductModal()" class="absolute top-3 right-3 z-20 bg-stone-950/80 text-[#C5A059] border border-[#C5A059]/40 w-8 h-8 flex items-center justify-center text-xs font-bold hover:bg-[#C5A059] hover:text-stone-950 transition">
-          ✕
-        </button>
-        <div class="bg-stone-900 h-80 sm:h-96 overflow-hidden">
-          <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
-        </div>
-        <div class="p-6 text-center space-y-3">
-          <span class="text-[9px] uppercase tracking-[0.3em] text-[#C5A059] block">✦ Pièce Certifiée • Collection Privée ✦</span>
-          <h3 id="modal-title" class="font-luxury text-2xl sm:text-3xl font-bold tracking-wide text-white"></h3>
-          <p id="modal-price" class="text-[#C5A059] font-semibold text-sm tracking-widest uppercase"></p>
-          <div class="pt-2">
-            <button id="modal-add-btn" class="w-full bg-[#C5A059] hover:opacity-90 text-stone-950 text-xs uppercase tracking-[0.2em] font-bold py-3.5 transition">
-              + Ajouter à ma Sélection
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML("beforeend", modalHTML);
-}
-
+// 6. OUVERTURE & FERMETURE DU ZOOM "VUE ÉCRIN"
 function openProductModal(productId) {
-  ensureProductModalExists();
-  const product = products.find(p => p.id == productId);
+  const product = products.find(p => String(p.id) === String(productId));
   if (!product) return;
 
+  const modal = document.getElementById("product-modal");
   document.getElementById("modal-img").src = product.image;
   document.getElementById("modal-img").alt = product.name;
   document.getElementById("modal-title").textContent = product.name;
@@ -175,12 +148,12 @@ function openProductModal(productId) {
     toggleCart(true);
   };
 
-  document.getElementById("product-modal").classList.remove("hidden");
+  modal.style.display = "flex";
 }
 
 function closeProductModal() {
   const modal = document.getElementById("product-modal");
-  if (modal) modal.classList.add("hidden");
+  if (modal) modal.style.display = "none";
 }
 
 // 7. CRUD SUPABASE (AJOUT, MODIFICATION PRIX, SUPPRESSION)
@@ -275,7 +248,7 @@ async function editPrice(productId, currentPrice) {
     .eq("id", productId);
 
   if (error) {
-    alert("Erreur lors de la modification : " + error.message);
+    alert("Erreur : " + error.message);
     return;
   }
 
@@ -303,25 +276,25 @@ function filterCategory(category) {
   currentCategory = category;
   document.querySelectorAll(".cat-btn").forEach(btn => {
     btn.className = btn.dataset.cat === category
-      ? "cat-btn bg-stone-950 text-[#C5A059] border border-stone-950 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-semibold whitespace-nowrap transition"
-      : "cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition";
+      ? "cat-btn bg-stone-950 text-[#C5A059] border border-stone-950 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-semibold whitespace-nowrap"
+      : "cat-btn bg-white text-stone-600 border border-stone-200 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-medium whitespace-nowrap";
   });
   renderProducts();
 }
 
 function addToCart(productId) {
-  const product = products.find(p => p.id == productId);
-  const existing = cart.find(item => item.id == productId);
+  const product = products.find(p => String(p.id) === String(productId));
+  const existing = cart.find(item => String(item.id) === String(productId));
   if (existing) existing.quantity += 1;
   else cart.push({ ...product, quantity: 1 });
   saveAndRefreshCart();
 }
 
 function updateQuantity(productId, change) {
-  const item = cart.find(i => i.id == productId);
+  const item = cart.find(i => String(i.id) === String(productId));
   if (!item) return;
   item.quantity += change;
-  if (item.quantity <= 0) cart = cart.filter(i => i.id != productId);
+  if (item.quantity <= 0) cart = cart.filter(i => String(i.id) !== String(productId));
   saveAndRefreshCart();
 }
 
@@ -346,9 +319,9 @@ function saveAndRefreshCart() {
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 bg-stone-100 font-bold text-xs">-</button>
+          <button type="button" onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 bg-stone-100 font-bold text-xs">-</button>
           <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
-          <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 bg-stone-950 text-[#C5A059] font-bold text-xs">+</button>
+          <button type="button" onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 bg-stone-950 text-[#C5A059] font-bold text-xs">+</button>
         </div>
       </div>
     `).join("");

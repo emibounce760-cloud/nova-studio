@@ -3,348 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Rodis STUDIO — Maison de Prestige</title>
+  <title id="page-title">RODIS MAISON — Collection Privée</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- POLICES DE LUXE : CORMORANT GARAMOND & MONTSERRAT -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Montserrat', sans-serif; background-color: #FAF8F5; color: #0F0F0F; }
     .font-luxury { font-family: 'Cormorant Garamond', serif; }
     .gold-text { color: #C5A059; }
-    .gold-border { border-color: #C5A059; }
     .gold-bg { background-color: #C5A059; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
   </style>
 </head>
-<body class="min-h-screen pb-24 selection:bg-stone-900 selection:text-amber-200">
+<body class="min-h-screen pb-24">
 
   <!-- BARRE D'ANNONCE VIP NOIR & OR -->
-  <div class="bg-stone-950 text-[#C5A059] text-[10px] tracking-[0.25em] uppercase py-2.5 px-4 text-center font-medium border-b border-stone-800">
-    ✦ Collection Privée • Service Conciergerie & Livraison Express ✦
+  <div class="bg-stone-950 text-[#C5A059] text-[9px] sm:text-[10px] tracking-[0.2em] uppercase py-2 px-3 text-center font-medium border-b border-stone-800">
+    ✦ Collection Privée • Conciergerie & Livraison Express ✦
   </div>
 
-  <!-- BANDEAU MODE VENDEUR (CACHÉ POUR LES CLIENTS) -->
+  <!-- BANDEAU MODE VENDEUR -->
   <div id="admin-banner" class="hidden bg-[#C5A059] text-stone-950 px-4 py-2.5 text-xs font-semibold tracking-wide">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <span>🔓 MODE DIRECTION ACTIF : Gérez votre collection en temps réel</span>
-      <button onclick="logoutAdmin()" class="bg-stone-950 text-white px-3 py-1 rounded-none text-[10px] uppercase tracking-widest">
+      <span>🔓 MODE DIRECTION ACTIF</span>
+      <button type="button" onclick="logoutAdmin()" class="bg-stone-950 text-white px-3 py-1 text-[10px] uppercase tracking-widest">
         Verrouiller 🔒
       </button>
     </div>
   </div>
 
-  <!-- EN-TÊTE LUXE -->
+  <!-- EN-TÊTE LUXE OPTIMISÉ POUR IPHONE -->
   <header class="sticky top-0 z-30 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-stone-200/80">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div>
-        <span id="shop-tagline" class="text-[9px] font-semibold tracking-[0.3em] uppercase gold-text block mb-0.5">Maison d'Excellence</span>
-        <h1 id="shop-name" class="font-luxury text-2xl sm:text-3xl font-bold tracking-wider uppercase text-stone-950">Rodis STUDIO</h1>
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-3.5 flex items-center justify-between gap-2">
+      <div class="min-w-0">
+        <span id="shop-tagline" class="text-[8px] sm:text-[9px] font-semibold tracking-[0.2em] uppercase gold-text block truncate">Haute Horlogerie & Prêt-à-Porter</span>
+        <h1 id="shop-name" class="font-luxury text-xl sm:text-3xl font-bold tracking-wider uppercase text-stone-950 truncate">RODIS MAISON</h1>
       </div>
 
-      <div class="flex items-center gap-2.5">
-        <button id="admin-lock-btn" onclick="unlockAdmin()" class="border border-stone-300 bg-white text-stone-700 px-3 py-2 text-[10px] uppercase tracking-widest font-semibold hover:border-stone-950 transition">
-          🔒 Accès Privé
+      <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <button id="admin-lock-btn" type="button" onclick="unlockAdmin()" class="border border-stone-300 bg-white text-stone-700 px-2.5 py-2 text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap">
+          🔒 Privé
         </button>
-        <button id="add-product-btn" onclick="toggleAdmin(true)" class="hidden gold-bg text-stone-950 px-3.5 py-2 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transition">
+        <button id="add-product-btn" type="button" onclick="toggleAdmin(true)" class="hidden gold-bg text-stone-950 px-2.5 py-2 text-[9px] sm:text-[10px] uppercase tracking-wider font-bold whitespace-nowrap">
           + Pièce
         </button>
-        <button onclick="toggleCart(true)" class="relative flex items-center gap-2.5 bg-stone-950 text-white px-4 py-2.5 text-[11px] uppercase tracking-widest font-medium hover:bg-stone-800 transition shadow-sm">
+        <button type="button" onclick="toggleCart(true)" class="flex items-center gap-1.5 bg-stone-950 text-white px-3 py-2 text-[10px] uppercase tracking-wider font-medium whitespace-nowrap">
           <span>Sélection</span>
           <span id="cart-badge" class="gold-bg text-stone-950 text-[10px] font-bold px-1.5 py-0.5">0</span>
         </button>
       </div>
     </div>
 
-    <!-- BARRE DE COLLECTIONS ÉDITORIALE -->
-    <div class="max-w-6xl mx-auto px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar">
-      <button onclick="filterCategory('tous')" class="cat-btn bg-stone-950 text-[#C5A059] border border-stone-950 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-semibold whitespace-nowrap transition" data-cat="tous">Toute la Collection</button>
-      <button onclick="filterCategory('vetements')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="vetements">Prêt-à-Porter</button>
-      <button onclick="filterCategory('accessoires')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="accessoires">Haute Horlogerie & Bijoux</button>
-      <button onclick="filterCategory('sacs')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="sacs">Maroquinerie</button>
-      <button onclick="filterCategory('chaussures')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="chaussures">Souliers</button>
+    <!-- BARRE DE COLLECTIONS -->
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar">
+      <button type="button" onclick="filterCategory('tous')" class="cat-btn bg-stone-950 text-[#C5A059] border border-stone-950 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-semibold whitespace-nowrap" data-cat="tous">Toute la Collection</button>
+      <button type="button" onclick="filterCategory('vetements')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-medium whitespace-nowrap" data-cat="vetements">Prêt-à-Porter</button>
+      <button type="button" onclick="filterCategory('accessoires')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-medium whitespace-nowrap" data-cat="accessoires">Horlogerie & Bijoux</button>
+      <button type="button" onclick="filterCategory('sacs')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-medium whitespace-nowrap" data-cat="sacs">Maroquinerie</button>
+      <button type="button" onclick="filterCategory('chaussures')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-medium whitespace-nowrap" data-cat="chaussures">Souliers</button>
     </div>
   </header>
 
   <!-- BANNIÈRE HERO PRESTIGE -->
-  <section class="max-w-6xl mx-auto px-4 pt-6">
-    <div class="relative bg-stone-950 text-white p-6 sm:p-10 overflow-hidden border border-stone-800 shadow-xl">
+  <section class="max-w-6xl mx-auto px-3 sm:px-4 pt-4">
+    <div class="relative bg-stone-950 text-white p-5 sm:p-10 overflow-hidden border border-stone-800 shadow-lg">
       <div class="relative z-10 max-w-lg">
-        <p class="text-[10px] uppercase tracking-[0.3em] gold-text mb-2">Catalogue Officiel • Édition Limitée</p>
-        <h2 class="font-luxury text-3xl sm:text-4xl font-semibold leading-tight mb-3">
+        <p class="text-[9px] uppercase tracking-[0.25em] gold-text mb-1.5">Catalogue Officiel • Édition Limitée</p>
+        <h2 class="font-luxury text-2xl sm:text-4xl font-semibold leading-tight mb-2">
           L'Élégance à portée de main. <span class="italic font-normal text-stone-300">Commandez en privé.</span>
         </h2>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          Sélectionnez vos pièces favorites et recevez une assistance personnalisée directement sur WhatsApp pour votre livraison.
+        <p class="text-[11px] text-stone-400 leading-relaxed">
+          Touchez une photographie pour admirer la pièce de près ou ajoutez-la à votre sélection WhatsApp.
         </p>
       </div>
-      <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full border border-[#C5A059]/20 pointer-events-none"></div>
-      <div class="absolute -right-4 -bottom-4 w-32 h-32 rounded-full border border-[#C5A059]/40 pointer-events-none"></div>
     </div>
   </section>
 
   <!-- RECHERCHE & GALERIE DES PIÈCES -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="mb-8">
+  <main class="max-w-6xl mx-auto px-3 sm:px-4 py-6">
+    <div class="mb-6">
       <input 
         id="search-input" 
         type="text" 
         oninput="handleSearch(this.value)" 
-        placeholder="Rechercher une pièce d'exception (ex: montre, parfum, sac...)" 
-        class="w-full bg-white border border-stone-300 px-4 py-3.5 text-xs tracking-wider focus:outline-none focus:border-stone-950 transition shadow-2xs"
+        placeholder="🔍 Rechercher une pièce (ex: pull, montre, lunettes...)" 
+        class="w-full bg-white border border-stone-300 px-4 py-3 text-xs tracking-wider focus:outline-none focus:border-stone-950"
       >
     </div>
 
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-5 sm:gap-7"></div>
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-7"></div>
   </main>
 
-  <!-- FENÊTRE D'AJOUT DE PIÈCE (MODE DIRECTION) -->
-  <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
-    <div class="relative bg-white max-w-sm w-full p-6 shadow-2xl space-y-4 z-10 border border-stone-200">
-      <div class="flex items-center justify-between border-b border-stone-200 pb-3">
-        <h2 class="font-luxury text-xl font-bold uppercase tracking-wider">Nouvelle Pièce</h2>
-        <button onclick="toggleAdmin(false)" class="text-xs font-bold text-stone-500 px-2 py-1">✕</button>
-      </div>
-      <input id="new-name" type="text" placeholder="Nom de la pièce (ex: Montre Royale Or)" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 focus:outline-none focus:border-stone-950">
-      <input id="new-price" type="number" placeholder="Prix en FCFA (ex: 45000)" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 focus:outline-none focus:border-stone-950">
-      <select id="new-category" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 bg-white focus:outline-none focus:border-stone-950">
-        <option value="vetements">Collection : Prêt-à-Porter</option>
-        <option value="accessoires">Collection : Horlogerie & Bijoux</option>
-        <option value="sacs">Collection : Maroquinerie</option>
-        <option value="chaussures">Collection : Souliers</option>
-      </select>
-
-      <div class="border border-dashed border-stone-400 p-4 text-center bg-stone-50">
-        <label class="cursor-pointer block">
-          <span class="text-[11px] uppercase tracking-widest font-bold gold-text block mb-2">📸 Photographie de la pièce</span>
-          <input id="new-image-file" type="file" accept="image/*" onchange="previewSelectedImage(this)" class="text-xs text-stone-500 w-full file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-[10px] file:uppercase file:tracking-widest file:font-bold file:bg-stone-950 file:text-white">
-        </label>
-        <img id="image-preview" class="hidden w-full h-36 object-cover mt-3 border border-stone-200" alt="Aperçu">
-      </div>
-
-      <button id="publish-btn" onclick="addNewProduct()" class="w-full bg-stone-950 hover:bg-stone-800 text-[#C5A059] font-bold py-3 text-xs uppercase tracking-[0.2em] transition">
-        Ajouter à la Collection
-      </button>
-    </div>
-  </div>
-
-  <!-- TIROIR DE SÉLECTION PRIVÉE (PANIER LUXE) -->
-  <div id="cart-modal" class="fixed inset-0 z-50 hidden">
-    <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
-    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-[#FAF8F5] shadow-2xl flex flex-col border-l border-stone-300">
-      <div class="p-5 bg-stone-950 text-white flex items-center justify-between">
-        <div>
-          <span class="text-[9px] uppercase tracking-[0.25em] gold-text block">Conciergerie Privée</span>
-          <h2 class="font-luxury text-2xl font-semibold tracking-wider">Votre Sélection</h2>
-        </div><!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Rodis STUDIO — Maison de Prestige</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- POLICES DE LUXE : CORMORANT GARAMOND & MONTSERRAT -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Montserrat', sans-serif; background-color: #FAF8F5; color: #0F0F0F; }
-    .font-luxury { font-family: 'Cormorant Garamond', serif; }
-    .gold-text { color: #C5A059; }
-    .gold-border { border-color: #C5A059; }
-    .gold-bg { background-color: #C5A059; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-  </style>
-</head>
-<body class="min-h-screen pb-24 selection:bg-stone-900 selection:text-amber-200">
-
-  <!-- BARRE D'ANNONCE VIP NOIR & OR -->
-  <div class="bg-stone-950 text-[#C5A059] text-[10px] tracking-[0.25em] uppercase py-2.5 px-4 text-center font-medium border-b border-stone-800">
-    ✦ Collection Privée • Service Conciergerie & Livraison Express ✦
-  </div>
-
-  <!-- BANDEAU MODE VENDEUR (CACHÉ POUR LES CLIENTS) -->
-  <div id="admin-banner" class="hidden bg-[#C5A059] text-stone-950 px-4 py-2.5 text-xs font-semibold tracking-wide">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <span>🔓 MODE DIRECTION ACTIF : Gérez votre collection en temps réel</span>
-      <button onclick="logoutAdmin()" class="bg-stone-950 text-white px-3 py-1 rounded-none text-[10px] uppercase tracking-widest">
-        Verrouiller 🔒
-      </button>
-    </div>
-  </div>
-
-  <!-- EN-TÊTE LUXE -->
-  <header class="sticky top-0 z-30 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-stone-200/80">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div>
-        <span id="shop-tagline" class="text-[9px] font-semibold tracking-[0.3em] uppercase gold-text block mb-0.5">Maison d'Excellence</span>
-        <h1 id="shop-name" class="font-luxury text-2xl sm:text-3xl font-bold tracking-wider uppercase text-stone-950">Rodis STUDIO</h1>
-      </div>
-
-      <div class="flex items-center gap-2.5">
-        <button id="admin-lock-btn" onclick="unlockAdmin()" class="border border-stone-300 bg-white text-stone-700 px-3 py-2 text-[10px] uppercase tracking-widest font-semibold hover:border-stone-950 transition">
-          🔒 Accès Privé
-        </button>
-        <button id="add-product-btn" onclick="toggleAdmin(true)" class="hidden gold-bg text-stone-950 px-3.5 py-2 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transition">
-          + Pièce
-        </button>
-        <button onclick="toggleCart(true)" class="relative flex items-center gap-2.5 bg-stone-950 text-white px-4 py-2.5 text-[11px] uppercase tracking-widest font-medium hover:bg-stone-800 transition shadow-sm">
-          <span>Sélection</span>
-          <span id="cart-badge" class="gold-bg text-stone-950 text-[10px] font-bold px-1.5 py-0.5">0</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- BARRE DE COLLECTIONS ÉDITORIALE -->
-    <div class="max-w-6xl mx-auto px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar">
-      <button onclick="filterCategory('tous')" class="cat-btn bg-stone-950 text-[#C5A059] border border-stone-950 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-semibold whitespace-nowrap transition" data-cat="tous">Toute la Collection</button>
-      <button onclick="filterCategory('vetements')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="vetements">Prêt-à-Porter</button>
-      <button onclick="filterCategory('accessoires')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="accessoires">Haute Horlogerie & Bijoux</button>
-      <button onclick="filterCategory('sacs')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="sacs">Maroquinerie</button>
-      <button onclick="filterCategory('chaussures')" class="cat-btn bg-white text-stone-600 border border-stone-200 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium whitespace-nowrap transition" data-cat="chaussures">Souliers</button>
-    </div>
-  </header>
-
-  <!-- BANNIÈRE HERO PRESTIGE -->
-  <section class="max-w-6xl mx-auto px-4 pt-6">
-    <div class="relative bg-stone-950 text-white p-6 sm:p-10 overflow-hidden border border-stone-800 shadow-xl">
-      <div class="relative z-10 max-w-lg">
-        <p class="text-[10px] uppercase tracking-[0.3em] gold-text mb-2">Catalogue Officiel • Édition Limitée</p>
-        <h2 class="font-luxury text-3xl sm:text-4xl font-semibold leading-tight mb-3">
-          L'Élégance à portée de main. <span class="italic font-normal text-stone-300">Commandez en privé.</span>
-        </h2>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          Sélectionnez vos pièces favorites et recevez une assistance personnalisée directement sur WhatsApp pour votre livraison.
-        </p>
-      </div>
-      <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full border border-[#C5A059]/20 pointer-events-none"></div>
-      <div class="absolute -right-4 -bottom-4 w-32 h-32 rounded-full border border-[#C5A059]/40 pointer-events-none"></div>
-    </div>
-  </section>
-
-  <!-- RECHERCHE & GALERIE DES PIÈCES -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="mb-8">
-      <input 
-        id="search-input" 
-        type="text" 
-        oninput="handleSearch(this.value)" 
-        placeholder="Rechercher une pièce d'exception (ex: montre, parfum, sac...)" 
-        class="w-full bg-white border border-stone-300 px-4 py-3.5 text-xs tracking-wider focus:outline-none focus:border-stone-950 transition shadow-2xs"
-      >
-    </div>
-
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-5 sm:gap-7"></div>
-  </main>
-
-  <!-- FENÊTRE D'AJOUT DE PIÈCE (MODE DIRECTION) -->
-  <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
-    <div class="relative bg-white max-w-sm w-full p-6 shadow-2xl space-y-4 z-10 border border-stone-200">
-      <div class="flex items-center justify-between border-b border-stone-200 pb-3">
-        <h2 class="font-luxury text-xl font-bold uppercase tracking-wider">Nouvelle Pièce</h2>
-        <button onclick="toggleAdmin(false)" class="text-xs font-bold text-stone-500 px-2 py-1">✕</button>
-      </div>
-      <input id="new-name" type="text" placeholder="Nom de la pièce (ex: Montre Royale Or)" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 focus:outline-none focus:border-stone-950">
-      <input id="new-price" type="number" placeholder="Prix en FCFA (ex: 45000)" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 focus:outline-none focus:border-stone-950">
-      <select id="new-category" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 bg-white focus:outline-none focus:border-stone-950">
-        <option value="vetements">Collection : Prêt-à-Porter</option>
-        <option value="accessoires">Collection : Horlogerie & Bijoux</option>
-        <option value="sacs">Collection : Maroquinerie</option>
-        <option value="chaussures">Collection : Souliers</option>
-      </select>
-
-      <div class="border border-dashed border-stone-400 p-4 text-center bg-stone-50">
-        <label class="cursor-pointer block">
-          <span class="text-[11px] uppercase tracking-widest font-bold gold-text block mb-2">📸 Photographie de la pièce</span>
-          <input id="new-image-file" type="file" accept="image/*" onchange="previewSelectedImage(this)" class="text-xs text-stone-500 w-full file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-[10px] file:uppercase file:tracking-widest file:font-bold file:bg-stone-950 file:text-white">
-        </label>
-        <img id="image-preview" class="hidden w-full h-36 object-cover mt-3 border border-stone-200" alt="Aperçu">
-      </div>
-
-      <button id="publish-btn" onclick="addNewProduct()" class="w-full bg-stone-950 hover:bg-stone-800 text-[#C5A059] font-bold py-3 text-xs uppercase tracking-[0.2em] transition">
-        Ajouter à la Collection
-      </button>
-    </div>
-  </div>
-
-  <!-- TIROIR DE SÉLECTION PRIVÉE (PANIER LUXE) -->
-  <div id="cart-modal" class="fixed inset-0 z-50 hidden">
-    <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
-    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-[#FAF8F5] shadow-2xl flex flex-col border-l border-stone-300">
-      <div class="p-5 bg-stone-950 text-white flex items-center justify-between">
-        <div>
-          <span class="text-[9px] uppercase tracking-[0.25em] gold-text block">Conciergerie Privée</span>
-          <h2 class="font-luxury text-2xl font-semibold tracking-wider">Votre Sélection</h2>
-        </div>
-        <button onclick="toggleCart(false)" class="text-stone-400 hover:text-white text-xs uppercase tracking-widest px-3 py-1 border border-stone-800">Fermer ✕</button>
-      </div>
-
-      <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
-
-      <div class="p-5 bg-white border-t border-stone-200 space-y-3">
-        <div class="grid grid-cols-2 gap-2.5">
-          <input id="client-name" type="text" oninput="updateWhatsAppPreview()" placeholder="Votre Nom / Prénom *" class="w-full px-3 py-2.5 text-xs border border-stone-300 bg-[#FAF8F5] focus:outline-none focus:border-stone-950">
-          <input id="client-address" type="text" oninput="updateWhatsAppPreview()" placeholder="Adresse / Quartier VIP *" class="w-full px-3 py-2.5 text-xs border border-stone-300 bg-[#FAF8F5] focus:outline-none focus:border-stone-950">
-        </div>
-        <div class="bg-stone-950 text-stone-200 border border-stone-800 p-3 text-[11px] font-mono whitespace-pre-line max-h-28 overflow-y-auto" id="whatsapp-preview"></div>
-        <div class="flex items-center justify-between pt-2 border-t border-stone-100">
-          <span class="text-xs uppercase tracking-widest text-stone-500">Total Estimé</span>
-          <span id="cart-total" class="font-luxury text-2xl font-bold text-stone-950">0 FCFA</span>
-        </div>
-        <button onclick="checkoutWhatsApp()" class="w-full bg-stone-950 hover:bg-stone-800 text-[#C5A059] font-bold py-3.5 text-xs uppercase tracking-[0.25em] shadow-lg transition">
-          Finaliser via Conciergerie WhatsApp
-        </button>
-      </div>
-    </div>
-  </div>
-<!-- FENÊTRE ZOOM "VUE ÉCRIN" (DÉTAIL D'UNE PIÈCE) -->
-  <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div onclick="closeProductModal()" class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
-    <div class="relative bg-stone-950 text-white max-w-md w-full overflow-hidden border border-[#C5A059]/40 shadow-2xl z-10">
-      <button onclick="closeProductModal()" class="absolute top-3 right-3 z-20 bg-stone-950/80 text-[#C5A059] border border-[#C5A059]/40 w-8 h-8 flex items-center justify-center text-xs font-bold hover:bg-[#C5A059] hover:text-stone-950 transition">
+  <!-- FENÊTRE ZOOM "VUE ÉCRIN" (100% COMPATIBLE IPHONE) -->
+  <div id="product-modal" style="display: none;" class="fixed inset-0 z-50 items-center justify-center p-4">
+    <div onclick="closeProductModal()" class="absolute inset-0 bg-black/85 backdrop-blur-xs"></div>
+    <div class="relative bg-stone-950 text-white max-w-sm w-full overflow-hidden border border-[#C5A059] shadow-2xl z-10">
+      <button type="button" onclick="closeProductModal()" class="absolute top-3 right-3 z-20 bg-stone-950 text-[#C5A059] border border-[#C5A059] w-9 h-9 flex items-center justify-center text-sm font-bold">
         ✕
       </button>
-      <div class="bg-stone-900 h-80 sm:h-96 overflow-hidden">
+      <div class="bg-stone-900 h-80 overflow-hidden">
         <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
       </div>
-      <div class="p-6 text-center space-y-3">
-        <span class="text-[9px] uppercase tracking-[0.3em] gold-text block">✦ Pièce Certifiée • Collection Privée ✦</span>
-        <h3 id="modal-title" class="font-luxury text-2xl sm:text-3xl font-bold tracking-wide text-white"></h3>
+      <div class="p-5 text-center space-y-2.5">
+        <span class="text-[9px] uppercase tracking-[0.25em] gold-text block">✦ Pièce Certifiée • Collection Privée ✦</span>
+        <h3 id="modal-title" class="font-luxury text-2xl font-bold tracking-wide text-white"></h3>
         <p id="modal-price" class="text-[#C5A059] font-semibold text-sm tracking-widest uppercase"></p>
         <div class="pt-2">
-          <button id="modal-add-btn" class="w-full gold-bg hover:opacity-90 text-stone-950 text-xs uppercase tracking-[0.2em] font-bold py-3.5 transition">
+          <button id="modal-add-btn" type="button" class="w-full gold-bg text-stone-950 text-[11px] uppercase tracking-[0.2em] font-bold py-3.5">
             + Ajouter à ma Sélection
           </button>
         </div>
       </div>
     </div>
   </div>
-  <script src="app.js"></script>
-</body>
-</html>
-        <button onclick="toggleCart(false)" class="text-stone-400 hover:text-white text-xs uppercase tracking-widest px-3 py-1 border border-stone-800">Fermer ✕</button>
+
+  <!-- FENÊTRE D'AJOUT DE PIÈCE (MODE DIRECTION) -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
+    <div class="relative bg-white max-w-sm w-full p-6 shadow-2xl space-y-4 z-10 border border-stone-200">
+      <div class="flex items-center justify-between border-b border-stone-200 pb-3">
+        <h2 class="font-luxury text-xl font-bold uppercase tracking-wider">Nouvelle Pièce</h2>
+        <button type="button" onclick="toggleAdmin(false)" class="text-xs font-bold text-stone-500 px-2 py-1">✕</button>
+      </div>
+      <input id="new-name" type="text" placeholder="Nom de la pièce (ex: Montre Royale Or)" class="w-full px-3.5 py-2.5 text-xs border border-stone-300">
+      <input id="new-price" type="number" placeholder="Prix en FCFA (ex: 45000)" class="w-full px-3.5 py-2.5 text-xs border border-stone-300">
+      <select id="new-category" class="w-full px-3.5 py-2.5 text-xs border border-stone-300 bg-white">
+        <option value="vetements">Collection : Prêt-à-Porter</option>
+        <option value="accessoires">Collection : Horlogerie & Bijoux</option>
+        <option value="sacs">Collection : Maroquinerie</option>
+        <option value="chaussures">Collection : Souliers</option>
+      </select>
+
+      <div class="border border-dashed border-stone-400 p-4 text-center bg-stone-50">
+        <label class="cursor-pointer block">
+          <span class="text-[11px] uppercase tracking-widest font-bold gold-text block mb-2">📸 Photographie de la pièce</span>
+          <input id="new-image-file" type="file" accept="image/*" onchange="previewSelectedImage(this)" class="text-xs text-stone-500 w-full">
+        </label>
+        <img id="image-preview" class="hidden w-full h-36 object-cover mt-3 border border-stone-200" alt="Aperçu">
+      </div>
+
+      <button id="publish-btn" type="button" onclick="addNewProduct()" class="w-full bg-stone-950 text-[#C5A059] font-bold py-3 text-xs uppercase tracking-[0.2em]">
+        Ajouter à la Collection
+      </button>
+    </div>
+  </div>
+
+  <!-- TIROIR DE SÉLECTION PRIVÉE (PANIER LUXE) -->
+  <div id="cart-modal" class="fixed inset-0 z-50 hidden">
+    <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-[#FAF8F5] shadow-2xl flex flex-col border-l border-stone-300">
+      <div class="p-5 bg-stone-950 text-white flex items-center justify-between">
+        <div>
+          <span class="text-[9px] uppercase tracking-[0.25em] gold-text block">Conciergerie Privée</span>
+          <h2 class="font-luxury text-2xl font-semibold tracking-wider">Votre Sélection</h2>
+        </div>
+        <button type="button" onclick="toggleCart(false)" class="text-stone-400 text-xs uppercase tracking-widest px-3 py-1 border border-stone-800">Fermer ✕</button>
       </div>
 
       <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
 
       <div class="p-5 bg-white border-t border-stone-200 space-y-3">
         <div class="grid grid-cols-2 gap-2.5">
-          <input id="client-name" type="text" oninput="updateWhatsAppPreview()" placeholder="Votre Nom / Prénom *" class="w-full px-3 py-2.5 text-xs border border-stone-300 bg-[#FAF8F5] focus:outline-none focus:border-stone-950">
-          <input id="client-address" type="text" oninput="updateWhatsAppPreview()" placeholder="Adresse / Quartier VIP *" class="w-full px-3 py-2.5 text-xs border border-stone-300 bg-[#FAF8F5] focus:outline-none focus:border-stone-950">
+          <input id="client-name" type="text" oninput="updateWhatsAppPreview()" placeholder="Votre Nom / Prénom *" class="w-full px-3 py-2.5 text-xs border border-stone-300 bg-[#FAF8F5]">
+          <input id="client-address" type="text" oninput="updateWhatsAppPreview()" placeholder="Quartier / Lieu *" class="w-full px-3 py-2.5 text-xs border border-stone-300 bg-[#FAF8F5]">
         </div>
         <div class="bg-stone-950 text-stone-200 border border-stone-800 p-3 text-[11px] font-mono whitespace-pre-line max-h-28 overflow-y-auto" id="whatsapp-preview"></div>
         <div class="flex items-center justify-between pt-2 border-t border-stone-100">
           <span class="text-xs uppercase tracking-widest text-stone-500">Total Estimé</span>
           <span id="cart-total" class="font-luxury text-2xl font-bold text-stone-950">0 FCFA</span>
         </div>
-        <button onclick="checkoutWhatsApp()" class="w-full bg-stone-950 hover:bg-stone-800 text-[#C5A059] font-bold py-3.5 text-xs uppercase tracking-[0.25em] shadow-lg transition">
-          Finaliser via Conciergerie WhatsApp
+        <button type="button" onclick="checkoutWhatsApp()" class="w-full bg-stone-950 text-[#C5A059] font-bold py-3.5 text-xs uppercase tracking-[0.2em] shadow-lg">
+          Commander via Conciergerie WhatsApp
         </button>
       </div>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <!-- LE ?v=3 FORCE L'IPHONE À RECHARGER LE NOUVEAU CODE -->
+  <script src="app.js?v=3"></script>
 </body>
 </html>
