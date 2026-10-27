@@ -1,10 +1,10 @@
 // ==========================================
-// 1. CONFIGURATION CLIENT (ÉDITION PRESTIGE)
+// 1. CONFIGURATION CLIENT : LINDA FASHION
 // ==========================================
 const SHOP_CONFIG = {
-  name: "RODIS MAISON",
-  tagline: "Haute Horlogerie & Prêt-à-Porter",
-  whatsappPhone: "22890000000",
+  name: "Linda Fashion",
+  tagline: "Gros & Détail • Local & International",
+  whatsappPhone: "22893746561",
   adminPin: "1234",
   currency: "FCFA"
 };
@@ -27,13 +27,13 @@ function initShopBranding() {
   const titleEl = document.getElementById("page-title");
   if (nameEl) nameEl.textContent = SHOP_CONFIG.name;
   if (taglineEl) taglineEl.textContent = SHOP_CONFIG.tagline;
-  if (titleEl) titleEl.textContent = `${SHOP_CONFIG.name} — Collection Privée`;
+  if (titleEl) titleEl.textContent = `${SHOP_CONFIG.name} — Catalogue Officiel`;
 }
 
-// 3. CHARGER LES PIÈCES DEPUIS SUPABASE
+// 3. CHARGER LES ARTICLES DEPUIS SUPABASE
 async function loadProducts() {
   const grid = document.getElementById("product-grid");
-  grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-16 text-xs uppercase tracking-widest">Chargement de la collection privée...</p>`;
+  grid.innerHTML = `<p class="col-span-full text-center text-[#D81B60] py-16 text-xs font-bold uppercase tracking-widest">⏳ Chargement des arrivages Linda Fashion...</p>`;
 
   const { data, error } = await db
     .from("products")
@@ -49,9 +49,9 @@ async function loadProducts() {
   renderProducts();
 }
 
-// 4. MODE DIRECTION & PERMISSIONS
+// 4. MODE VENDEUR & PERMISSIONS
 function unlockAdmin() {
-  const code = prompt("🔐 Code PIN Direction :");
+  const code = prompt("🔐 Code PIN Vendeur (par défaut : 1234) :");
   if (code === SHOP_CONFIG.adminPin) {
     isAdmin = true;
     updateAdminUI();
@@ -77,7 +77,7 @@ function handleSearch(value) {
   renderProducts();
 }
 
-// 5. AFFICHAGE DES CARTES PRODUITS (OPTIMISÉ TACTILE IPHONE)
+// 5. AFFICHAGE DES CARTES PRODUITS (ROSE FUCHSIA & BLEU MARINE)
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const filtered = products.filter(p => {
@@ -87,50 +87,48 @@ function renderProducts() {
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-16 text-xs uppercase tracking-widest">Aucune pièce trouvée.</p>`;
+    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-16 text-xs font-semibold">Aucun article trouvé dans cette catégorie.</p>`;
     return;
   }
 
   grid.innerHTML = filtered.map(product => `
-    <div class="relative bg-white border border-stone-200 flex flex-col justify-between shadow-2xs">
+    <div class="relative bg-white rounded-2xl border border-pink-200 overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-md transition">
       ${isAdmin ? `
         <div class="absolute top-2 right-2 z-20 flex gap-1">
-          <button type="button" onclick="editPrice(${product.id}, ${product.price})" class="bg-[#C5A059] text-stone-950 text-[10px] font-bold uppercase px-2 py-1 shadow-md">
+          <button type="button" onclick="editPrice(${product.id}, ${product.price})" class="bg-amber-400 text-stone-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
             ✏️ Prix
           </button>
-          <button type="button" onclick="deleteProduct(${product.id})" class="bg-stone-950 text-white text-[10px] font-bold px-2 py-1 shadow-md">
+          <button type="button" onclick="deleteProduct(${product.id})" class="bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md">
             🗑️
           </button>
         </div>
       ` : `
-        <span class="absolute top-2.5 left-2.5 z-10 bg-stone-950/90 text-[#C5A059] text-[8px] uppercase tracking-[0.15em] px-2 py-1 font-semibold pointer-events-none">
-          Édition Prestige
+        <span class="absolute top-2.5 left-2.5 z-10 bg-[#D81B60] text-white text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full font-bold shadow-xs pointer-events-none">
+          Nouvel Arrivage
         </span>
       `}
       <div>
-        <!-- VRAI BOUTON TACTILE SUR L'IMAGE POUR OUVRIR LE ZOOM SUR IPHONE -->
-        <button type="button" onclick="openProductModal(${product.id})" class="block w-full text-left overflow-hidden bg-stone-100 h-52 sm:h-64 relative focus:outline-none">
+        <button type="button" onclick="openProductModal(${product.id})" class="block w-full text-left overflow-hidden bg-pink-50 h-52 sm:h-64 relative focus:outline-none">
           <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
-          <span class="absolute bottom-2 right-2 bg-stone-950/90 text-[#C5A059] border border-[#C5A059]/40 text-[9px] uppercase tracking-wider px-2 py-1 font-bold shadow-md">
+          <span class="absolute bottom-2 right-2 bg-[#1E295B]/90 text-white text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full font-bold shadow-md">
             🔍 Voir de près
           </span>
         </button>
         <div onclick="openProductModal(${product.id})" class="p-3 sm:p-4 text-center cursor-pointer">
-          <h3 class="font-luxury text-base sm:text-xl font-bold text-stone-950 tracking-wide truncate">${product.name}</h3>
-          <div class="w-6 h-[1px] bg-[#C5A059] mx-auto my-1.5"></div>
-          <p class="text-stone-900 font-semibold text-xs sm:text-sm tracking-wider uppercase">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
+          <h3 class="text-xs sm:text-sm font-bold text-[#1E295B] line-clamp-2 min-h-[2rem] flex items-center justify-center">${product.name}</h3>
+          <p class="text-[#D81B60] font-black text-sm sm:text-base mt-1">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
         </div>
       </div>
       <div class="px-3 pb-3 sm:px-4 sm:pb-4">
-        <button type="button" onclick="addToCart(${product.id})" class="w-full bg-stone-950 active:bg-[#C5A059] text-white active:text-stone-950 text-[10px] uppercase tracking-[0.12em] font-semibold py-2.5 px-2 whitespace-nowrap transition">
-          + Sélectionner
+        <button type="button" onclick="addToCart(${product.id})" class="w-full bg-[#1E295B] hover:bg-[#D81B60] active:bg-[#D81B60] text-white text-[11px] font-bold py-2.5 px-2 rounded-xl whitespace-nowrap transition">
+          + Commander
         </button>
       </div>
     </div>
   `).join("");
 }
 
-// 6. OUVERTURE & FERMETURE DU ZOOM "VUE ÉCRIN"
+// 6. ZOOM PHOTO "VUE ÉCRIN"
 function openProductModal(productId) {
   const product = products.find(p => String(p.id) === String(productId));
   if (!product) return;
@@ -156,7 +154,7 @@ function closeProductModal() {
   if (modal) modal.style.display = "none";
 }
 
-// 7. CRUD SUPABASE (AJOUT, MODIFICATION PRIX, SUPPRESSION)
+// 7. CRUD SUPABASE (AJOUT, PRIX, SUPPRESSION)
 function toggleAdmin(show) {
   document.getElementById("admin-modal").classList.toggle("hidden", !show);
 }
@@ -202,7 +200,7 @@ async function addNewProduct() {
   const image = selectedImageData || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600";
 
   if (!name || !price) {
-    alert("Veuillez renseigner le nom et le prix de la pièce.");
+    alert("Veuillez renseigner le nom et le prix de l'article.");
     return;
   }
 
@@ -214,7 +212,7 @@ async function addNewProduct() {
     .from("products")
     .insert([{ name, category, price, image }]);
 
-  btn.textContent = "Ajouter à la Collection";
+  btn.textContent = "Publier dans la Boutique";
   btn.disabled = false;
 
   if (error) {
@@ -233,12 +231,12 @@ async function addNewProduct() {
 }
 
 async function editPrice(productId, currentPrice) {
-  const input = prompt(`💰 Nouveau tarif en ${SHOP_CONFIG.currency} :`, currentPrice);
+  const input = prompt(`💰 Nouveau prix en ${SHOP_CONFIG.currency} :`, currentPrice);
   if (input === null) return;
 
   const newPrice = parseInt(input, 10);
   if (!newPrice || newPrice <= 0) {
-    alert("Veuillez entrer un tarif valide.");
+    alert("Veuillez entrer un prix valide.");
     return;
   }
 
@@ -256,7 +254,7 @@ async function editPrice(productId, currentPrice) {
 }
 
 async function deleteProduct(productId) {
-  if (!confirm("Retirer définitivement cette pièce de la collection ?")) return;
+  if (!confirm("Supprimer cet article de la boutique ?")) return;
 
   const { error } = await db
     .from("products")
@@ -271,13 +269,13 @@ async function deleteProduct(productId) {
   await loadProducts();
 }
 
-// 8. GESTION DES COLLECTIONS ET DE LA CONCIERGERIE WHATSAPP
+// 8. FILTRES PAR CATÉGORIES & PANIER WHATSAPP
 function filterCategory(category) {
   currentCategory = category;
   document.querySelectorAll(".cat-btn").forEach(btn => {
     btn.className = btn.dataset.cat === category
-      ? "cat-btn bg-stone-950 text-[#C5A059] border border-stone-950 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-semibold whitespace-nowrap"
-      : "cat-btn bg-white text-stone-600 border border-stone-200 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.15em] font-medium whitespace-nowrap";
+      ? "cat-btn bg-[#D81B60] text-white border border-[#D81B60] px-4 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition"
+      : "cat-btn bg-white text-[#1E295B] border border-pink-200 px-4 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition";
   });
   renderProducts();
 }
@@ -308,20 +306,20 @@ function saveAndRefreshCart() {
 
   const container = document.getElementById("cart-items");
   container.innerHTML = cart.length === 0
-    ? `<p class="text-center text-stone-400 text-xs uppercase tracking-widest py-16">Votre sélection est vide.</p>`
+    ? `<p class="text-center text-stone-400 text-xs py-16">Votre panier est vide.</p>`
     : cart.map(item => `
-      <div class="flex items-center justify-between bg-white p-3 border border-stone-200">
+      <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-pink-200">
         <div class="flex items-center gap-3">
-          <img src="${item.image}" class="w-14 h-14 object-cover border border-stone-200">
+          <img src="${item.image}" class="w-14 h-14 rounded-lg object-cover border border-pink-200">
           <div>
-            <h4 class="font-luxury text-base font-bold text-stone-950">${item.name}</h4>
-            <p class="text-[11px] gold-text font-bold tracking-wider">${(item.price * item.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
+            <h4 class="text-xs font-bold text-[#1E295B]">${item.name}</h4>
+            <p class="text-xs text-[#D81B60] font-extrabold">${(item.price * item.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 bg-stone-100 font-bold text-xs">-</button>
+          <button type="button" onclick="updateQuantity(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-pink-100 text-[#D81B60] font-bold text-xs">-</button>
           <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
-          <button type="button" onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 bg-stone-950 text-[#C5A059] font-bold text-xs">+</button>
+          <button type="button" onclick="updateQuantity(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-[#D81B60] text-white font-bold text-xs">+</button>
         </div>
       </div>
     `).join("");
@@ -333,12 +331,12 @@ function toggleCart(show) {
 }
 
 function buildWhatsAppMessage() {
-  const name = document.getElementById("client-name").value.trim() || "Client VIP";
-  const address = document.getElementById("client-address").value.trim() || "À confirmer";
+  const name = document.getElementById("client-name").value.trim() || "Cliente";
+  const address = document.getElementById("client-address").value.trim() || "À préciser";
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  if (cart.length === 0) return "Sélectionnez une pièce pour préparer votre commande VIP...";
-  const lines = cart.map(i => `▪ ${i.quantity}x ${i.name} — ${(i.price * i.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`).join("\n");
-  return `✨ *CONCIERGERIE ${SHOP_CONFIG.name}* ✨\nBonjour, je souhaite commander la sélection suivante :\n\n${lines}\n\n👑 *TOTAL : ${total.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}*\n👤 Client : ${name}\n📍 Lieu de livraison : ${address}`;
+  if (cart.length === 0) return "Sélectionnez un article pour voir votre bon de commande...";
+  const lines = cart.map(i => `• ${i.quantity}x ${i.name} (${(i.price * i.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency})`).join("\n");
+  return `🛍️ *COMMANDE ${SHOP_CONFIG.name.toUpperCase()}* 🛍️\nBonjour Linda Fashion, je souhaite commander :\n\n${lines}\n\n💖 *TOTAL : ${total.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}*\n👤 Cliente : ${name}\n📍 Livraison : ${address}`;
 }
 
 function updateWhatsAppPreview() {
@@ -346,7 +344,7 @@ function updateWhatsAppPreview() {
 }
 
 function checkoutWhatsApp() {
-  if (cart.length === 0) return alert("Votre sélection est vide.");
+  if (cart.length === 0) return alert("Votre panier est vide.");
   const phone = SHOP_CONFIG.whatsappPhone.replace(/\D/g, "");
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`, "_blank");
 }
