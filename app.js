@@ -1,354 +1,259 @@
-// ==========================================
-// 1. CONFIGURATION CLIENT : LINDA FASHION
-// ==========================================
-const SHOP_CONFIG = {
-  name: "Linda Fashion",
-  tagline: "Gros & Détail • Local & International",
-  whatsappPhone: "22893746561",
-  adminPin: "1234",
-  currency: "FCFA"
-};
+/* ===== LINDA FASHION — app.js ===== */
+const sb = supabase.createClient(
+  "https://ehicifgwmpyyaoxvzezw.supabase.co",
+  "sb_publishable_AJuaJ5zv3NZpOspUtVcZCg_6kIYGZRX"
+);
+const WA = "22893746561", PIN = "1234", SOLD = "[ÉPUISÉ] ";
+const CATS = [
+  ["tous", "Tous les Arrivages"], ["vetements", "Robes Chic"],
+  ["accessoires", "Ensembles 2 Pièces"], ["sacs", "Crop Tops (Gros & Détail)"],
+  ["chaussures", "Accessoires"]
+];
+const TYPES = ["Au Détail", "En Gros (Lot / Revendeur)"];
+const COLORS = ["Au choix sur photo", "Noir", "Blanc", "Rose", "Vert", "Bleu", "Multicolore"];
 
-// 2. CONNEXION AU CLOUD SUPABASE
-const SUPABASE_URL = "https://ehicifgwmpyyaoxvzezw.supabase.co";
-const SUPABASE_KEY = "sb_publishable_AJuaJ5zv3NZpOspUtVcZCg_6kIYGZRX";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = n => Number(n || 0).toLocaleString("fr-FR") + " FCFA";
+const isSold = p => String(p.name || "").startsWith(SOLD);
+const label = p => isSold(p) ? String(p.name).slice(SOLD.length) : String(p.name || "");
+const find = id => products.find(p => String(p.id) === String(id));
+const show = id => { $(id).classList.remove("hidden"); document.body.style.overflow = "hidden"; };
+const closeModal = id => { $(id).classList.add("hidden"); document.body.style.overflow = ""; };
 
-let isAdmin = false;
-let products = [];
-let cart = JSON.parse(localStorage.getItem("nova_cart")) || [];
-let currentCategory = "tous";
-let searchQuery = "";
-let selectedImageData = "";
+let products = [], cat = "tous", query = "", admin = false, cur = null, newImg = "";
+let opt = { type: TYPES[0], color: "" };
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("nova_cart")) || []; } catch (e) { cart = []; }
+cart = cart.map(x => ({ type: TYPES[0], size: "Unique", color: COLORS[0], qty: 1, ...x }));
 
-function initShopBranding() {
-  const nameEl = document.getElementById("shop-name");
-  const taglineEl = document.getElementById("shop-tagline");
-  const titleEl = document.getElementById("page-title");
-  if (nameEl) nameEl.textContent = SHOP_CONFIG.name;
-  if (taglineEl) taglineEl.textContent = SHOP_CONFIG.tagline;
-  if (titleEl) titleEl.textContent = `${SHOP_CONFIG.name} — Catalogue Officiel`;
+function toast(m) {
+  const t = $("toast"); t.textContent = m; t.classList.remove("hidden");
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.add("hidden"), 2000);
 }
 
-// 3. CHARGER LES ARTICLES DEPUIS SUPABASE
+/* ===== PRODUITS ===== */
 async function loadProducts() {
-  const grid = document.getElementById("product-grid");
-  grid.innerHTML = `<p class="col-span-full text-center text-[#D81B60] py-16 text-xs font-bold uppercase tracking-widest">⏳ Chargement des arrivages Linda Fashion...</p>`;
-
-  const { data, error } = await db
-    .from("products")
-    .select("*")
-    .order("id", { ascending: false });
-
+  $("grid").innerHTML = '<p class="col-span-full text-center py-10 text-sm opacity-60">Chargement…</p>';
+  const { data, error } = await sb.from("products").select("id,name,category,price,image,created_at").order("created_at", { ascending: false });
   if (error) {
-    grid.innerHTML = `<p class="col-span-full text-center text-red-600 py-12 text-xs font-bold">⚠️ Erreur Cloud : ${error.message}</p>`;
+    $("grid").innerHTML = `<p class="col-span-full text-center py-10 text-sm text-red-600">Erreur de chargement : ${esc(error.message)}</p>`;
     return;
   }
-
-  products = data;
-  renderProducts();
+  products = data || [];
+  render();
 }
 
-// 4. MODE VENDEUR & PERMISSIONS
-function unlockAdmin() {
-  const code = prompt("🔐 Code PIN Vendeur (par défaut : 1234) :");
-  if (code === SHOP_CONFIG.adminPin) {
-    isAdmin = true;
-    updateAdminUI();
-  } else if (code !== null) {
-    alert("❌ Code PIN incorrect.");
-  }
+function renderCats() {
+  $("cats").innerHTML = CATS.map(([k, l]) =>
+    `<button type="button" onclick="setCat('${k}')" class="shrink-0 px-4 py-2 rounded-full text-xs font-semibold border ${k === cat ? "bg-brand text-white border-brand" : "bg-white text-navy border-gray-200"}">${l}</button>`
+  ).join("");
+}
+function setCat(k) { cat = k; renderCats(); render(); }
+function handleSearch(v) { query = v.trim().toLowerCase(); render(); }
+
+function render() {
+  const list = products.filter(p => (cat === "tous" || p.category === cat) && label(p).toLowerCase().includes(query));
+  $("grid").innerHTML = list.length ? list.map(card).join("") : '<p class="col-span-full text-center py-10 text-sm opacity-60">Aucun article trouvé.</p>';
 }
 
-function logoutAdmin() {
-  isAdmin = false;
-  updateAdminUI();
-}
-
-function updateAdminUI() {
-  document.getElementById("admin-banner").classList.toggle("hidden", !isAdmin);
-  document.getElementById("add-product-btn").classList.toggle("hidden", !isAdmin);
-  document.getElementById("admin-lock-btn").classList.toggle("hidden", isAdmin);
-  renderProducts();
-}
-
-function handleSearch(value) {
-  searchQuery = value.toLowerCase().trim();
-  renderProducts();
-}
-
-// 5. AFFICHAGE DES CARTES PRODUITS (ROSE FUCHSIA & BLEU MARINE)
-function renderProducts() {
-  const grid = document.getElementById("product-grid");
-  const filtered = products.filter(p => {
-    const matchCategory = currentCategory === "tous" || p.category === currentCategory;
-    const matchSearch = p.name.toLowerCase().includes(searchQuery);
-    return matchCategory && matchSearch;
-  });
-
-  if (filtered.length === 0) {
-    grid.innerHTML = `<p class="col-span-full text-center text-stone-400 py-16 text-xs font-semibold">Aucun article trouvé dans cette catégorie.</p>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(product => `
-    <div class="relative bg-white rounded-2xl border border-pink-200 overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-md transition">
-      ${isAdmin ? `
-        <div class="absolute top-2 right-2 z-20 flex gap-1">
-          <button type="button" onclick="editPrice(${product.id}, ${product.price})" class="bg-amber-400 text-stone-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
-            ✏️ Prix
-          </button>
-          <button type="button" onclick="deleteProduct(${product.id})" class="bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md">
-            🗑️
-          </button>
-        </div>
-      ` : `
-        <span class="absolute top-2.5 left-2.5 z-10 bg-[#D81B60] text-white text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full font-bold shadow-xs pointer-events-none">
-          Nouvel Arrivage
-        </span>
-      `}
-      <div>
-        <button type="button" onclick="openProductModal(${product.id})" class="block w-full text-left overflow-hidden bg-pink-50 h-52 sm:h-64 relative focus:outline-none">
-          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
-          <span class="absolute bottom-2 right-2 bg-[#1E295B]/90 text-white text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full font-bold shadow-md">
-            🔍 Voir de près
-          </span>
-        </button>
-        <div onclick="openProductModal(${product.id})" class="p-3 sm:p-4 text-center cursor-pointer">
-          <h3 class="text-xs sm:text-sm font-bold text-[#1E295B] line-clamp-2 min-h-[2rem] flex items-center justify-center">${product.name}</h3>
-          <p class="text-[#D81B60] font-black text-sm sm:text-base mt-1">${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
-        </div>
-      </div>
-      <div class="px-3 pb-3 sm:px-4 sm:pb-4">
-        <button type="button" onclick="addToCart(${product.id})" class="w-full bg-[#1E295B] hover:bg-[#D81B60] active:bg-[#D81B60] text-white text-[11px] font-bold py-2.5 px-2 rounded-xl whitespace-nowrap transition">
-          + Commander
-        </button>
-      </div>
+function card(p) {
+  const sold = isSold(p), id = esc(p.id);
+  return `<div class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+    <button type="button" onclick="openProduct('${id}')" class="relative block w-full aspect-[3/4] bg-blush">
+      <img src="${esc(p.image)}" alt="${esc(label(p))}" loading="lazy" class="w-full h-full object-cover ${sold ? "grayscale opacity-70" : ""}">
+      ${sold
+        ? '<span class="absolute inset-x-0 top-1/2 -translate-y-1/2 bg-red-700 text-white text-[11px] font-bold text-center py-2 px-1">Victime de son succès • Épuisé</span>'
+        : '<span class="absolute top-2 left-2 bg-brand text-white text-[10px] font-bold px-2 py-1 rounded-full">Nouvel Arrivage</span>'}
+      <span class="absolute bottom-2 right-2 bg-white/90 text-navy text-[10px] font-semibold px-2 py-1 rounded-full">🔍 Voir de près</span>
+    </button>
+    <div class="p-3 flex flex-col gap-2 flex-1">
+      <button type="button" onclick="openProduct('${id}')" class="text-left font-semibold text-sm leading-tight">${esc(label(p))}</button>
+      <p class="font-bold text-brand text-sm">${fmt(p.price)}</p>
+      ${sold
+        ? '<button type="button" disabled class="mt-auto w-full py-2 rounded-full text-xs font-semibold bg-gray-200 text-gray-500">Indisponible</button>'
+        : `<button type="button" onclick="openProduct('${id}')" class="mt-auto w-full py-2 rounded-full text-xs font-semibold bg-brand text-white">+ Commander</button>`}
+      ${admin ? `<div class="grid grid-cols-2 gap-1 text-[11px] font-semibold">
+        <button type="button" onclick="editPrice('${id}')" class="py-2 rounded-lg bg-gray-100">✏️ Prix</button>
+        <button type="button" onclick="editName('${id}')" class="py-2 rounded-lg bg-gray-100">✏️ Nom</button>
+        <button type="button" onclick="toggleStock('${id}')" class="py-2 rounded-lg bg-gray-100">🔄 Stock</button>
+        <button type="button" onclick="deleteProduct('${id}')" class="py-2 rounded-lg bg-red-50 text-red-600">🗑️</button>
+      </div>` : ""}
     </div>
-  `).join("");
+  </div>`;
 }
 
-// 6. ZOOM PHOTO "VUE ÉCRIN"
-function openProductModal(productId) {
-  const product = products.find(p => String(p.id) === String(productId));
-  if (!product) return;
+/* ===== MODALE ZOOM + OPTIONS ===== */
+const pill = (txt, on, fn) =>
+  `<button type="button" onclick="${fn}" class="px-3 py-2 rounded-full text-xs font-semibold border ${on ? "bg-brand text-white border-brand" : "bg-white text-navy border-gray-300"}">${txt}</button>`;
 
-  const modal = document.getElementById("product-modal");
-  document.getElementById("modal-img").src = product.image;
-  document.getElementById("modal-img").alt = product.name;
-  document.getElementById("modal-title").textContent = product.name;
-  document.getElementById("modal-price").textContent = `${product.price.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`;
+function renderOpts() {
+  $("p-type").innerHTML = TYPES.map((t, i) => pill(t, opt.type === t, `setType(${i})`)).join("");
+  $("p-color").innerHTML = COLORS.map((c, i) => pill(c, opt.color === c, `setColor(${i})`)).join("");
+}
+function setType(i) { opt.type = TYPES[i]; renderOpts(); }
+function setColor(i) { opt.color = COLORS[i]; $("o-color").value = COLORS[i]; renderOpts(); }
+function onColor(v) { opt.color = v; renderOpts(); }
 
-  const addBtn = document.getElementById("modal-add-btn");
-  addBtn.onclick = function() {
-    addToCart(product.id);
-    closeProductModal();
-    toggleCart(true);
-  };
-
-  modal.style.display = "flex";
+function openProduct(id) {
+  cur = find(id); if (!cur) return;
+  const sold = isSold(cur);
+  opt = { type: TYPES[0], color: "" };
+  $("pm-img").src = cur.image;
+  $("pm-name").textContent = label(cur);
+  $("pm-price").textContent = fmt(cur.price);
+  $("o-size").value = "Unique"; $("o-color").value = "";
+  $("pm-opts").classList.toggle("hidden", sold);
+  const b = $("pm-add");
+  b.disabled = sold;
+  b.textContent = sold ? "Indisponible" : "+ Ajouter au Panier";
+  b.className = "w-full py-3 rounded-full font-semibold text-base " + (sold ? "bg-gray-300 text-gray-500" : "bg-brand text-white");
+  renderOpts(); show("product-modal");
 }
 
-function closeProductModal() {
-  const modal = document.getElementById("product-modal");
-  if (modal) modal.style.display = "none";
+/* ===== PANIER ===== */
+const total = () => cart.reduce((s, l) => s + l.price * l.qty, 0);
+const lineKey = l => [l.id, l.type, l.size, String(l.color).toLowerCase()].join("|");
+function saveCart() {
+  try { localStorage.setItem("nova_cart", JSON.stringify(cart)); } catch (e) {}
+  $("cart-count").textContent = cart.reduce((s, l) => s + l.qty, 0);
 }
 
-// 7. CRUD SUPABASE (AJOUT, PRIX, SUPPRESSION)
-function toggleAdmin(show) {
-  document.getElementById("admin-modal").classList.toggle("hidden", !show);
+function addToCart() {
+  if (!cur || isSold(cur)) return;
+  const l = { id: cur.id, name: label(cur), price: Number(cur.price) || 0, qty: 1, type: opt.type, size: $("o-size").value, color: opt.color.trim() || COLORS[0] };
+  const e = cart.find(x => lineKey(x) === lineKey(l));
+  if (e) e.qty++; else cart.push(l);
+  saveCart(); closeModal("product-modal"); toast("Ajouté au panier ✓");
+}
+function chQty(i, d) { cart[i].qty += d; if (cart[i].qty < 1) cart.splice(i, 1); saveCart(); renderCart(); }
+function rmLine(i) { cart.splice(i, 1); saveCart(); renderCart(); }
+function openCart() { renderCart(); show("cart-modal"); }
+
+function renderCart() {
+  const empty = !cart.length;
+  $("cart-empty").classList.toggle("hidden", !empty);
+  $("cart-body").classList.toggle("hidden", empty);
+  $("cart-items").innerHTML = cart.map((l, i) => `<div class="py-3 border-b">
+    <div class="flex justify-between gap-2">
+      <p class="font-semibold text-sm">${esc(l.name)}</p>
+      <button type="button" onclick="rmLine(${i})" class="text-sm">🗑️</button>
+    </div>
+    <p class="text-xs text-brand font-medium">${esc(l.type)} · Taille ${esc(l.size)} · ${esc(l.color)}</p>
+    <div class="flex items-center justify-between mt-2">
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="chQty(${i},-1)" class="w-8 h-8 rounded-full border">−</button>
+        <span class="font-semibold">${l.qty}</span>
+        <button type="button" onclick="chQty(${i},1)" class="w-8 h-8 rounded-full border">+</button>
+      </div>
+      <span class="font-bold text-sm">${fmt(l.price * l.qty)}</span>
+    </div>
+  </div>`).join("");
+  $("cart-total").textContent = fmt(total());
+  buildPreview();
 }
 
-function previewSelectedImage(input) {
-  const file = input.files[0];
-  if (!file) return;
+function buildMsg() {
+  const n = $("c-name").value.trim() || "…", z = $("c-zone").value.trim() || "…";
+  const lines = cart.map((l, i) =>
+    `${i + 1}. *${l.name}*\n   • ${l.type}\n   • Taille : ${l.size} • Couleur : ${l.color}\n   • ${l.qty} x ${fmt(l.price)} = ${fmt(l.price * l.qty)}`
+  ).join("\n\n");
+  return `🛍️ *Nouvelle commande — Linda Fashion*\n\n👤 Prénom : ${n}\n📍 Quartier/Ville : ${z}\n\n${lines}\n\n💰 *Total : ${fmt(total())}*\n\nMerci de confirmer la disponibilité et le prix gros/détail 🙏`;
+}
+function buildPreview() { $("c-preview").textContent = buildMsg(); }
 
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const img = new Image();
-    img.onload = function() {
-      const canvas = document.createElement("canvas");
-      const maxWidth = 600;
-      let width = img.width;
-      let height = img.height;
+function sendWA() {
+  if (!cart.length) return;
+  if (!$("c-name").value.trim() || !$("c-zone").value.trim()) return alert("Merci d'indiquer votre prénom et votre quartier / ville.");
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(buildMsg())}`, "_blank");
+}
 
-      if (width > maxWidth) {
-        height = Math.round((height * maxWidth) / width);
-        width = maxWidth;
-      }
+/* ===== ADMIN ===== */
+function unlockAdmin() {
+  if (admin) admin = false;
+  else {
+    const v = prompt("Code vendeur :");
+    if (v === null) return;
+    if (v !== PIN) return alert("Code incorrect.");
+    admin = true;
+  }
+  $("btn-add").classList.toggle("hidden", !admin);
+  $("btn-lock").textContent = admin ? "🔓" : "🔒";
+  render();
+}
 
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, width, height);
+async function upd(p, fields, msg) {
+  const { error } = await sb.from("products").update(fields).eq("id", p.id);
+  if (error) return alert("Erreur : " + error.message);
+  toast(msg); loadProducts();
+}
 
-      selectedImageData = canvas.toDataURL("image/jpeg", 0.8);
+function editPrice(id) {
+  const p = find(id); if (!p) return;
+  const v = prompt("Nouveau prix (FCFA) :", p.price);
+  if (v === null) return;
+  const n = parseInt(String(v).replace(/\D/g, ""), 10);
+  if (!n) return alert("Prix invalide.");
+  upd(p, { price: n }, "Prix mis à jour ✓");
+}
 
-      const preview = document.getElementById("image-preview");
-      preview.src = selectedImageData;
-      preview.classList.remove("hidden");
+function editName(id) {
+  const p = find(id); if (!p) return;
+  const v = prompt("Nom du modèle (ex : Robe Satin — Gros: 2500F / Détail: 3000F) :", label(p));
+  if (v === null) return;
+  const n = v.replace(SOLD.trim(), "").trim();
+  if (!n) return alert("Le nom ne peut pas être vide.");
+  upd(p, { name: (isSold(p) ? SOLD : "") + n }, "Nom mis à jour ✓");
+}
+
+function toggleStock(id) {
+  const p = find(id); if (!p) return;
+  upd(p, { name: isSold(p) ? label(p) : SOLD + label(p) }, isSold(p) ? "Remis en stock ✓" : "Marqué épuisé ✓");
+}
+
+async function deleteProduct(id) {
+  const p = find(id); if (!p) return;
+  if (!confirm("Supprimer « " + label(p) + " » définitivement ?")) return;
+  const { error } = await sb.from("products").delete().eq("id", p.id);
+  if (error) return alert("Erreur : " + error.message);
+  toast("Article supprimé"); loadProducts();
+}
+
+function openAdmin() {
+  newImg = "";
+  ["a-name", "a-price", "a-file"].forEach(i => $(i).value = "");
+  $("a-prev").classList.add("hidden");
+  show("admin-modal");
+}
+
+function pickPhoto(inp) {
+  const f = inp.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    const im = new Image();
+    im.onload = () => {
+      const w = Math.min(600, im.width), h = Math.round(im.height * w / im.width);
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      c.getContext("2d").drawImage(im, 0, 0, w, h);
+      newImg = c.toDataURL("image/jpeg", 0.8);
+      $("a-prev").src = newImg; $("a-prev").classList.remove("hidden");
     };
-    img.src = event.target.result;
+    im.src = r.result;
   };
-  reader.readAsDataURL(file);
+  r.readAsDataURL(f);
 }
 
 async function addNewProduct() {
-  const name = document.getElementById("new-name").value.trim();
-  const price = parseInt(document.getElementById("new-price").value, 10);
-  const category = document.getElementById("new-category").value;
-  const image = selectedImageData || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600";
-
-  if (!name || !price) {
-    alert("Veuillez renseigner le nom et le prix de l'article.");
-    return;
-  }
-
-  const btn = document.getElementById("publish-btn");
-  btn.textContent = "⏳ Publication...";
-  btn.disabled = true;
-
-  const { error } = await db
-    .from("products")
-    .insert([{ name, category, price, image }]);
-
-  btn.textContent = "Publier dans la Boutique";
-  btn.disabled = false;
-
-  if (error) {
-    alert("Erreur Cloud : " + error.message);
-    return;
-  }
-
-  document.getElementById("new-name").value = "";
-  document.getElementById("new-price").value = "";
-  document.getElementById("new-image-file").value = "";
-  document.getElementById("image-preview").classList.add("hidden");
-  selectedImageData = "";
-
-  toggleAdmin(false);
-  await loadProducts();
+  const name = $("a-name").value.trim(), price = parseInt($("a-price").value, 10), category = $("a-cat").value;
+  if (!name || !price || !newImg) return alert("Nom, prix et photo sont obligatoires.");
+  const btns = document.querySelectorAll(".pub");
+  btns.forEach(b => b.disabled = true);
+  const { error } = await sb.from("products").insert([{ name, category, price, image: newImg }]);
+  btns.forEach(b => b.disabled = false);
+  if (error) return alert("Erreur : " + error.message);
+  closeModal("admin-modal"); toast("Article publié ✓"); loadProducts();
 }
 
-async function editPrice(productId, currentPrice) {
-  const input = prompt(`💰 Nouveau prix en ${SHOP_CONFIG.currency} :`, currentPrice);
-  if (input === null) return;
-
-  const newPrice = parseInt(input, 10);
-  if (!newPrice || newPrice <= 0) {
-    alert("Veuillez entrer un prix valide.");
-    return;
-  }
-
-  const { error } = await db
-    .from("products")
-    .update({ price: newPrice })
-    .eq("id", productId);
-
-  if (error) {
-    alert("Erreur : " + error.message);
-    return;
-  }
-
-  await loadProducts();
-}
-
-async function deleteProduct(productId) {
-  if (!confirm("Supprimer cet article de la boutique ?")) return;
-
-  const { error } = await db
-    .from("products")
-    .delete()
-    .eq("id", productId);
-
-  if (error) {
-    alert("Erreur : " + error.message);
-    return;
-  }
-
-  await loadProducts();
-}
-
-// 8. FILTRES PAR CATÉGORIES & PANIER WHATSAPP
-function filterCategory(category) {
-  currentCategory = category;
-  document.querySelectorAll(".cat-btn").forEach(btn => {
-    btn.className = btn.dataset.cat === category
-      ? "cat-btn bg-[#D81B60] text-white border border-[#D81B60] px-4 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition"
-      : "cat-btn bg-white text-[#1E295B] border border-pink-200 px-4 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition";
-  });
-  renderProducts();
-}
-
-function addToCart(productId) {
-  const product = products.find(p => String(p.id) === String(productId));
-  const existing = cart.find(item => String(item.id) === String(productId));
-  if (existing) existing.quantity += 1;
-  else cart.push({ ...product, quantity: 1 });
-  saveAndRefreshCart();
-}
-
-function updateQuantity(productId, change) {
-  const item = cart.find(i => String(i.id) === String(productId));
-  if (!item) return;
-  item.quantity += change;
-  if (item.quantity <= 0) cart = cart.filter(i => String(i.id) !== String(productId));
-  saveAndRefreshCart();
-}
-
-function saveAndRefreshCart() {
-  localStorage.setItem("nova_cart", JSON.stringify(cart));
-  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-  document.getElementById("cart-badge").textContent = totalCount;
-  document.getElementById("cart-total").textContent = `${totalPrice.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}`;
-
-  const container = document.getElementById("cart-items");
-  container.innerHTML = cart.length === 0
-    ? `<p class="text-center text-stone-400 text-xs py-16">Votre panier est vide.</p>`
-    : cart.map(item => `
-      <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-pink-200">
-        <div class="flex items-center gap-3">
-          <img src="${item.image}" class="w-14 h-14 rounded-lg object-cover border border-pink-200">
-          <div>
-            <h4 class="text-xs font-bold text-[#1E295B]">${item.name}</h4>
-            <p class="text-xs text-[#D81B60] font-extrabold">${(item.price * item.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="updateQuantity(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-pink-100 text-[#D81B60] font-bold text-xs">-</button>
-          <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
-          <button type="button" onclick="updateQuantity(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-[#D81B60] text-white font-bold text-xs">+</button>
-        </div>
-      </div>
-    `).join("");
-  updateWhatsAppPreview();
-}
-
-function toggleCart(show) {
-  document.getElementById("cart-modal").classList.toggle("hidden", !show);
-}
-
-function buildWhatsAppMessage() {
-  const name = document.getElementById("client-name").value.trim() || "Cliente";
-  const address = document.getElementById("client-address").value.trim() || "À préciser";
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  if (cart.length === 0) return "Sélectionnez un article pour voir votre bon de commande...";
-  const lines = cart.map(i => `• ${i.quantity}x ${i.name} (${(i.price * i.quantity).toLocaleString("fr-FR")} ${SHOP_CONFIG.currency})`).join("\n");
-  return `🛍️ *COMMANDE ${SHOP_CONFIG.name.toUpperCase()}* 🛍️\nBonjour Linda Fashion, je souhaite commander :\n\n${lines}\n\n💖 *TOTAL : ${total.toLocaleString("fr-FR")} ${SHOP_CONFIG.currency}*\n👤 Cliente : ${name}\n📍 Livraison : ${address}`;
-}
-
-function updateWhatsAppPreview() {
-  document.getElementById("whatsapp-preview").textContent = buildWhatsAppMessage();
-}
-
-function checkoutWhatsApp() {
-  if (cart.length === 0) return alert("Votre panier est vide.");
-  const phone = SHOP_CONFIG.whatsappPhone.replace(/\D/g, "");
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppMessage())}`, "_blank");
-}
-
-initShopBranding();
-loadProducts();
-saveAndRefreshCart();
+/* ===== INIT ===== */
+$("a-cat").innerHTML = CATS.filter(c => c[0] !== "tous").map(([k, l]) => `<option value="${k}">${l}</option>`).join("");
+renderCats(); saveCart(); loadProducts();

@@ -1,250 +1,166 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title id="page-title">Linda Fashion — Boutique Officielle</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Montserrat', sans-serif; background-color: #FFF7FA; color: #1E295B; overflow-x: hidden; }
-    .font-luxury { font-family: 'Cormorant Garamond', serif; }
-    .linda-pink-bg { background-color: #D81B60; }
-    .linda-pink-text { color: #D81B60; }
-    .linda-navy-bg { background-color: #1E295B; }
-    .linda-navy-text { color: #1E295B; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Linda Fashion — Catalogue Officiel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{brand:'#D81B60',navy:'#1E295B',blush:'#FFF7FA'}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Montserrat',sans-serif;background:#FFF7FA;color:#1E295B}
+.fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700}
+.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{scrollbar-width:none}
+</style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen">
 
-  <div>
-    <!-- BARRE D'ANNONCE HAUT -->
-    <div class="linda-pink-bg text-white text-[10px] tracking-[0.12em] uppercase py-2 px-3 text-center font-bold shadow-xs">
-      ✨ Vente en Gros & en Détail • Local (Adétikopé) & International ✨
-    </div>
+<!-- BARRE D'ANNONCE HAUT (COMME SUR LA MAQUETTE) -->
+<div class="bg-brand text-white text-[10px] tracking-[0.12em] uppercase py-2 px-3 text-center font-bold">
+  ✨ Vente en Gros &amp; en Détail • Local (Adétikopé) &amp; International ✨
+</div>
 
-    <!-- BANDEAU MODE VENDEUR -->
-    <div id="admin-banner" class="hidden bg-amber-400 text-stone-950 px-3 py-2 text-xs font-extrabold">
-      <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <span>🔓 MODE LINDA ACTIF</span>
-        <button type="button" onclick="logoutAdmin()" class="bg-stone-950 text-white px-3 py-1 rounded-full text-[10px] uppercase tracking-wider">
-          Verrouiller 🔒
-        </button>
+<!-- EN-TÊTE COMPLET AVEC TITRE EN NOIR + SOUS-TITRE + CATÉGORIES -->
+<header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-pink-200 shadow-sm">
+  <div class="flex items-center justify-between gap-2 px-3 py-2.5 max-w-5xl mx-auto">
+    <!-- LOGO + NOM EN NOIR + SOUS-TITRE -->
+    <div class="flex items-center gap-2.5 min-w-0">
+      <div id="logo" class="w-11 h-11 shrink-0 rounded-full border-2 border-brand p-0.5 overflow-hidden bg-white flex items-center justify-center font-bold text-brand text-sm shadow-xs">
+        <img src="logo.jpg" alt="Linda Fashion" class="w-full h-full object-cover rounded-full" onerror="this.remove();document.getElementById('logo').textContent='LF'">
+      </div>
+      <div class="min-w-0">
+        <h1 class="fd text-2xl sm:text-3xl text-black leading-none whitespace-nowrap">Linda Fashion</h1>
+        <span class="text-[8px] sm:text-[10px] font-bold tracking-wider uppercase text-navy block truncate mt-0.5">
+          Gros &amp; Détail • Local &amp; International
+        </span>
       </div>
     </div>
 
-    <!-- EN-TÊTE CORRIGÉ : LE NOM "LINDA FASHION" NE SE COUPE PLUS SUR IPHONE -->
-    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-pink-200 shadow-2xs">
-      <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2">
-        <!-- LOGO + NOM COMPLET -->
-        <div class="flex items-center gap-2 min-w-0">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#D81B60] p-0.5 bg-white shrink-0 overflow-hidden flex items-center justify-center shadow-xs">
-            <img id="shop-logo" src="logo.jpg" alt="Linda Fashion" class="w-full h-full object-cover rounded-full" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
-            <span id="logo-fallback" style="display: none;" class="w-full h-full rounded-full bg-pink-50 text-[#D81B60] font-luxury font-bold text-base items-center justify-center">LF</span>
-          </div>
-          <div class="min-w-0">
-            <h1 id="shop-name" class="font-luxury italic text-xl sm:text-3xl font-bold text-[#D81B60] leading-none whitespace-nowrap">Linda Fashion</h1>
-            <span id="shop-tagline" class="text-[8px] sm:text-[10px] font-bold tracking-wider uppercase text-[#1E295B] block truncate mt-0.5">Gros & Détail • Adétikopé</span>
-          </div>
-        </div>
-
-        <!-- BOUTONS COMPACTS POUR IPHONE -->
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button id="admin-lock-btn" type="button" onclick="unlockAdmin()" title="Accès Vendeur" class="border border-pink-300 bg-pink-50 text-[#D81B60] w-8 h-8 sm:w-auto sm:px-3 sm:py-2 rounded-full text-xs font-bold flex items-center justify-center">
-            <span>🔒</span>
-            <span class="hidden sm:inline ml-1 text-[10px]">Accès Linda</span>
-          </button>
-          <button id="add-product-btn" type="button" onclick="toggleAdmin(true)" class="hidden linda-navy-bg text-white px-2.5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap shadow-xs">
-            + Article
-          </button>
-          <button type="button" onclick="toggleCart(true)" class="flex items-center gap-1.5 linda-pink-bg text-white px-3 py-2 rounded-full text-xs font-bold shadow-sm whitespace-nowrap">
-            <span>Panier</span>
-            <span id="cart-badge" class="bg-white text-[#D81B60] text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">0</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- BARRE DE CATÉGORIES -->
-      <div class="max-w-6xl mx-auto px-3 sm:px-4 pb-2.5 flex gap-2 overflow-x-auto no-scrollbar">
-        <button type="button" onclick="filterCategory('tous')" class="cat-btn bg-[#D81B60] text-white border border-[#D81B60] px-3.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition" data-cat="tous">Tous les Arrivages</button>
-        <button type="button" onclick="filterCategory('vetements')" class="cat-btn bg-white text-[#1E295B] border border-pink-200 px-3.5 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition" data-cat="vetements">Robes Chic</button>
-        <button type="button" onclick="filterCategory('accessoires')" class="cat-btn bg-white text-[#1E295B] border border-pink-200 px-3.5 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition" data-cat="accessoires">Ensembles 2 Pièces</button>
-        <button type="button" onclick="filterCategory('sacs')" class="cat-btn bg-white text-[#1E295B] border border-pink-200 px-3.5 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition" data-cat="sacs">Crop Tops (Gros & Détail)</button>
-        <button type="button" onclick="filterCategory('chaussures')" class="cat-btn bg-white text-[#1E295B] border border-pink-200 px-3.5 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition" data-cat="chaussures">Accessoires</button>
-      </div>
-    </header>
-
-    <!-- BANNIÈRE HERO + BOUTONS RÉSEAUX SOCIAUX -->
-    <section class="max-w-6xl mx-auto px-3 sm:px-4 pt-3">
-      <div class="bg-gradient-to-r from-[#1E295B] via-[#2A1B4E] to-[#880E4F] text-white rounded-2xl p-4 sm:p-7 shadow-lg border border-pink-300/30">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3.5">
-          <div class="space-y-1 max-w-xl">
-            <span class="inline-block bg-[#D81B60] text-white text-[9px] uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full">
-              Catalogue Officiel • Gros & Détail
-            </span>
-            <h2 class="font-luxury italic text-2xl sm:text-4xl font-bold text-pink-200 leading-tight">
-              Bienvenue chez Linda Fashion
-            </h2>
-            <p class="text-xs text-pink-100/90 leading-relaxed">
-              Touchez une photo pour voir le modèle de près, ajoutez vos articles au panier et envoyez votre commande directement sur notre WhatsApp.
-            </p>
-            <p class="text-[11px] text-pink-200 font-medium pt-0.5">
-              📍 Adétikopé (non loin de l'école Astuce, 7e von à droite vers la réserve d'Akpankopé)
-            </p>
-          </div>
-
-          <!-- BOUTONS RÉSEAUX SOCIAUX BIEN ALIGNÉS SUR 2 COLONNES MOBILE -->
-          <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 shrink-0 pt-1">
-            <a href="https://www.tiktok.com/@lindafashion-officiel" target="_blank" class="flex items-center justify-center gap-1.5 bg-black text-white border border-pink-400/40 px-3 py-2 rounded-xl text-[11px] font-bold shadow-md">
-              <span>🎵 TikTok</span>
-            </a>
-            <a href="https://wa.me/22893746561" target="_blank" class="flex items-center justify-center gap-1.5 bg-emerald-600 text-white px-3 py-2 rounded-xl text-[11px] font-bold shadow-md">
-              <span>💬 WhatsApp</span>
-            </a>
-            <a href="tel:+22893746561" class="flex items-center justify-center gap-1.5 bg-white text-[#1E295B] px-3 py-2 rounded-xl text-[11px] font-extrabold shadow-md">
-              <span>📞 Appeler</span>
-            </a>
-            <a href="mailto:gbengbertanelynda@gmail.com" class="flex items-center justify-center gap-1.5 bg-pink-600/40 border border-pink-300/40 text-white px-3 py-2 rounded-xl text-[11px] font-semibold">
-              <span>✉️ Email</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RECHERCHE (POLICE 16PX ANTI-ZOOM IPHONE) & GRILLE DES ARTICLES -->
-    <main class="max-w-6xl mx-auto px-3 sm:px-4 py-5">
-      <div class="mb-5">
-        <input 
-          id="search-input" 
-          type="text" 
-          oninput="handleSearch(this.value)" 
-          placeholder="🔍 Rechercher (ex: robe, crop top, St Willy...)" 
-          class="w-full bg-white border-2 border-pink-200 rounded-2xl px-4 py-2.5 text-base sm:text-xs font-medium text-[#1E295B] focus:outline-none focus:border-[#D81B60] shadow-2xs"
-        >
-      </div>
-
-      <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-6"></div>
-    </main>
+    <!-- BOUTONS ACTIONS VENDEUR & PANIER -->
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button type="button" id="btn-lock" onclick="unlockAdmin()" title="Accès Linda" class="border border-pink-300 bg-pink-50 text-brand w-8 h-8 sm:w-auto sm:px-3 sm:py-1.5 rounded-full text-xs font-bold flex items-center justify-center">
+        🔒
+      </button>
+      <button type="button" id="btn-add" onclick="openAdmin()" class="hidden bg-navy text-white text-[11px] font-bold px-3 py-2 rounded-full whitespace-nowrap">
+        + Article
+      </button>
+      <button type="button" onclick="openCart()" class="flex items-center gap-1.5 bg-brand text-white text-xs font-bold px-3.5 py-2 rounded-full whitespace-nowrap shadow-sm">
+        <span>Panier</span>
+        <span id="cart-count" class="bg-white text-brand text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">0</span>
+      </button>
+    </div>
   </div>
 
-  <!-- PIED DE PAGE COMPLET -->
-  <footer class="bg-[#1E295B] text-white mt-10 border-t-4 border-[#D81B60]">
-    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+  <!-- BARRE DE CATÉGORIES FIXÉE DANS L'EN-TÊTE -->
+  <div id="cats" class="flex gap-2 overflow-x-auto no-scrollbar max-w-5xl mx-auto px-3 pb-2.5"></div>
+</header>
+
+<!-- CONTENU PRINCIPAL (DESIGN CLAUDE) -->
+<main class="max-w-5xl mx-auto px-3 pb-16">
+  <section class="mt-3 rounded-3xl p-5 text-white shadow-md" style="background:linear-gradient(135deg,#1E295B,#880E4F)">
+    <span class="inline-block bg-brand text-white text-[9px] uppercase tracking-widest font-extrabold px-2.5 py-1 rounded-full mb-2">
+      Catalogue Officiel • Gros &amp; Détail
+    </span>
+    <h2 class="fd text-3xl leading-tight">Bienvenue chez Linda Fashion</h2>
+    <p class="text-xs sm:text-sm mt-2 opacity-90 leading-relaxed">
+      Touchez une photo pour voir le modèle de près, choisir vos options (Gros ou Détail, taille, couleur) et envoyer votre commande directement sur notre WhatsApp.
+    </p>
+    <p class="text-xs mt-2 text-pink-200 font-medium">
+      📍 Adétikopé non loin de l'école Astuce, 7e von à droite en allant vers la réserve d'Akpankopé
+    </p>
+    <p class="text-xs mt-1 opacity-85">📞 93 74 65 61 / 90 84 58 13 / 96 79 60 96</p>
+    <div class="grid grid-cols-4 gap-2 mt-4 text-center text-xs font-semibold">
+      <a href="https://www.tiktok.com/@lindafashion-officiel" target="_blank" rel="noopener" class="bg-black/80 border border-pink-400/30 rounded-2xl py-3">🎵<br>TikTok</a>
+      <a href="https://wa.me/22893746561" target="_blank" rel="noopener" class="bg-emerald-600 rounded-2xl py-3">💬<br>WhatsApp</a>
+      <a href="tel:+22893746561" class="bg-white text-navy font-bold rounded-2xl py-3">📞<br>Appeler</a>
+      <a href="mailto:gbengbertanelynda@gmail.com" class="bg-white/15 border border-pink-300/30 rounded-2xl py-3">✉️<br>Email</a>
+    </div>
+  </section>
+
+  <div class="mt-4">
+    <input type="search" oninput="handleSearch(this.value)" placeholder="🔍 Rechercher un modèle (ex: robe, crop top, ensemble...)" class="w-full bg-white border-2 border-pink-200 rounded-full px-4 py-3 text-base focus:outline-none focus:border-brand">
+  </div>
+
+  <div id="grid" class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4"></div>
+</main>
+
+<!-- VUE ÉCRIN + OPTIONS -->
+<div id="product-modal" class="hidden fixed inset-0 z-40 bg-black/70 overflow-y-auto" onclick="if(event.target===this)closeModal('product-modal')">
+  <div class="relative bg-white rounded-2xl max-w-md w-[calc(100%-1.5rem)] mx-auto my-3 overflow-hidden">
+    <button type="button" onclick="closeModal('product-modal')" class="absolute top-2 right-2 z-10 w-9 h-9 rounded-full bg-black/60 text-white">✕</button>
+    <img id="pm-img" alt="" class="w-full max-h-[45vh] object-contain bg-blush">
+    <div class="p-4 space-y-3">
       <div>
-        <h3 class="font-luxury italic text-2xl font-bold text-pink-300 mb-1">Linda Fashion</h3>
-        <p class="text-pink-100/80 leading-relaxed">
-          Vente de vêtements et accessoires en gros et en détail (local et international).
-        </p>
+        <h2 id="pm-name" class="fd text-2xl leading-tight text-black"></h2>
+        <p id="pm-price" class="font-bold text-brand"></p>
       </div>
-      <div class="space-y-1.5">
-        <p class="font-bold text-pink-300 uppercase tracking-wider text-[11px]">📞 Nos Numéros & Contacts</p>
-        <p>WhatsApp : <a href="https://wa.me/22893746561" class="underline font-bold text-white">93 74 65 61</a></p>
-        <p>Tél : <a href="tel:+22893746561" class="hover:underline">93 74 65 61</a> / <a href="tel:+22890845813" class="hover:underline">90 84 58 13</a> / <a href="tel:+22896796096" class="hover:underline">96 79 60 96</a></p>
-        <p>Email : <a href="mailto:gbengbertanelynda@gmail.com" class="underline text-pink-200">gbengbertanelynda@gmail.com</a></p>
-      </div>
-      <div class="space-y-1.5">
-        <p class="font-bold text-pink-300 uppercase tracking-wider text-[11px]">📍 Adresse & Réseaux</p>
-        <p class="text-pink-100/90">Adétikopé non loin de l'école Astuce, 7e von à droite en allant vers la réserve d'Akpankopé.</p>
-        <p class="pt-1">
-          <a href="https://www.tiktok.com/@lindafashion-officiel" target="_blank" class="inline-block bg-[#D81B60] text-white font-bold px-3 py-1.5 rounded-lg text-[11px]">
-            🎵 Suivre @lindafashion-officiel sur TikTok
-          </a>
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- FENÊTRE ZOOM PHOTO (VUE ÉCRIN) -->
-  <div id="product-modal" style="display: none;" class="fixed inset-0 z-50 items-center justify-center p-4">
-    <div onclick="closeProductModal()" class="absolute inset-0 bg-black/80 backdrop-blur-xs"></div>
-    <div class="relative bg-white text-[#1E295B] max-w-sm w-full max-h-[90dvh] overflow-y-auto rounded-2xl border-2 border-[#D81B60] shadow-2xl z-10">
-      <button type="button" onclick="closeProductModal()" class="absolute top-3 right-3 z-20 bg-[#D81B60] text-white rounded-full w-9 h-9 flex items-center justify-center text-sm font-bold shadow-md">
-        ✕
-      </button>
-      <div class="bg-pink-50 h-72 sm:h-80 overflow-hidden">
-        <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
-      </div>
-      <div class="p-4 text-center space-y-2">
-        <span class="text-[10px] uppercase tracking-widest text-[#D81B60] font-extrabold block">✨ Linda Fashion • Gros & Détail ✨</span>
-        <h3 id="modal-title" class="text-lg font-extrabold text-[#1E295B]"></h3>
-        <p id="modal-price" class="text-[#D81B60] font-black text-base"></p>
-        <div class="pt-1">
-          <button id="modal-add-btn" type="button" class="w-full linda-pink-bg text-white text-xs uppercase tracking-wider font-bold py-3.5 rounded-xl shadow-md">
-            + Ajouter au Panier
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FENÊTRE D'AJOUT D'ARTICLE CORRIGÉE : SCROLLABLE SUR IPHONE + BOUTON TOUJOURS VISIBLE -->
-  <div id="admin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4">
-    <div onclick="toggleAdmin(false)" class="absolute inset-0 bg-black/75 backdrop-blur-xs"></div>
-    <div class="relative bg-white rounded-2xl max-w-sm w-full max-h-[88dvh] overflow-y-auto p-5 shadow-2xl space-y-3 z-10 border-2 border-pink-200">
-      <div class="flex items-center justify-between border-b border-pink-100 pb-2 sticky top-0 bg-white z-10">
-        <h2 class="text-sm font-extrabold text-[#D81B60]">Ajouter un Nouvel Arrivage</h2>
-        <button type="button" onclick="toggleAdmin(false)" class="text-xs font-bold bg-pink-50 text-[#D81B60] px-2.5 py-1 rounded-full">✕</button>
-      </div>
-
-      <!-- text-base (16px) empêche l'iPhone de zoomer et de cacher le bouton Publier -->
-      <input id="new-name" type="text" placeholder="Nom du modèle (ex: Robe St Willy)" class="w-full px-3.5 py-2.5 text-base border border-pink-200 rounded-xl focus:outline-none focus:border-[#D81B60]">
-      <input id="new-price" type="number" inputmode="numeric" placeholder="Prix en FCFA (ex: 2500)" class="w-full px-3.5 py-2.5 text-base border border-pink-200 rounded-xl focus:outline-none focus:border-[#D81B60]">
-      <select id="new-category" class="w-full px-3.5 py-2.5 text-base border border-pink-200 rounded-xl bg-white focus:outline-none focus:border-[#D81B60]">
-        <option value="vetements">Catégorie : Robes Chic</option>
-        <option value="accessoires">Catégorie : Ensembles 2 Pièces</option>
-        <option value="sacs">Catégorie : Crop Tops (Gros & Détail)</option>
-        <option value="chaussures">Catégorie : Accessoires</option>
-      </select>
-
-      <div class="border-2 border-dashed border-pink-300 rounded-xl p-3 text-center bg-pink-50/50">
-        <label class="cursor-pointer block">
-          <span class="text-xs font-bold text-[#D81B60] block mb-1.5">📸 Choisir la photo du vêtement</span>
-          <input id="new-image-file" type="file" accept="image/*" onchange="previewSelectedImage(this)" class="text-xs text-stone-500 w-full">
-        </label>
-        <!-- Hauteur réduite à h-28 pour laisser le bouton Publier visible à l'écran -->
-        <img id="image-preview" class="hidden w-full h-28 object-contain bg-white rounded-lg mt-2 border border-pink-200" alt="Aperçu">
-      </div>
-
-      <button id="publish-btn" type="button" onclick="addNewProduct()" class="w-full linda-pink-bg active:bg-[#1E295B] text-white font-extrabold py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg sticky bottom-0">
-        ✅ Publier dans la Boutique
-      </button>
-    </div>
-  </div>
-
-  <!-- TIROIR DU PANIER CORRIGÉ (h-[100dvh] POUR COUVRIR TOUT L'ÉCRAN IPHONE) -->
-  <div id="cart-modal" class="fixed inset-0 z-50 hidden">
-    <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
-    <div class="fixed right-0 top-0 bottom-0 h-[100dvh] w-full max-w-md bg-[#FFF7FA] shadow-2xl flex flex-col border-l-2 border-pink-200 z-10">
-      <div class="p-4 linda-pink-bg text-white flex items-center justify-between shrink-0">
+      <div id="pm-opts" class="space-y-3">
         <div>
-          <span class="text-[9px] uppercase tracking-widest text-pink-200 block font-bold">Commande Express</span>
-          <h2 class="font-luxury italic text-2xl font-bold">Votre Panier Linda Fashion</h2>
+          <p class="text-xs font-semibold mb-1">Type d'achat</p>
+          <div id="p-type" class="flex flex-wrap gap-2"></div>
         </div>
-        <button type="button" onclick="toggleCart(false)" class="bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-full">Fermer ✕</button>
+        <div>
+          <label for="o-size" class="text-xs font-semibold block mb-1">Taille</label>
+          <select id="o-size" class="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white text-base">
+            <option>Unique</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+          </select>
+        </div>
+        <div>
+          <label for="o-color" class="text-xs font-semibold block mb-1">Couleur souhaitée</label>
+          <input id="o-color" type="text" maxlength="40" oninput="onColor(this.value)" placeholder="Ex : Noir, Rose, rayé…" class="w-full border border-gray-300 rounded-xl px-3 py-2 text-base mb-2">
+          <div id="p-color" class="flex flex-wrap gap-2"></div>
+        </div>
       </div>
-
-      <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
-
-      <div class="p-4 bg-white border-t border-pink-200 space-y-2.5 shrink-0">
-        <div class="grid grid-cols-2 gap-2">
-          <input id="client-name" type="text" oninput="updateWhatsAppPreview()" placeholder="Votre Prénom *" class="w-full px-3 py-2 text-base border border-pink-200 rounded-xl bg-pink-50/40">
-          <input id="client-address" type="text" oninput="updateWhatsAppPreview()" placeholder="Quartier / Ville *" class="w-full px-3 py-2 text-base border border-pink-200 rounded-xl bg-pink-50/40">
-        </div>
-        <div class="bg-[#1E295B] text-pink-100 rounded-xl p-2.5 text-[11px] font-mono whitespace-pre-line max-h-24 overflow-y-auto" id="whatsapp-preview"></div>
-        <div class="flex items-center justify-between pt-0.5">
-          <span class="text-xs font-bold text-[#1E295B]">Total à payer :</span>
-          <span id="cart-total" class="text-lg font-black text-[#D81B60]">0 FCFA</span>
-        </div>
-        <button type="button" onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 active:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg transition">
-          💬 Envoyer la commande sur WhatsApp
-        </button>
-      </div>
+      <button type="button" id="pm-add" onclick="addToCart()" class="w-full py-3 rounded-full font-semibold text-base bg-brand text-white">+ Ajouter au Panier</button>
     </div>
   </div>
+</div>
 
-  <script src="app.js?v=5"></script>
+<!-- PANIER -->
+<div id="cart-modal" class="hidden fixed inset-0 z-40 bg-black/60 flex flex-col" onclick="if(event.target===this)closeModal('cart-modal')">
+  <div class="mt-auto bg-white rounded-t-3xl max-h-[92vh] overflow-y-auto p-4 max-w-md w-full mx-auto">
+    <div class="flex items-center justify-between">
+      <h2 class="fd text-2xl text-black">Mon panier Linda Fashion</h2>
+      <button type="button" onclick="closeModal('cart-modal')" class="w-9 h-9 rounded-full bg-gray-100">✕</button>
+    </div>
+    <p id="cart-empty" class="hidden text-center text-sm py-10 opacity-60">Votre panier est vide.</p>
+    <div id="cart-body">
+      <div id="cart-items"></div>
+      <div class="flex justify-between font-bold py-3"><span>Total</span><span id="cart-total" class="text-brand"></span></div>
+      <p class="text-[11px] opacity-60 -mt-2 mb-3">Total indicatif : le prix gros / détail final est confirmé sur WhatsApp.</p>
+      <div class="space-y-2">
+        <input id="c-name" type="text" oninput="buildPreview()" placeholder="Votre prénom" class="w-full border border-gray-300 rounded-xl px-3 py-2 text-base">
+        <input id="c-zone" type="text" oninput="buildPreview()" placeholder="Quartier / Ville" class="w-full border border-gray-300 rounded-xl px-3 py-2 text-base">
+      </div>
+      <p class="text-xs font-semibold mt-3 mb-1">Aperçu du message WhatsApp</p>
+      <div id="c-preview" class="bg-blush border border-pink-100 rounded-xl p-3 text-xs whitespace-pre-wrap break-words"></div>
+      <button type="button" onclick="sendWA()" class="w-full mt-3 py-3 rounded-full font-semibold text-base text-white" style="background:#25D366">Envoyer ma commande sur WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN : AJOUT -->
+<div id="admin-modal" class="hidden fixed inset-0 z-50 bg-white overflow-y-auto">
+  <div class="max-w-md mx-auto p-4 space-y-3">
+    <div class="flex items-center justify-between sticky top-0 bg-white py-2 z-10">
+      <h2 class="fd text-2xl text-black">Nouvel article</h2>
+      <div class="flex gap-2">
+        <button type="button" onclick="addNewProduct()" class="pub bg-brand text-white font-semibold text-sm px-4 py-2 rounded-full">✅ Publier</button>
+        <button type="button" onclick="closeModal('admin-modal')" class="w-10 h-10 rounded-full bg-gray-100">✕</button>
+      </div>
+    </div>
+    <input id="a-name" type="text" placeholder="Nom du modèle (ex : Robe Satin — Gros: 2500F / Détail: 3000F)" class="w-full border border-gray-300 rounded-xl px-3 py-3 text-base">
+    <select id="a-cat" class="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white text-base"></select>
+    <input id="a-price" type="number" inputmode="numeric" placeholder="Prix (FCFA)" class="w-full border border-gray-300 rounded-xl px-3 py-3 text-base">
+    <input id="a-file" type="file" accept="image/*" onchange="pickPhoto(this)" class="w-full border border-gray-300 rounded-xl px-3 py-3 text-base">
+    <img id="a-prev" alt="Aperçu" class="hidden w-full max-h-64 object-contain rounded-xl bg-blush">
+    <button type="button" onclick="addNewProduct()" class="pub w-full py-3 rounded-full font-semibold text-base bg-brand text-white">✅ Publier</button>
+  </div>
+</div>
+
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-navy text-white text-sm px-4 py-2 rounded-full shadow-lg"></div>
+
+<script src="app.js"></script>
 </body>
 </html>
