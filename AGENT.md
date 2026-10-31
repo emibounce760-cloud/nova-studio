@@ -1,30 +1,17 @@
-# RÈGLES D'ARCHITECTURE & CONTEXTE AGENT — NOVA STUDIO (MARQUE BLANCHE)
+# CONTEXTE AGENT — BOUTIQUE #1 : LINDA FASHION (RACINE)
 
-## 1. Vue d'ensemble du projet
-- **Moteur :** Catalogue E-Commerce Express WhatsApp en Marque Blanche (`nova-studio`)
-- **URL Production :** https://emibounce760-cloud.github.io/nova-studio/
-- **Client Actif (Démo en cours) :** Linda Fashion (Prêt-à-Porter & Accessoires, Gros & Détail, Adétikopé)
-- **Objectif :** Permettre aux clientes de zoomer sur les modèles ("Vue Écrin"), filtrer par catégorie, contacter la boutique (TikTok, WhatsApp, Appel, Email) et envoyer leur panier chiffré sur WhatsApp.
+## 1. Architecture & Multi-Tenancy
+- **Dossier :** Racine `/nova-studio` (Client : Linda Fashion, Adétikopé)
+- **Sous-dossiers :** `/glam` héberge la Boutique #2 (Cosmétiques & Sacs). Ne jamais modifier `/glam` lors d'une intervention sur Linda Fashion.
+- **Stack :** HTML5 (`index.html`), Tailwind CDN (couleurs `brand: #D81B60`, `navy: #1E295B`, `blush: #FFF7FA`), Vanilla JS (`app.js`), Supabase.
 
-## 2. Stack Technique (Zéro Build / Ultra-léger)
-- **Frontend :** HTML5 (`index.html`) + Tailwind CSS via CDN + Logo local (`logo.jpg` avec fallback automatique)
-- **Logique :** JavaScript Vanilla (`app.js` avec versionning anti-cache `?v=4`)
-- **Base de données Cloud :** Supabase PostgreSQL (`https://ehicifgwmpyyaoxvzezw.supabase.co`)
-- **Table SQL :** `products` (colonnes : `id`, `name`, `category`, `price`, `image`, `created_at`)
+## 2. Règles Base de Données Supabase (Table `products`)
+- **Colonnes fixes :** `id`, `name`, `category`, `price`, `image`, `created_at` (Zéro migration SQL).
+- **Isolation des catégories Linda Fashion :** Utiliser uniquement `vetements`, `accessoires`, `sacs`, `chaussures`. Ignorer toute catégorie commençant par `glam_`.
+- **Gestion de stock :** Préfixe `[ÉPUISÉ] ` au début de `name` via `toggleStock(id)`.
 
-## 3. Fonctionnalités Vendeur (CRUD Complet)
-- **Accès sécurisé :** Bouton `🔒 Accès Linda` déverrouillable par code PIN (`SHOP_CONFIG.adminPin`).
-- **Create :** Ajout d'article avec sélection photo depuis la galerie téléphone et compression automatique `<canvas>` (max 600px, JPEG 0.8).
-- **Read :** Chargement temps réel depuis Supabase + recherche instantanée + filtres catégories.
-- **Update :** Modification rapide du prix en direct via le bouton `✏️ Prix` (`editPrice`).
-- **Delete :** Suppression d'article en 1 clic via le bouton `🗑️` (`deleteProduct`).
-
-## 4. Design System Actif — Thème "Linda Fashion"
-- **Palette :** Rose Fuchsia (`#D81B60`), Bleu Marine (`#1E295B`), Fond Rose Poudré (`#FFF7FA`).
-- **Typographie :** Titres en `Cormorant Garamond` (italic bold), interface en `Montserrat`.
-- **Réseaux & Contacts intégrés :** TikTok (`@lindafashion-officiel`), WhatsApp (`22893746561`), Appels (`93 74 65 61` / `90 84 58 13` / `96 79 60 96`), Email (`gbengbertanelynda@gmail.com`).
-
-## 5. Règles strictes pour l'Agent IA
-1. Ne jamais exposer de clé `sb_secret` dans le frontend (utiliser uniquement `sb_publishable`).
-2. Toujours utiliser de vrais `<button type="button">` sur les zones cliquables des cartes produits pour garantir la compatibilité tactile sur iPhone (Safari iOS).
-3. Centraliser les textes et numéros du commerçant dans `SHOP_CONFIG` en haut de `app.js`.
+## 3. Fonctionnalités & DOM IDs Actifs
+- **Grille & Filtres :** `#cats` (catégories), `#grid` (cartes produits), recherche instantanée `handleSearch()`.
+- **Modale Options (`#product-modal`) :** Sélection Type (`Au Détail` / `En Gros`), Taille (`#o-size`) et Couleur (`#p-color` / `#o-color`).
+- **Panier (`#cart-modal`) :** Stockage `localStorage` (`nova_cart`), aperçu `#c-preview` et envoi WhatsApp vers `22893746561`.
+- **Admin (`#admin-modal`) :** PIN `1234`, compression photo `<canvas>` 600px JPEG 0.8, édition prix (`editPrice`), nom (`editName`) et stock (`toggleStock`).
