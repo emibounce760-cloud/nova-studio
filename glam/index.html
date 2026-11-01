@@ -139,30 +139,61 @@ tailwind.config = {
   </section>
 
   <!-- DUO DE BANNIÈRES PROMO 3D TILT -->
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-    <div onclick="setCat('glam_levres')" class="tilt-card cursor-pointer rounded-3xl p-6 bg-pastelPink border border-pink-200/70 flex items-center justify-between gap-4 shadow-xs hover:shadow-md">
-      <div class="tilt-inner space-y-1.5">
-        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand">OFFRE SPÉCIALE LÈVRES</span>
-        <h4 class="fd text-2xl sm:text-3xl text-navy leading-tight">Gloss, Crayons &amp; Rouges Matte</h4>
-        <p class="text-xs text-gray-600">2 000 F l'unité • Formule Lot : 3 à 5 000 F</p>
-        <span class="inline-block mt-2 text-xs font-bold text-brand underline">Voir le rayon →</span>
+<!-- DUO DE BANNIÈRES PROMO EFFET GLOSSY & RÉALISTE -->
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
+    
+    <!-- BANNIÈRE 1 : ROSE GLOSSY BRILLANT -->
+    <div onclick="setCat('glam_levres')" 
+         class="tilt-card relative overflow-hidden cursor-pointer rounded-3xl p-6 flex items-center justify-between gap-4 border border-white/80 transition duration-300"
+         style="background: linear-gradient(135deg, #FFF5F8 0%, #FBCFE8 50%, #F472B6 130%); box-shadow: 0 15px 30px -10px rgba(225, 29, 116, 0.28), inset 0 2px 4px rgba(255, 255, 255, 1), inset 0 -3px 8px rgba(225, 29, 116, 0.18);">
+      
+      <!-- Reflet brillant effet vernis / miroir -->
+      <div class="pointer-events-none absolute inset-0" style="background: linear-gradient(115deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.25) 32%, rgba(255,255,255,0) 48%);"></div>
+      <div class="pointer-events-none absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white/50 blur-xl"></div>
+
+      <div class="tilt-inner relative z-10 space-y-1.5">
+        <span class="inline-block bg-white/80 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest text-brand shadow-2xs">
+          OFFRE SPÉCIALE LÈVRES
+        </span>
+        <h4 class="fd text-2xl sm:text-3xl text-navy leading-tight drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+          Gloss, Crayons &amp; Rouges Matte
+        </h4>
+        <p class="text-xs font-medium text-gray-700">2 000 F l'unité • Formule Lot : 3 à 5 000 F</p>
+        <span class="inline-block mt-2 text-xs font-extrabold text-brand underline">Voir le rayon →</span>
       </div>
-      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white flex items-center justify-center text-3xl sm:text-4xl shadow-inner shrink-0">
-        💄
+
+      <div class="tilt-inner relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-4 border-white shrink-0 bg-white"
+           style="box-shadow: 0 10px 20px rgba(225, 29, 116, 0.25), inset 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=400&q=80" alt="Gloss et Rouges à lèvres" class="w-full h-full object-cover">
       </div>
     </div>
 
-    <div onclick="setCat('glam_sacs')" class="tilt-card cursor-pointer rounded-3xl p-6 bg-pastelMint border border-teal-200/70 flex items-center justify-between gap-4 shadow-xs hover:shadow-md">
-      <div class="tilt-inner space-y-1.5">
-        <span class="text-[10px] font-extrabold uppercase tracking-widest text-teal-700">NOUVEL ARRIVAGE CHIC</span>
-        <h4 class="fd text-2xl sm:text-3xl text-navy leading-tight">Sacs à Main, Talons &amp; Coffrets</h4>
-        <p class="text-xs text-gray-600">Cuir grainé bordeaux, vert olive, escarpins &amp; gift box</p>
-        <span class="inline-block mt-2 text-xs font-bold text-teal-800 underline">Découvrir →</span>
+    <!-- BANNIÈRE 2 : MENTHE NACRÉE BRILLANTE -->
+    <div onclick="setCat('glam_sacs')" 
+         class="tilt-card relative overflow-hidden cursor-pointer rounded-3xl p-6 flex items-center justify-between gap-4 border border-white/80 transition duration-300"
+         style="background: linear-gradient(135deg, #F2FFFD 0%, #CCFBF1 50%, #5EEAD4 130%); box-shadow: 0 15px 30px -10px rgba(13, 148, 136, 0.25), inset 0 2px 4px rgba(255, 255, 255, 1), inset 0 -3px 8px rgba(13, 148, 136, 0.18);">
+      
+      <!-- Reflet brillant effet vernis / miroir -->
+      <div class="pointer-events-none absolute inset-0" style="background: linear-gradient(115deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.25) 32%, rgba(255,255,255,0) 48%);"></div>
+      <div class="pointer-events-none absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white/50 blur-xl"></div>
+
+      <div class="tilt-inner relative z-10 space-y-1.5">
+        <span class="inline-block bg-white/80 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest text-teal-800 shadow-2xs">
+          NOUVEL ARRIVAGE CHIC
+        </span>
+        <h4 class="fd text-2xl sm:text-3xl text-navy leading-tight drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+          Sacs à Main, Talons &amp; Coffrets
+        </h4>
+        <p class="text-xs font-medium text-gray-700">Cuir grainé bordeaux, vert olive, escarpins &amp; gift box</p>
+        <span class="inline-block mt-2 text-xs font-extrabold text-teal-900 underline">Découvrir →</span>
       </div>
-      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white flex items-center justify-center text-3xl sm:text-4xl shadow-inner shrink-0">
-        👜
+
+      <div class="tilt-inner relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-4 border-white shrink-0 bg-white"
+           style="box-shadow: 0 10px 20px rgba(13, 148, 136, 0.25), inset 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80" alt="Sacs à main et Coffrets" class="w-full h-full object-cover">
       </div>
     </div>
+
   </section>
 
   <!-- RECHERCHE & GRILLE PRODUITS -->

@@ -5,12 +5,12 @@ const sb = supabase.createClient(
 const WA = "22893789708", PIN = "1234", SOLD = "[ÉPUISÉ] ";
 
 const CATS = [
-  ["tous", "Tout voir", "✨", "#FCEEF2"],
-  ["glam_levres", "Gloss & Lèvres", "💄", "#FFE4E6"],
-  ["glam_maquillage", "Teint & Palettes", "🎨", "#FDF1E8"],
-  ["glam_soins", "Soins & Parfums", "🌸", "#E6F6F4"],
-  ["glam_sacs", "Sacs, Talons & Coffrets", "👜", "#F3E8FF"],
-  ["glam_accessoires", "Accessoires Beauté", "🪞", "#FEF3C7"]
+  ["tous", "Tout voir", "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=300&q=80"],
+  ["glam_levres", "Gloss & Lèvres", "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=300&q=80"],
+  ["glam_maquillage", "Teint & Palettes", "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=300&q=80"],
+  ["glam_soins", "Soins & Parfums", "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=300&q=80"],
+  ["glam_sacs", "Sacs, Talons & Coffrets", "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=300&q=80"],
+  ["glam_accessoires", "Accessoires Beauté", "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80"]
 ];
 const TYPES = ["À l'unité", "Offre Lot (ex: 3 à 5 000 F)", "En Gros / Revendeuse"];
 const COLORS = ["Au choix sur photo", "Nude", "Chocolat", "Rose Glossy", "Rouge Matte", "Bordeaux", "Vert Olive", "Noir"];
@@ -49,91 +49,6 @@ function toast(m) {
   clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.add("hidden"), 2200);
 }
 
-/* ===== SCÈNE 3D TEMPS RÉEL (THREE.JS) ===== */
-function init3D() {
-  const canvas = $("hero-3d");
-  if (!canvas || !window.THREE) return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.z = 14;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const ambLight = new THREE.AmbientLight(0xffffff, 0.9);
-  scene.add(ambLight);
-
-  const dirLight1 = new THREE.PointLight(0xe11d74, 2.2, 30);
-  dirLight1.position.set(6, 6, 8);
-  scene.add(dirLight1);
-
-  const dirLight2 = new THREE.PointLight(0xffb6c1, 1.8, 30);
-  dirLight2.position.set(-6, -4, 6);
-  scene.add(dirLight2);
-
-  const palette = [0xe11d74, 0xf472b6, 0xfbcfe8, 0xfde68a, 0xd97706];
-  const spheres = [];
-  const geo = new THREE.SphereGeometry(1, 32, 32);
-
-  for (let i = 0; i < 16; i++) {
-    const mat = new THREE.MeshStandardMaterial({
-      color: palette[i % palette.length],
-      roughness: 0.18,
-      metalness: 0.35
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    const scale = 0.35 + Math.random() * 0.85;
-    mesh.scale.set(scale, scale, scale);
-    mesh.position.set(
-      (Math.random() - 0.25) * 14,
-      (Math.random() - 0.5) * 7,
-      (Math.random() - 0.5) * 5
-    );
-    mesh.userData = {
-      speed: 0.008 + Math.random() * 0.012,
-      offset: Math.random() * Math.PI * 2,
-      baseY: mesh.position.y,
-      baseX: mesh.position.x
-    };
-    scene.add(mesh);
-    spheres.push(mesh);
-  }
-
-  let targetX = 0, targetY = 0;
-  window.addEventListener("pointermove", e => {
-    targetX = (e.clientX / window.innerWidth - 0.5) * 2.5;
-    targetY = -(e.clientY / window.innerHeight - 0.5) * 2.5;
-  });
-
-  let clock = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-    clock += 0.02;
-    camera.position.x += (targetX - camera.position.x) * 0.05;
-    camera.position.y += (targetY - camera.position.y) * 0.05;
-    camera.lookAt(scene.position);
-
-    spheres.forEach(s => {
-      s.position.y = s.userData.baseY + Math.sin(clock + s.userData.offset) * 0.65;
-      s.rotation.x += s.userData.speed;
-      s.rotation.y += s.userData.speed;
-    });
-
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  window.addEventListener("resize", () => {
-    if (!canvas.clientWidth) return;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-  });
-}
-
-/* ===== ANIMATIONS GSAP & EFFET 3D TILT ===== */
 function initHeroAnimations() {
   if (!window.gsap) return;
   const tl = gsap.timeline();
@@ -142,7 +57,6 @@ function initHeroAnimations() {
     .fromTo("#hero-desc", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, "-=0.2")
     .fromTo("#hero-btns a", { y: 10, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.4 }, "-=0.2");
 }
-
 
 function animateGridCards() {
   if (!window.gsap) return;
@@ -167,7 +81,6 @@ function bindTilt() {
   });
 }
 
-/* ===== CATALOGUE & ISOLATION SUPABASE ===== */
 async function loadProducts() {
   $("grid").innerHTML = '<p class="col-span-full text-center py-12 text-sm opacity-60">Chargement de la collection…</p>';
   const { data, error } = await sb.from("products").select("id,name,category,price,image,created_at").order("created_at", { ascending: false });
@@ -180,10 +93,10 @@ async function loadProducts() {
 }
 
 function renderCats() {
-  $("cat-bubbles").innerHTML = CATS.map(([k, l, icon, bg]) =>
-    `<button type="button" onclick="setCat('${k}')" class="flex flex-col items-center gap-1.5 shrink-0 group">
-      <div style="background:${bg}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-2xl sm:text-3xl transition transform group-hover:scale-110 shadow-xs border-2 ${k === cat ? "border-brand ring-2 ring-pink-200" : "border-white"}">
-        ${icon}
+  $("cat-bubbles").innerHTML = CATS.map(([k, l, img]) =>
+    `<button type="button" onclick="setCat('${k}')" class="flex flex-col items-center gap-2 shrink-0 group">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 transition transform group-hover:scale-110 shadow-sm border-2 overflow-hidden bg-white ${k === cat ? "border-brand ring-2 ring-pink-200" : "border-pink-100"}">
+        <img src="${img}" alt="${esc(l)}" loading="lazy" class="w-full h-full object-cover rounded-full">
       </div>
       <span class="text-[11px] font-bold ${k === cat ? "text-brand" : "text-navy"} whitespace-nowrap">${l}</span>
     </button>`
@@ -234,7 +147,6 @@ function card(p, i) {
   </div>`;
 }
 
-/* ===== OPTIONS & PANIER ===== */
 const pill = (txt, on, fn) =>
   `<button type="button" onclick="${fn}" class="px-3 py-2 rounded-full text-xs font-bold border transition ${on ? "bg-brand text-white border-brand" : "bg-white text-navy border-gray-300"}">${txt}</button>`;
 
@@ -319,7 +231,6 @@ function sendWA() {
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(buildMsg())}`, "_blank");
 }
 
-/* ===== ADMIN ===== */
 function unlockAdmin() {
   if (admin) admin = false;
   else {
@@ -408,7 +319,6 @@ async function addNewProduct() {
 $("a-cat").innerHTML = CATS.filter(c => c[0] !== "tous").map(([k, l]) => `<option value="${k}">${l}</option>`).join("");
 renderCats();
 saveCart();
-init3D();
 initHeroAnimations();
 bindTilt();
 loadProducts();
