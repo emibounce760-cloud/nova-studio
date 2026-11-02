@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MR PROPRE Lomé | Expert Propreté, Entretien Professionnel & Espaces Verts</title>
+  <meta name="description" content="MR PROPRE à Lomé : Entretien de résidences, bureaux d'entreprises, nettoyage événementiel, remise en état fin de chantier et aménagement d'espaces verts. Devis express gratuit sur WhatsApp.">
+  <meta name="theme-color" content="#0284C7">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#080D1A',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            azure: {
+              50: '#F0F9FF',
+              100: '#E0F2FE',
+              200: '#BAE6FD',
+              300: '#7DD3FC',
+              400: '#38BDF8',
+              500: '#0284C7',
+              600: '#0369A1',
+              700: '#075985',
+            },
+            emerald: {
+              50: '#ECFDF5',
+              100: '#D1FAE5',
+              200: '#A7F3D0',
+              400: '#34D399',
+              500: '#10B981',
+              600: '#059669',
+            },
+            surface: '#F8FAFC',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif'],
+          },
+          boxShadow: {
+            'glass': '0 8px 32px 0 rgba(15, 23, 42, 0.06)',
+            'glass-hover': '0 20px 45px -12px rgba(2, 132, 199, 0.18)',
+            'azure-glow': '0 10px 30px -5px rgba(2, 132, 199, 0.35)',
+            'emerald-glow': '0 10px 30px -5px rgba(16, 185, 129, 0.3)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Custom Utilities & Glassmorphism */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+    .glass-dark {
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .text-gradient-azure {
+      background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #0F172A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-gradient-fresh {
+      background: linear-gradient(135deg, #0284C7 0%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-grid-pattern {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(2, 132, 199, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(2, 132, 199, 0.05) 1px, transparent 1px);
+    }
+    .badge-shimmer {
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    /* Floating 3D card tilt & hover effects */
+    .card-3d-hover {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-3d-hover:hover {
+      transform: translateY(-8px) scale(1.015);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94A3B8;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0284C7;
+    }
+  </style>
+</head>
+
+<body class="bg-[#F8FAFC] text-navy-800 font-sans antialiased overflow-x-hidden selection:bg-azure-500 selection:text-white">
+
+  <!-- ========================================================================= -->
+  <!-- TOP BANNER INFO LOMÉ -->
+  <!-- ========================================================================= -->
+  <div class="bg-navy-900 text-slate-300 text-xs py-2 px-4 border-b border-navy-700/60 relative z-50">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-4 text-center sm:text-left">
+        <span class="inline-flex items-center gap-1.5 font-medium text-azure-300">
+          <i class="fa-solid fa-location-dot text-emerald-400"></i> Lomé, Togo & environs
+        </span>
+        <span class="hidden md:inline-block text-slate-500">•</span>
+        <span class="hidden md:inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-clock text-azure-400"></i> 7j/7 : 07h30 - 19h00 (Urgences 24/7)
+        </span>
+        <span class="hidden lg:inline-block text-slate-500">•</span>
+        <span class="hidden lg:inline-flex items-center gap-1.5 text-emerald-400 font-medium">
+          <i class="fa-solid fa-shield-halved"></i> Devis Gratuit & Réponse sous 60 min
+        </span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="tel:+22870162740" class="hover:text-white transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-azure-400"></i> +228 70 16 27 40
+        </a>
+        <a href="https://wa.me/22870162740?text=Bonjour%20MR%20PROPRE%2C%20je%20souhaite%20des%20renseignements%20sur%20vos%20services." target="_blank" class="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp direct
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- HEADER STICKY -->
+  <!-- ========================================================================= -->
+  <header id="main-header" class="sticky top-0 z-40 w-full transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo Container -->
+      <a href="#" class="flex items-center gap-3 group">
+        <img 
+          src="logo.png" 
+          alt="MR PROPRE Logo" 
+          class="h-12 w-auto object-contain rounded-xl" 
+        />
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center gap-8">
+        <a href="#services" class="text-sm font-semibold text-slate-700 hover:text-azure-600 transition-colors flex items-center gap-1.5 py-1">
+          <span>Nos Services</span>
+          <span class="bg-azure-100 text-azure-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full">5 pôles</span>
+        </a>
+        <a href="#pourquoi-nous" class="text-sm font-semibold text-slate-700 hover:text-azure-600 transition-colors">
+          Pourquoi Nous ?
+        </a>
+        <a href="#engagements" class="text-sm font-semibold text-slate-700 hover:text-azure-600 transition-colors">
+          Nos Garanties
+        </a>
+        <a href="#temoignages" class="text-sm font-semibold text-slate-700 hover:text-azure-600 transition-colors">
+          Avis Clients
+        </a>
+        <a href="#devis" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors flex items-center gap-1">
+          <i class="fa-solid fa-calculator text-xs"></i> Simulateur Devis
+        </a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="#devis" class="hidden xl:inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-azure-700 bg-azure-50 hover:bg-azure-100 rounded-xl transition-all border border-azure-200">
+          Calculer mon Devis
+        </a>
+        <a href="https://wa.me/22870162740?text=Bonjour%20MR%20PROPRE%2C%20je%20souhaite%20obtenir%20un%20devis%20gratuit." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 rounded-xl shadow-md shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+          <span>Devis WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="lg:hidden flex items-center gap-2">
+        <a href="https://wa.me/22870162740?text=Bonjour%20MR%20PROPRE" target="_blank" class="p-2 text-emerald-600 bg-emerald-50 rounded-lg">
+          <i class="fa-brands fa-whatsapp text-2xl"></i>
+        </a>
+        <button id="mobile-toggle" aria-label="Menu" class="p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none">
+          <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Slide-down Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 px-6 py-6 space-y-4">
+      <div class="grid gap-2">
+        <a href="#services" class="mobile-nav-link flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
+          <span class="flex items-center gap-3">
+            <i class="fa-solid fa-broom text-azure-500"></i> Nos 5 Domaines d'Intervention
+          </span>
+          <span class="text-xs bg-azure-100 text-azure-700 px-2 py-0.5 rounded-full font-bold">5 services</span>
+        </a>
+        <a href="#pourquoi-nous" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
+          <i class="fa-solid fa-medal text-azure-500"></i> Pourquoi Choisir Mr Propre ?
+        </a>
+        <a href="#engagements" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
+          <i class="fa-solid fa-shield-check text-azure-500"></i> Nos Engagements & Chiffres
+        </a>
+        <a href="#temoignages" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
+          <i class="fa-solid fa-star text-amber-500"></i> Témoignages Clients Lomé
+        </a>
+        <a href="#devis" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl bg-azure-50 text-azure-800 font-semibold">
+          <i class="fa-solid fa-calculator text-azure-600"></i> Simulateur Devis WhatsApp Express
+        </a>
+      </div>
+      <div class="pt-2 border-t border-slate-100">
+        <a href="https://wa.me/22870162740?text=Bonjour%20MR%20PROPRE%2C%20je%20souhaite%20un%20devis%20direct." target="_blank" class="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/30">
+          <i class="fa-brands fa-whatsapp text-xl"></i> Discuter sur WhatsApp (+228 70 16 27 40)
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ========================================================================= -->
+  <!-- HERO SECTION -->
+  <!-- ========================================================================= -->
+  <section class="relative pt-8 pb-16 lg:pt-16 lg:pb-28 overflow-hidden bg-grid-pattern">
+    
+    <!-- Ambient background glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-tr from-azure-300/30 to-emerald-300/20 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-azure-500/10 rounded-full blur-[80px] pointer-events-none -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Content Column -->
+        <div class="lg:col-span-7 space-y-7 text-center lg:text-left hero-content">
+          
+          <!-- Trust Badge -->
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-200/90 text-xs sm:text-sm font-bold text-navy-800 hover:border-azure-300 transition-colors">
+            <span class="flex h-2.5 w-2.5 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-slate-600">Partenaire de confiance</span>
+            <span class="text-slate-300">•</span>
+            <span class="text-azure-600">Particuliers & Entreprises</span>
+            <span class="text-slate-300">•</span>
+            <span class="text-emerald-600">Lomé</span>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-navy-900 leading-[1.12]">
+            Transformez chaque espace en un endroit 
+            <span class="text-gradient-azure">impeccable</span>, 
+            <span class="text-gradient-fresh">beau</span> et 
+            <span class="relative inline-block">
+              accueillant.
+              <svg class="absolute -bottom-2 left-0 w-full text-azure-400 h-2.5 -z-10" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <path d="M0,15 Q50,0 100,15" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            Spécialiste de la propreté haute exigence et de l'aménagement paysager à Lomé. Nous combinons réactivité éclair, équipe rigoureusement formée et protocoles stricts pour sublimer vos villas, bureaux, événements et jardins.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <!-- Primary CTA -->
+            <a href="#devis" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-azure-600 to-azure-700 hover:from-azure-500 hover:to-azure-600 text-white font-bold text-base shadow-azure-glow hover:-translate-y-1 transition-all duration-300 group">
+              <i class="fa-solid fa-calculator text-azure-200 group-hover:scale-110 transition-transform"></i>
+              <span>Demander un devis gratuit</span>
+              <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+            </a>
+
+            <!-- Secondary CTA -->
+            <a href="#services" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-navy-800 font-bold text-base border border-slate-200/90 shadow-sm hover:border-azure-300 hover:-translate-y-1 transition-all duration-300">
+              <i class="fa-solid fa-sparkles text-azure-500"></i>
+              <span>Découvrir nos 5 services</span>
+            </a>
+          </div>
+
+          <!-- Trust Badges Under CTA -->
+          <div class="pt-4 grid grid-cols-3 gap-2 sm:gap-4 border-t border-slate-200/70 max-w-lg mx-auto lg:mx-0">
+            <div class="flex items-center gap-2 text-left">
+              <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-bolt-lightning text-xs"></i>
+              </div>
+              <div class="text-[11px] sm:text-xs">
+                <p class="font-bold text-navy-900 leading-tight">Réponse &lt; 60m</p>
+                <p class="text-slate-500">WhatsApp direct</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 text-left">
+              <div class="w-8 h-8 rounded-lg bg-azure-50 text-azure-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-user-shield text-xs"></i>
+              </div>
+              <div class="text-[11px] sm:text-xs">
+                <p class="font-bold text-navy-900 leading-tight">Équipe cadrée</p>
+                <p class="text-slate-500">Discrète & pro</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 text-left">
+              <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-leaf text-xs"></i>
+              </div>
+              <div class="text-[11px] sm:text-xs">
+                <p class="font-bold text-navy-900 leading-tight">Produits certifiés</p>
+                <p class="text-slate-500">Respect santé & sol</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Visual Showcase with Floating Cards -->
+        <div class="lg:col-span-5 relative hero-visual flex justify-center">
+          <div class="relative w-full max-w-md lg:max-w-none">
+            
+            <!-- Main Hero Visual Image Frame -->
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/5] bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" 
+                alt="Résidence de standing nettoyée par MR PROPRE" 
+                class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent"></div>
+
+              <!-- Overlay Bottom Caption -->
+              <div class="absolute bottom-6 left-6 right-6 text-white">
+                <span class="inline-block px-3 py-1 bg-azure-600/90 backdrop-blur-md rounded-lg text-xs font-bold tracking-wide uppercase mb-2">
+                  Prestation d'Exception
+                </span>
+                <p class="text-lg font-bold font-display leading-tight">Villa privée & Espace paysager</p>
+                <p class="text-xs text-slate-200">Zone Résidentielle, Lomé II</p>
+              </div>
+            </div>
+
+            <!-- Floating Badge 1: 100% Satisfaction (Top Left) -->
+            <div class="absolute -top-6 -left-4 sm:-left-8 glass-card p-4 rounded-2xl shadow-glass border border-white/90 flex items-center gap-3.5 animate-bounce-subtle">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 text-white flex items-center justify-center shadow-md shadow-amber-500/30 text-xl font-bold">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-1 text-amber-500 text-xs">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-sm font-bold text-navy-900 font-display">100% Satisfaction</p>
+                <p class="text-[11px] text-slate-500 font-medium">+250 clients satisfaits à Lomé</p>
+              </div>
+            </div>
+
+            <!-- Floating Badge 2: Équipe Qualifiée (Bottom Right) -->
+            <div class="absolute -bottom-6 -right-3 sm:-right-6 glass-card p-4 rounded-2xl shadow-glass border border-white/90 flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-azure-500 to-azure-700 text-white flex items-center justify-center shadow-md shadow-azure-500/30 text-xl">
+                <i class="fa-solid fa-user-check"></i>
+              </div>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-azure-600">Personnel Agréé</p>
+                <p class="text-sm font-bold text-navy-900 font-display">Agents Qualifiés & Encadrés</p>
+                <p class="text-[11px] text-slate-500">Supervision systématique</p>
+              </div>
+            </div>
+
+            <!-- Floating Badge 3: Intervention Rapide (Middle Right) -->
+            <div class="hidden sm:flex absolute top-1/2 -right-10 glass-card px-4 py-2.5 rounded-xl shadow-glass items-center gap-2 border border-white/90 text-xs font-bold text-navy-900">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+              <i class="fa-solid fa-truck-fast text-emerald-500"></i>
+              <span>Interventions 7j/7</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- STATS & TRUST STRIP -->
+  <!-- ========================================================================= -->
+  <section id="engagements" class="py-12 bg-white border-y border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 text-center">
+        
+        <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-100 hover:border-azure-200 transition-colors">
+          <p class="font-display font-black text-3xl sm:text-4xl text-azure-600 mb-1">+250</p>
+          <p class="text-xs sm:text-sm font-bold text-navy-900">Chantiers & Locaux Sublimés</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Villas, bureaux & événements</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-100 hover:border-emerald-200 transition-colors">
+          <p class="font-display font-black text-3xl sm:text-4xl text-emerald-500 mb-1">100%</p>
+          <p class="text-xs sm:text-sm font-bold text-navy-900">Hygiène & Propreté Impeccable</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Contrôle qualité rigoureux</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-100 hover:border-azure-200 transition-colors">
+          <p class="font-display font-black text-3xl sm:text-4xl text-navy-900 mb-1">&lt; 1h</p>
+          <p class="text-xs sm:text-sm font-bold text-navy-900">Délai Réponse Devis WhatsApp</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Estimation gratuite immédiate</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-100 hover:border-emerald-200 transition-colors">
+          <p class="font-display font-black text-3xl sm:text-4xl text-emerald-600 mb-1">5 Pôles</p>
+          <p class="text-xs sm:text-sm font-bold text-navy-900">Expertises Spécialisées</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Du sol aux jardins extérieurs</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- SECTION : NOS 5 DOMAINES D'INTERVENTION -->
+  <!-- ========================================================================= -->
+  <section id="services" class="py-20 lg:py-28 bg-[#F8FAFC] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-azure-50 border border-azure-200 text-azure-700 text-xs font-bold uppercase tracking-wider">
+          <i class="fa-solid fa-sparkles text-azure-500"></i> Nos Domaines d'Intervention
+        </div>
+        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-navy-900 tracking-tight">
+          Une réponse de haute précision pour chaque environnement.
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600">
+          Chaque espace a ses propres exigences. Découvrez nos 5 prestations phares à Lomé, exécutées avec des équipements de pointe et des protocoles éprouvés.
+        </p>
+      </div>
+
+      <!-- Services Grid (5 Cards) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- ================= CARD 1 : Biens Immobiliers ================= -->
+        <div class="service-card group rounded-3xl bg-white border border-slate-200/90 shadow-glass overflow-hidden card-3d-hover flex flex-col justify-between" data-service-key="immobilier">
+          <div>
+            <!-- Image Frame -->
+            <div class="relative h-60 overflow-hidden bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80" 
+                alt="Entretien de résidences et villas à Lomé" 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/20 to-transparent"></div>
+              
+              <!-- Badge -->
+              <span class="absolute top-4 left-4 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-azure-700 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-house text-azure-500"></i> Particuliers & Prestige
+              </span>
+
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs font-semibold text-azure-200 tracking-wide uppercase">Service N°1</span>
+                <h3 class="font-display font-bold text-xl leading-tight">Propreté des Biens Immobiliers</h3>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-4">
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Entretien complet et méticuleux de villas, appartements, duplex, résidences meublées et biens destinés à la location ou à la vente.
+              </p>
+
+              <!-- Features checklist -->
+              <ul class="space-y-2 text-xs font-medium text-slate-700">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Dépoussiérage & lessivage des surfaces et plinthes</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Nettoyage des vitres intérieures / extérieures</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Désinfection profonde des sanitaires et cuisines</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Préparation express pour état des lieux ou vente</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card Footer Action -->
+          <div class="p-6 pt-0">
+            <button 
+              type="button" 
+              onclick="selectServiceAndScroll('immobilier', 'Propreté des Biens Immobiliers (Villas & Appartements)')"
+              class="w-full py-3 px-4 rounded-xl bg-azure-50 hover:bg-azure-600 text-azure-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 border border-azure-200 hover:border-transparent group-hover:shadow-azure-glow"
+            >
+              <span>Choisir ce service</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ================= CARD 2 : Entreprises & Bureaux ================= -->
+        <div class="service-card group rounded-3xl bg-white border border-slate-200/90 shadow-glass overflow-hidden card-3d-hover flex flex-col justify-between" data-service-key="entreprises">
+          <div>
+            <!-- Image Frame -->
+            <div class="relative h-60 overflow-hidden bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" 
+                alt="Nettoyage de bureaux et banques à Lomé" 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/20 to-transparent"></div>
+              
+              <!-- Badge -->
+              <span class="absolute top-4 left-4 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-navy-800 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-building text-azure-600"></i> Corporate & Tertiaire
+              </span>
+
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs font-semibold text-azure-200 tracking-wide uppercase">Service N°2</span>
+                <h3 class="font-display font-bold text-xl leading-tight">Nettoyage & Entretien d'Entreprises</h3>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-4">
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Bureaux, locaux commerciaux, banques, sièges de sociétés et cabinets d'affaires. Des espaces sains et valorisants pour vos collaborateurs et clients.
+              </p>
+
+              <!-- Features checklist -->
+              <ul class="space-y-2 text-xs font-medium text-slate-700">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Contrats réguliers flexibles (journalier / hebdo)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Désinfection claviers, postes et open spaces</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Approvisionnement consommables sanitaires</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Interventions discrètes tôt le matin ou après 18h</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card Footer Action -->
+          <div class="p-6 pt-0">
+            <button 
+              type="button" 
+              onclick="selectServiceAndScroll('entreprises', 'Nettoyage & Entretien d\'Entreprises (Bureaux & Sièges)')"
+              class="w-full py-3 px-4 rounded-xl bg-azure-50 hover:bg-azure-600 text-azure-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 border border-azure-200 hover:border-transparent group-hover:shadow-azure-glow"
+            >
+              <span>Choisir ce service</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ================= CARD 3 : Salles & Événements ================= -->
+        <div class="service-card group rounded-3xl bg-white border border-slate-200/90 shadow-glass overflow-hidden card-3d-hover flex flex-col justify-between" data-service-key="evenementiel">
+          <div>
+            <!-- Image Frame -->
+            <div class="relative h-60 overflow-hidden bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80" 
+                alt="Nettoyage salles de fête et réceptions à Lomé" 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/20 to-transparent"></div>
+              
+              <!-- Badge -->
+              <span class="absolute top-4 left-4 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-purple-700 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-champagne-glasses text-purple-500"></i> Événements & Cérémonies
+              </span>
+
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs font-semibold text-azure-200 tracking-wide uppercase">Service N°3</span>
+                <h3 class="font-display font-bold text-xl leading-tight">Salles & Espaces Événementiels</h3>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-4">
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Mise au propre irréprochable avant et après mariages, réceptions, conférences d'affaires, concerts et fêtes privées à Lomé.
+              </p>
+
+              <!-- Features checklist -->
+              <ul class="space-y-2 text-xs font-medium text-slate-700">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Préparation minutieuse avant accueil des invités</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Permanence propreté discrète durant la cérémonie</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Remise en état totale après fête (sols, vaisselle)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-azure-500 text-sm"></i>
+                  <span>Évacuation rapide et responsable de tous les déchets</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card Footer Action -->
+          <div class="p-6 pt-0">
+            <button 
+              type="button" 
+              onclick="selectServiceAndScroll('evenementiel', 'Salles & Espaces Événementiels (Avant / Après Réception)')"
+              class="w-full py-3 px-4 rounded-xl bg-azure-50 hover:bg-azure-600 text-azure-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 border border-azure-200 hover:border-transparent group-hover:shadow-azure-glow"
+            >
+              <span>Choisir ce service</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ================= CARD 4 : Jardins & Espaces Verts ================= -->
+        <div class="service-card group rounded-3xl bg-white border border-slate-200/90 shadow-glass overflow-hidden card-3d-hover flex flex-col justify-between" data-service-key="jardins">
+          <div>
+            <!-- Image Frame -->
+            <div class="relative h-60 overflow-hidden bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=800&q=80" 
+                alt="Aménagement et tonte de jardins à Lomé" 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/20 to-transparent"></div>
+              
+              <!-- Badge -->
+              <span class="absolute top-4 left-4 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-emerald-700 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-leaf text-emerald-500"></i> Nature & Paysage
+              </span>
+
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs font-semibold text-emerald-200 tracking-wide uppercase">Service N°4</span>
+                <h3 class="font-display font-bold text-xl leading-tight">Aménagement & Entretien de Jardins</h3>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-4">
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Création paysagère, tonte de pelouse, débroussaillage, taille de haies et embellissement extérieur pour villas, hôtels et complexes.
+              </p>
+
+              <!-- Features checklist -->
+              <ul class="space-y-2 text-xs font-medium text-slate-700">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+                  <span>Tonte régulière de gazon et nivellement soigné</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+                  <span>Taille architecturale des haies et arbustes</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+                  <span>Désherbage manuel ou sélectif écologique</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+                  <span>Ramassage et évacuation soignée des résidus verts</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card Footer Action -->
+          <div class="p-6 pt-0">
+            <button 
+              type="button" 
+              onclick="selectServiceAndScroll('jardins', 'Aménagement & Entretien de Jardins (Espaces Verts)')"
+              class="w-full py-3 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 border border-emerald-200 hover:border-transparent group-hover:shadow-emerald-glow"
+            >
+              <span>Choisir ce service</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ================= CARD 5 : Remise au Propre / Fin de Chantier ================= -->
+        <div class="service-card group rounded-3xl bg-white border border-slate-200/90 shadow-glass overflow-hidden card-3d-hover flex flex-col justify-between md:col-span-2 lg:col-span-2" data-service-key="remise_propre">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-0 h-full">
+            <!-- Image Frame -->
+            <div class="md:col-span-5 relative h-64 md:h-full overflow-hidden bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80" 
+                alt="Grand nettoyage fin de chantier à Lomé" 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-navy-900/80 via-navy-900/30 to-transparent"></div>
+              
+              <span class="absolute top-4 left-4 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-amber-700 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-helmet-safety text-amber-500"></i> Après Travaux & Rénovations
+              </span>
+
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs font-semibold text-azure-200 tracking-wide uppercase">Service N°5</span>
+                <h3 class="font-display font-bold text-xl leading-tight">Nettoyage Général & Fin de Chantier</h3>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="md:col-span-7 p-6 md:p-8 flex flex-col justify-between space-y-6">
+              <div class="space-y-4">
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Remise à neuf intégrale après travaux de construction ou réfection, et grand ménage approfondi avant installation dans vos nouveaux locaux ou votre domicile.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-medium text-slate-700">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-azure-500 text-sm shrink-0"></i>
+                    <span>Élimination des voiles de ciment, plâtre et colle</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-azure-500 text-sm shrink-0"></i>
+                    <span>Gratte des résidus de peinture sur vitres et carrelage</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-azure-500 text-sm shrink-0"></i>
+                    <span>Aspiration industrielle des poussières fines résiduelles</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-azure-500 text-sm shrink-0"></i>
+                    <span>Lavage haute pression des extérieurs et pavés</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <button 
+                  type="button" 
+                  onclick="selectServiceAndScroll('remise_propre', 'Nettoyage Général & Remise au Propre (Fin de Chantier)')"
+                  class="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-azure-50 hover:bg-azure-600 text-azure-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 inline-flex items-center justify-center gap-2 border border-azure-200 hover:border-transparent group-hover:shadow-azure-glow"
+                >
+                  <span>Choisir ce service et pré-remplir mon devis</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- SECTION : POURQUOI CHOISIR MR PROPRE ? -->
+  <!-- ========================================================================= -->
+  <section id="pourquoi-nous" class="py-20 lg:py-28 bg-white relative overflow-hidden">
+    <!-- Subtle backdrop element -->
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-azure-50 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold uppercase tracking-wider">
+          <i class="fa-solid fa-award text-emerald-500"></i> Nos 3 Piliers d'Excellence
+        </div>
+        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-navy-900 tracking-tight">
+          Pourquoi confier vos espaces à Mr Propre ?
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600">
+          Nous redéfinissons les standards du nettoyage professionnel et paysager au Togo grâce à une rigueur d'entreprise sans compromis.
+        </p>
+      </div>
+
+      <!-- 3 Strong Selling Points -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Argument 1 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-azure-400 hover:bg-white hover:shadow-glass-hover transition-all duration-300 card-3d-hover relative group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-azure-600 to-azure-400 text-white flex items-center justify-center text-2xl shadow-azure-glow mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-users-gear"></i>
+          </div>
+          <span class="text-xs font-bold tracking-widest text-azure-600 uppercase">Pilier 01</span>
+          <h3 class="font-display font-bold text-2xl text-navy-900 mt-1 mb-3">Équipe sérieuse et encadrée</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Pas de personnel improvisé : nos agents sont soigneusement recrutés, formés aux techniques de pointe de nettoyage et de sécurité, vêtus d'uniformes impeccables et encadrés par un responsable de chantier dédié à chaque mission.
+          </p>
+          <div class="mt-6 pt-4 border-t border-slate-200/80 flex items-center gap-2 text-xs font-bold text-navy-900">
+            <i class="fa-solid fa-badge-check text-azure-500 text-base"></i>
+            <span>Ponctualité, discrétion & intégrité</span>
+          </div>
+        </div>
+
+        <!-- Argument 2 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-emerald-400 hover:bg-white hover:shadow-glass-hover transition-all duration-300 card-3d-hover relative group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 text-white flex items-center justify-center text-2xl shadow-emerald-glow mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-spray-can-sparkles"></i>
+          </div>
+          <span class="text-xs font-bold tracking-widest text-emerald-600 uppercase">Pilier 02</span>
+          <h3 class="font-display font-bold text-2xl text-navy-900 mt-1 mb-3">Matériel et produits adaptés</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Nous investissons dans des machines performantes (autolaveuses, injecteurs-extracteurs industriels, nettoyeurs haute pression Kärcher, tronçonneuses de précision) et utilisons des produits désinfectants aux normes garantissant la protection de vos sols délicats.
+          </p>
+          <div class="mt-6 pt-4 border-t border-slate-200/80 flex items-center gap-2 text-xs font-bold text-navy-900">
+            <i class="fa-solid fa-leaf text-emerald-500 text-base"></i>
+            <span>Préservation des surfaces & éco-responsabilité</span>
+          </div>
+        </div>
+
+        <!-- Argument 3 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-navy-600 hover:bg-white hover:shadow-glass-hover transition-all duration-300 card-3d-hover relative group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-navy-800 to-navy-600 text-white flex items-center justify-center text-2xl shadow-md mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+          <span class="text-xs font-bold tracking-widest text-navy-700 uppercase">Pilier 03</span>
+          <h3 class="font-display font-bold text-2xl text-navy-900 mt-1 mb-3">Devis rapide et sur mesure</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Finis les jours d'attente : recevez une estimation claire, détaillée et transparente sous 60 minutes via WhatsApp. Déplacement préalable gratuit pour évaluer vos locaux si nécessaire, sans aucun frais caché ni mauvaise surprise.
+          </p>
+          <div class="mt-6 pt-4 border-t border-slate-200/80 flex items-center gap-2 text-xs font-bold text-navy-900">
+            <i class="fa-solid fa-bolt text-amber-500 text-base"></i>
+            <span>Transparence & flexibilité totale</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Trust Comparison Banner -->
+      <div class="mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white shadow-2xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-azure-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8 space-y-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 text-azure-300 text-xs font-semibold">
+              <i class="fa-solid fa-handshake"></i> Contrat Propreté B2B & Résidentiel
+            </div>
+            <h3 class="font-display font-bold text-2xl sm:text-3xl">Besoin d'un passage régulier dans vos locaux ?</h3>
+            <p class="text-sm text-slate-300 max-w-2xl">
+              Nous mettons en place des plannings sur mesure (quotidien, bi-hebdomadaire ou mensuel) adaptés à votre rythme avec tarification dégressive préférentielle.
+            </p>
+          </div>
+          <div class="lg:col-span-4 flex justify-start lg:justify-end">
+            <a href="#devis" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-azure-500 hover:bg-azure-400 text-white font-bold text-sm shadow-azure-glow transition-all">
+              <i class="fa-solid fa-file-signature"></i>
+              <span>Établir un contrat régulier</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- SECTION : SIMULATEUR DE DEVIS EXPRESS WHATSAPP -->
+  <!-- ========================================================================= -->
+  <section id="devis" class="py-20 lg:py-28 bg-gradient-to-b from-[#F8FAFC] to-slate-100 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+          <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> Générateur Instantané de Devis
+        </div>
+        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-navy-900 tracking-tight">
+          Simulateur de Devis Express WhatsApp
+        </h2>
+        <p class="text-base sm:text-lg text-slate-600">
+          Sélectionnez votre besoin, ajustez vos informations en quelques clics et visualisez votre message WhatsApp en temps réel avant envoi à notre équipe.
+        </p>
+      </div>
+
+      <!-- Main Interactive Box (2 Columns Layout) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT COLUMN : Interactive Form Controls -->
+        <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl shadow-glass border border-slate-200/90 space-y-7" id="simulator-form-container">
+          
+          <!-- STEP 1 : Choix du Service (5 Pills) -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <label class="block text-xs font-bold uppercase tracking-wider text-navy-900">
+                1. Choisissez votre domaine d'intervention <span class="text-azure-600">*</span>
+              </label>
+              <span class="text-[11px] font-semibold text-slate-400">Cliquez pour sélectionner</span>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="services-picker">
+              
+              <!-- Option 1 -->
+              <button 
+                type="button" 
+                data-service-val="Propreté des Biens Immobiliers (Villas & Appartements)" 
+                class="service-pill text-left p-3.5 rounded-2xl border text-xs font-bold flex items-center gap-3 transition-all duration-200 border-azure-500 bg-azure-50 text-azure-800 shadow-sm"
+              >
+                <div class="w-8 h-8 rounded-xl bg-azure-500 text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-house"></i>
+                </div>
+                <div>
+                  <p class="font-bold">Biens Immobiliers</p>
+                  <p class="text-[10px] text-slate-500 font-normal">Villas, appartements, duplex</p>
+                </div>
+              </button>
+
+              <!-- Option 2 -->
+              <button 
+                type="button" 
+                data-service-val="Nettoyage & Entretien d'Entreprises (Bureaux & Sièges)" 
+                class="service-pill text-left p-3.5 rounded-2xl border text-xs font-bold flex items-center gap-3 transition-all duration-200 border-slate-200 hover:border-azure-300 text-slate-700 hover:bg-slate-50"
+              >
+                <div class="w-8 h-8 rounded-xl bg-slate-100 text-navy-800 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-building"></i>
+                </div>
+                <div>
+                  <p class="font-bold">Entreprises & Bureaux</p>
+                  <p class="text-[10px] text-slate-500 font-normal">Sociétés, banques, commerces</p>
+                </div>
+              </button>
+
+              <!-- Option 3 -->
+              <button 
+                type="button" 
+                data-service-val="Salles & Espaces Événementiels (Avant / Après Réception)" 
+                class="service-pill text-left p-3.5 rounded-2xl border text-xs font-bold flex items-center gap-3 transition-all duration-200 border-slate-200 hover:border-azure-300 text-slate-700 hover:bg-slate-50"
+              >
+                <div class="w-8 h-8 rounded-xl bg-slate-100 text-navy-800 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-champagne-glasses"></i>
+                </div>
+                <div>
+                  <p class="font-bold">Salles & Événements</p>
+                  <p class="text-[10px] text-slate-500 font-normal">Mariages, fêtes, salons</p>
+                </div>
+              </button>
+
+              <!-- Option 4 -->
+              <button 
+                type="button" 
+                data-service-val="Aménagement & Entretien de Jardins (Espaces Verts)" 
+                class="service-pill text-left p-3.5 rounded-2xl border text-xs font-bold flex items-center gap-3 transition-all duration-200 border-slate-200 hover:border-emerald-300 text-slate-700 hover:bg-slate-50"
+              >
+                <div class="w-8 h-8 rounded-xl bg-slate-100 text-emerald-600 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                  <p class="font-bold">Jardins & Espaces Verts</p>
+                  <p class="text-[10px] text-slate-500 font-normal">Tonte, taille, aménagement</p>
+                </div>
+              </button>
+
+              <!-- Option 5 (Span 2) -->
+              <button 
+                type="button" 
+                data-service-val="Nettoyage Général & Remise au Propre (Fin de Chantier)" 
+                class="service-pill sm:col-span-2 text-left p-3.5 rounded-2xl border text-xs font-bold flex items-center gap-3 transition-all duration-200 border-slate-200 hover:border-amber-300 text-slate-700 hover:bg-slate-50"
+              >
+                <div class="w-8 h-8 rounded-xl bg-slate-100 text-amber-600 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-broom"></i>
+                </div>
+                <div>
+                  <p class="font-bold">Nettoyage Général & Fin de Chantier</p>
+                  <p class="text-[10px] text-slate-500 font-normal">Après travaux, grand décapage, remise à neuf</p>
+                </div>
+              </button>
+
+            </div>
+          </div>
+
+          <!-- STEP 2 : Fréquence Souhaitée -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-navy-900 mb-3">
+              2. Fréquence souhaitée <span class="text-azure-600">*</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="frequency-picker">
+              
+              <button 
+                type="button" 
+                data-freq-val="Intervention ponctuelle / Urgence" 
+                class="freq-pill p-3 rounded-xl border text-xs font-bold text-center transition-all duration-200 border-azure-500 bg-azure-50 text-azure-800 shadow-sm"
+              >
+                <i class="fa-solid fa-bolt text-azure-500 block text-base mb-1"></i>
+                <span>Ponctuelle / Urgence</span>
+              </button>
+
+              <button 
+                type="button" 
+                data-freq-val="Entretien régulier (Hebdomadaire / Mensuel)" 
+                class="freq-pill p-3 rounded-xl border text-xs font-bold text-center transition-all duration-200 border-slate-200 hover:border-azure-300 text-slate-700 hover:bg-slate-50"
+              >
+                <i class="fa-solid fa-repeat text-slate-400 block text-base mb-1"></i>
+                <span>Entretien Régulier</span>
+              </button>
+
+              <button 
+                type="button" 
+                data-freq-val="Fin de chantier / Grand événement" 
+                class="freq-pill p-3 rounded-xl border text-xs font-bold text-center transition-all duration-200 border-slate-200 hover:border-azure-300 text-slate-700 hover:bg-slate-50"
+              >
+                <i class="fa-solid fa-calendar-check text-slate-400 block text-base mb-1"></i>
+                <span>Chantier / Événement</span>
+              </button>
+
+            </div>
+          </div>
+
+          <!-- STEP 3 : Coordonnées & Précisions -->
+          <div class="space-y-4">
+            <label class="block text-xs font-bold uppercase tracking-wider text-navy-900">
+              3. Détails & Localisation à Lomé
+            </label>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Nom -->
+              <div>
+                <label for="client-name" class="block text-xs font-medium text-slate-600 mb-1">Votre Nom ou Entreprise</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-user text-xs"></i>
+                  </span>
+                  <input 
+                    type="text" 
+                    id="client-name" 
+                    placeholder="Ex: M. Mensah / Société Global" 
+                    class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-azure-500 focus:border-transparent transition"
+                  />
+                </div>
+              </div>
+
+              <!-- Téléphone -->
+              <div>
+                <label for="client-phone" class="block text-xs font-medium text-slate-600 mb-1">Numéro de Téléphone</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-phone text-xs"></i>
+                  </span>
+                  <input 
+                    type="tel" 
+                    id="client-phone" 
+                    placeholder="Ex: +228 70 16 27 40" 
+                    class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-azure-500 focus:border-transparent transition"
+                  />
+                </div>
+              </div>
+
+              <!-- Quartier -->
+              <div>
+                <label for="client-district" class="block text-xs font-medium text-slate-600 mb-1">Quartier / Ville</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-location-dot text-xs"></i>
+                  </span>
+                  <input 
+                    type="text" 
+                    id="client-district" 
+                    placeholder="Ex: Tokoin, Bè, Agoè, Baguida..." 
+                    class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-azure-500 focus:border-transparent transition"
+                  />
+                </div>
+              </div>
+
+              <!-- Date souhaitée -->
+              <div>
+                <label for="client-date" class="block text-xs font-medium text-slate-600 mb-1">Date d'Intervention Souhaitée</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-calendar text-xs"></i>
+                  </span>
+                  <input 
+                    type="text" 
+                    id="client-date" 
+                    placeholder="Ex: Dès que possible / Samedi prochain" 
+                    class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-azure-500 focus:border-transparent transition"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Précisions / Superficie -->
+            <div>
+              <label for="client-details" class="block text-xs font-medium text-slate-600 mb-1">
+                Précisions sur l'espace (Superficie, nombre de pièces, état des lieux...)
+              </label>
+              <textarea 
+                id="client-details" 
+                rows="3" 
+                placeholder="Ex: Villa de 4 chambres avec salon et grande terrasse carrelée. Présence d'un jardin avec pelouse d'environ 250m² à tondre." 
+                class="w-full p-3 rounded-xl border border-slate-200 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-azure-500 focus:border-transparent transition"
+              ></textarea>
+            </div>
+
+          </div>
+
+          <!-- Micro notice -->
+          <div class="flex items-center gap-2 text-[11px] text-slate-500">
+            <i class="fa-solid fa-lock text-emerald-500"></i>
+            <span>Aucune inscription requise. Votre demande est directement transmise sur WhatsApp.</span>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN : Real-time WhatsApp Chat Screen Mockup -->
+        <div class="lg:col-span-5 sticky top-28 space-y-4">
+          
+          <div class="rounded-3xl bg-[#0B141A] border-4 border-slate-300 shadow-2xl overflow-hidden">
+            
+            <!-- WhatsApp Screen Header -->
+            <div class="bg-[#1F2C34] px-4 py-3.5 flex items-center justify-between text-white border-b border-slate-800">
+              <div class="flex items-center gap-3">
+                <div class="relative w-10 h-10 rounded-full overflow-hidden border border-white/20">
+                  <img src="logo.png" alt="MR PROPRE" class="w-full h-full object-contain bg-white rounded-full" />
+                  <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#1F2C34]"></span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm leading-tight text-white flex items-center gap-1.5">
+                    MR PROPRE Lomé
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-xs" title="Vérifié"></i>
+                  </h4>
+                  <p class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    En ligne • Service Client
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 text-slate-400 text-sm">
+                <i class="fa-solid fa-video hover:text-white cursor-pointer"></i>
+                <i class="fa-solid fa-phone hover:text-white cursor-pointer"></i>
+                <i class="fa-solid fa-ellipsis-vertical hover:text-white cursor-pointer"></i>
+              </div>
+            </div>
+
+            <!-- WhatsApp Chat Body with WhatsApp Pattern BG -->
+            <div class="p-4 bg-[#0B141A] min-h-[350px] flex flex-col justify-between space-y-4 bg-opacity-95 relative" style="background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 16px 16px;">
+              
+              <!-- Encryption notice pill -->
+              <div class="text-center">
+                <span class="inline-block px-3 py-1 bg-[#182229] text-[#8696A0] text-[10px] rounded-lg shadow-sm border border-white/5">
+                  🔒 Message sécurisé chiffré de bout en bout
+                </span>
+              </div>
+
+              <!-- Automated Message Bubble -->
+              <div class="self-end max-w-[92%] bg-[#005C4B] text-[#E9EDEF] rounded-2xl rounded-tr-none p-3.5 shadow-md relative text-xs leading-relaxed space-y-2 border border-emerald-500/20">
+                
+                <div class="font-bold text-emerald-300 border-b border-emerald-600/40 pb-1.5 flex items-center justify-between text-[11px]">
+                  <span>✨ NOUVELLE DEMANDE DE DEVIS</span>
+                  <span class="text-[9px] uppercase tracking-wider text-emerald-200">MR PROPRE</span>
+                </div>
+
+                <div class="space-y-1.5 text-[11px] font-sans">
+                  <p><strong class="text-white">👤 Client / Société :</strong> <span id="preview-name" class="text-emerald-100 font-semibold">[Non renseigné]</span></p>
+                  <p><strong class="text-white">📍 Localisation :</strong> <span id="preview-district" class="text-emerald-100 font-semibold">Lomé, Togo</span></p>
+                  <p><strong class="text-white">📞 Contact :</strong> <span id="preview-phone" class="text-emerald-100">[Non renseigné]</span></p>
+                  
+                  <div class="pt-1 border-t border-emerald-700/50">
+                    <p><strong class="text-white">🛠️ Prestation demandée :</strong></p>
+                    <p id="preview-service" class="text-emerald-200 font-bold bg-emerald-900/40 px-2 py-1 rounded mt-0.5">
+                      Propreté des Biens Immobiliers (Villas & Appartements)
+                    </p>
+                  </div>
+
+                  <p><strong class="text-white">⏱️ Fréquence :</strong> <span id="preview-frequency" class="text-emerald-100 font-semibold">Intervention ponctuelle / Urgence</span></p>
+                  <p><strong class="text-white">📅 Date souhaitée :</strong> <span id="preview-date" class="text-emerald-100 font-semibold">Dès que possible</span></p>
+
+                  <div class="pt-1 border-t border-emerald-700/50">
+                    <p><strong class="text-white">📝 Détails & Superficie :</strong></p>
+                    <p id="preview-details" class="italic text-emerald-100/90 bg-emerald-900/30 p-2 rounded text-[10.5px]">
+                      Demande d'estimation rapide pour intervention sur Lomé.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="pt-1 text-[10px] text-emerald-300/80 italic">
+                  💬 Merci de me transmettre un devis détaillé avec vos disponibilités.
+                </div>
+
+                <!-- Timestamp & Blue double ticks -->
+                <div class="flex items-center justify-end gap-1 text-[10px] text-emerald-300/80 pt-1">
+                  <span id="chat-time">12:00</span>
+                  <i class="fa-solid fa-check-double text-azure-400"></i>
+                </div>
+
+              </div>
+
+              <!-- Input bar simulation -->
+              <div class="flex items-center gap-2 bg-[#1F2C34] p-2 rounded-full border border-slate-700/50">
+                <i class="fa-regular fa-face-smile text-slate-400 ml-2"></i>
+                <span class="text-xs text-slate-400 flex-1 truncate">Message prêt à être envoyé...</span>
+                <i class="fa-solid fa-paperclip text-slate-400"></i>
+                <div class="w-8 h-8 rounded-full bg-[#00A884] text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-paper-plane text-xs"></i>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Main WhatsApp Send Button -->
+          <div class="space-y-2.5">
+            <a 
+              id="whatsapp-submit-btn" 
+              href="https://wa.me/22870162740" 
+              target="_blank" 
+              class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-display font-bold text-base shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3"
+            >
+              <i class="fa-brands fa-whatsapp text-2xl"></i>
+              <span>Envoyer ma demande sur WhatsApp</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+
+            <!-- Quick copy button as fallback -->
+            <button 
+              type="button" 
+              onclick="copyPreviewText()" 
+              id="copy-text-btn"
+              class="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs border border-slate-200 flex items-center justify-center gap-2 transition"
+            >
+              <i class="fa-regular fa-copy"></i>
+              <span>Copier le texte du message</span>
+            </button>
+          </div>
+
+          <!-- Direct Call Box -->
+          <div class="p-4 rounded-2xl bg-white border border-slate-200/80 text-center text-xs text-slate-600">
+            <span class="font-medium">Vous préférez un échange téléphonique immédiat ?</span><br>
+            <a href="tel:+22870162740" class="text-azure-600 font-bold hover:underline inline-flex items-center gap-1.5 mt-1">
+              <i class="fa-solid fa-phone"></i> Appelez le +228 70 16 27 40
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- SECTION : AVIS & TÉMOIGNAGES LOMÉ -->
+  <!-- ========================================================================= -->
+  <section id="temoignages" class="py-20 bg-white border-y border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wider">
+          <i class="fa-solid fa-star text-amber-500"></i> Témoignages & Confiance
+        </div>
+        <h2 class="font-display font-black text-3xl sm:text-4xl text-navy-900 tracking-tight">
+          Ce que nos clients disent de nous à Lomé
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base">
+          Des entreprises leaders aux propriétaires exigeants, découvrez leurs retours d'expérience avec MR PROPRE.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center gap-1 text-amber-400 text-xs">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+              "Nous avons confié l'entretien régulier de nos bureaux à Tokoin à l'équipe de Mr Propre. Ponctualité exemplaire, discrétion et sols toujours impeccables. C'est un vrai confort pour notre société."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200/60">
+            <div class="w-10 h-10 rounded-full bg-azure-100 text-azure-700 font-bold flex items-center justify-center text-xs">
+              KA
+            </div>
+            <div>
+              <p class="text-xs font-bold text-navy-900">M. Koffi Agbeko</p>
+              <p class="text-[11px] text-slate-500">Directeur Général, Cabinet Conseil • Tokoin</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center gap-1 text-amber-400 text-xs">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+              "Nettoyage fin de chantier après la rénovation complète de notre villa à Lomé II. Toutes les traces tenaces de ciment et de peinture ont disparu en une journée. Service rapide et devis WhatsApp très clair !"
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200/60">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs">
+              DA
+            </div>
+            <div>
+              <p class="text-xs font-bold text-navy-900">Mme Delphine Adanlete</p>
+              <p class="text-[11px] text-slate-500">Propriétaire Résidentielle • Lomé II</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center gap-1 text-amber-400 text-xs">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+              "L'entretien de notre espace événementiel et du jardin paysager à Baguida est assuré par Mr Propre. Le gazon est magnifique, les haies taillées au millimètre. Nos mariés sont toujours conquis."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200/60">
+            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs">
+              EL
+            </div>
+            <div>
+              <p class="text-xs font-bold text-navy-900">Espace Le Palmier</p>
+              <p class="text-[11px] text-slate-500">Gestionnaire Événementiel • Baguida</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- FAQ ACCORDION -->
+  <!-- ========================================================================= -->
+  <section class="py-16 bg-[#F8FAFC]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center mb-10 space-y-2">
+        <h3 class="font-display font-bold text-2xl sm:text-3xl text-navy-900">Questions Fréquentes</h3>
+        <p class="text-xs sm:text-sm text-slate-500">Tout ce que vous devez savoir pour votre intervention</p>
+      </div>
+
+      <div class="space-y-3" id="faq-container">
+        
+        <!-- FAQ 1 -->
+        <div class="rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-sm">
+          <button type="button" class="faq-toggle w-full px-6 py-4 text-left font-bold text-sm text-navy-900 flex items-center justify-between gap-4">
+            <span>Comment se déroule la validation du devis et l'intervention ?</span>
+            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Vous envoyez votre demande via notre simulateur WhatsApp. Notre équipe analyse les paramètres et vous répond sous 60 minutes avec une estimation tarifaire claire. Dès votre accord, un créneau d'intervention est planifié selon vos convenances.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-sm">
+          <button type="button" class="faq-toggle w-full px-6 py-4 text-left font-bold text-sm text-navy-900 flex items-center justify-between gap-4">
+            <span>Fournissez-vous l'ensemble du matériel et des produits de nettoyage ?</span>
+            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Absolument ! Notre équipe arrive sur place avec tous les équipements industriels nécessaires (aspirateurs professionnels, nettoyeurs haute pression, tondeuses, escabeaux) et des produits désinfectants de haute qualité adaptés à chaque type de surface.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-sm">
+          <button type="button" class="faq-toggle w-full px-6 py-4 text-left font-bold text-sm text-navy-900 flex items-center justify-between gap-4">
+            <span>Quelles sont vos zones géographiques d'intervention au Togo ?</span>
+            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Nous intervenons sur l'ensemble du Grand Lomé : Tokoin, Hedzranawoé, Agoè-Nyivé, Baguida, Nyékonakpoè, Kodjoviakopé, Bè, Adidogomé, Aflao, ainsi que sur les zones péri-urbaines et côtières. Pour les chantiers d'envergure, nous nous déplaçons également en région.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-sm">
+          <button type="button" class="faq-toggle w-full px-6 py-4 text-left font-bold text-sm text-navy-900 flex items-center justify-between gap-4">
+            <span>Intervenez-vous en urgence le week-end ou en soirée ?</span>
+            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Oui, notre service d'astreinte est opérationnel 7j/7 pour les urgences (infiltrations, sinistres légers, nettoyage urgent après événement ou état des lieux précipité). Contactez directement notre ligne d'urgence via WhatsApp.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER PROFESSIONNEL -->
+  <!-- ========================================================================= -->
+  <footer class="bg-navy-900 text-slate-300 pt-16 pb-12 border-t border-navy-700/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-navy-700/60">
+        
+        <!-- Brand Info -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <img src="logo.png" alt="MR PROPRE" class="h-10 w-auto object-contain rounded-xl bg-white p-1" />
+            <div>
+              <span class="font-display font-extrabold text-xl text-white tracking-tight">MR PROPRE</span>
+              <p class="text-[10px] text-azure-400 uppercase tracking-wider font-semibold">Propreté & Espaces Verts • Lomé</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            La référence à Lomé pour le nettoyage professionnel, la remise en état après travaux et l'aménagement de vos jardins. Rigueur, confiance et résultat garanti.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <a href="https://wa.me/22870162740" target="_blank" class="w-9 h-9 rounded-xl bg-navy-800 hover:bg-emerald-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="tel:+22870162740" class="w-9 h-9 rounded-xl bg-navy-800 hover:bg-azure-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="mailto:contact@mrpropre-lome.com" class="w-9 h-9 rounded-xl bg-navy-800 hover:bg-azure-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links : Services -->
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider">Nos 5 Domaines</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#services" class="hover:text-azure-400 transition-colors">Propreté des Biens Immobiliers</a></li>
+            <li><a href="#services" class="hover:text-azure-400 transition-colors">Nettoyage d'Entreprises & Bureaux</a></li>
+            <li><a href="#services" class="hover:text-azure-400 transition-colors">Salles & Espaces Événementiels</a></li>
+            <li><a href="#services" class="hover:text-emerald-400 transition-colors">Aménagement & Entretien de Jardins</a></li>
+            <li><a href="#services" class="hover:text-amber-400 transition-colors">Nettoyage Fin de Chantier & Rénovation</a></li>
+          </ul>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider">Navigation</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#" class="hover:text-white transition-colors">Accueil</a></li>
+            <li><a href="#pourquoi-nous" class="hover:text-white transition-colors">Pourquoi Nous ?</a></li>
+            <li><a href="#engagements" class="hover:text-white transition-colors">Nos Chiffres & Garanties</a></li>
+            <li><a href="#temoignages" class="hover:text-white transition-colors">Avis Clients</a></li>
+            <li><a href="#devis" class="hover:text-emerald-400 font-bold transition-colors">Simulateur Devis</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Lomé -->
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider">Contact & Siège</h4>
+          <div class="space-y-2 text-xs text-slate-400">
+            <p class="flex items-start gap-2.5">
+              <i class="fa-solid fa-location-dot text-azure-400 mt-0.5"></i>
+              <span>Quartier Résidentiel, Boulevard du 13 Janvier, Lomé - Togo</span>
+            </p>
+            <p class="flex items-center gap-2.5">
+              <i class="fa-solid fa-phone text-azure-400"></i>
+              <a href="tel:+22870162740" class="hover:text-white">+228 70 16 27 40</a>
+            </p>
+            <p class="flex items-center gap-2.5">
+              <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+              <a href="https://wa.me/22870162740" target="_blank" class="hover:text-white font-medium text-emerald-400">WhatsApp : +228 70 16 27 40</a>
+            </p>
+            <p class="flex items-center gap-2.5">
+              <i class="fa-solid fa-envelope text-azure-400"></i>
+              <span>contact@mrpropre-lome.com</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright & Bottom Line -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026 MR PROPRE - Tous droits réservés. Entreprise enregistrée à Lomé, Togo.</p>
+        <p class="flex items-center gap-2">
+          <span>Propreté irréprochable • Aménagement paysager soigné</span>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ========================================================================= -->
+  <!-- FLOATING WHATSAPP BUTTON (BOTTOM RIGHT) -->
+  <!-- ========================================================================= -->
+  <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    
+    <!-- Tooltip Bubble -->
+    <div class="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white shadow-xl border border-slate-200 text-xs font-bold text-navy-900 animate-pulse">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span>Besoin d'un devis immédiat ? Écrivez-nous !</span>
+    </div>
+
+    <!-- Floating Icon with Pulse Ring -->
+    <a 
+      href="https://wa.me/22870162740?text=Bonjour%20MR%20PROPRE%2C%20je%20souhaite%20obtenir%20un%20devis%20rapide." 
+      target="_blank" 
+      aria-label="Contacter sur WhatsApp" 
+      class="relative w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/40 hover:scale-110 active:scale-95 transition-all duration-300 group"
+    >
+      <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-40 animate-ping"></span>
+      <i class="fa-brands fa-whatsapp text-3xl group-hover:rotate-12 transition-transform"></i>
+    </a>
+
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT : INTERACTIVITÉ DU SIMULATEUR & ANIMATIONS GSAP -->
+  <!-- ========================================================================= -->
+  <script>
+    // State of the Quote Simulator
+    const quoteState = {
+      service: "Propreté des Biens Immobiliers (Villas & Appartements)",
+      frequency: "Intervention ponctuelle / Urgence",
+      name: "",
+      phone: "",
+      district: "",
+      date: "",
+      details: "",
+      whatsappPhone: "22870162740"
+    };
+
+    // Update WhatsApp Live Preview & Target Link
+    function updateWhatsAppPreview() {
+      // Inputs values
+      const nameVal = document.getElementById('client-name').value.trim();
+      const phoneVal = document.getElementById('client-phone').value.trim();
+      const districtVal = document.getElementById('client-district').value.trim();
+      const dateVal = document.getElementById('client-date').value.trim();
+      const detailsVal = document.getElementById('client-details').value.trim();
+
+      quoteState.name = nameVal || "[Non renseigné]";
+      quoteState.phone = phoneVal || "[Non renseigné]";
+      quoteState.district = districtVal || "Lomé, Togo";
+      quoteState.date = dateVal || "Dès que possible";
+      quoteState.details = detailsVal || "Demande d'estimation rapide pour intervention sur Lomé.";
+
+      // DOM Preview Update
+      document.getElementById('preview-name').innerText = quoteState.name;
+      document.getElementById('preview-phone').innerText = quoteState.phone;
+      document.getElementById('preview-district').innerText = quoteState.district;
+      document.getElementById('preview-date').innerText = quoteState.date;
+      document.getElementById('preview-details').innerText = quoteState.details;
+      document.getElementById('preview-service').innerText = quoteState.service;
+      document.getElementById('preview-frequency').innerText = quoteState.frequency;
+
+      // Current Time
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('chat-time').innerText = `${hours}:${minutes}`;
+
+      // Build Formatted Message for WhatsApp URL
+      const fullMessage = 
+`✨ *NOUVELLE DEMANDE DE DEVIS - MR PROPRE LOMÉ* ✨
+━━━━━━━━━━━━━━━━━━━━━
+👤 *Client / Société :* ${quoteState.name}
+📍 *Localisation :* ${quoteState.district}
+📞 *Contact :* ${quoteState.phone}
+
+🛠️ *Prestation demandée :*
+👉 ${quoteState.service}
+
+⏱️ *Fréquence souhaitée :* ${quoteState.frequency}
+📅 *Date souhaitée :* ${quoteState.date}
+
+📝 *Détails & Superficie :*
+${quoteState.details}
+━━━━━━━━━━━━━━━━━━━━━
+💬 _Demande générée depuis mrpropre-lome.com. Merci de me transmettre un devis détaillé avec vos disponibilités._`;
+
+      // Update CTA Link
+      const encodedMessage = encodeURIComponent(fullMessage);
+      const whatsappUrl = `https://wa.me/${quoteState.whatsappPhone}?text=${encodedMessage}`;
+      document.getElementById('whatsapp-submit-btn').setAttribute('href', whatsappUrl);
+    }
+
+    // Interactive Service Selection Pills
+    const servicePills = document.querySelectorAll('.service-pill');
+    servicePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        servicePills.forEach(p => {
+          p.classList.remove('border-azure-500', 'bg-azure-50', 'text-azure-800', 'shadow-sm');
+          p.classList.add('border-slate-200', 'text-slate-700');
+          const iconBox = p.querySelector('div');
+          if (iconBox) {
+            iconBox.classList.remove('bg-azure-500', 'text-white');
+            iconBox.classList.add('bg-slate-100', 'text-navy-800');
+          }
+        });
+
+        pill.classList.remove('border-slate-200', 'text-slate-700');
+        pill.classList.add('border-azure-500', 'bg-azure-50', 'text-azure-800', 'shadow-sm');
+        const activeIcon = pill.querySelector('div');
+        if (activeIcon) {
+          activeIcon.classList.remove('bg-slate-100', 'text-navy-800');
+          activeIcon.classList.add('bg-azure-500', 'text-white');
+        }
+
+        quoteState.service = pill.getAttribute('data-service-val');
+        updateWhatsAppPreview();
+      });
+    });
+
+    // Interactive Frequency Selection Pills
+    const freqPills = document.querySelectorAll('.freq-pill');
+    freqPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        freqPills.forEach(p => {
+          p.classList.remove('border-azure-500', 'bg-azure-50', 'text-azure-800', 'shadow-sm');
+          p.classList.add('border-slate-200', 'text-slate-700');
+          const icon = p.querySelector('i');
+          if (icon) {
+            icon.classList.remove('text-azure-500');
+            icon.classList.add('text-slate-400');
+          }
+        });
+
+        pill.classList.remove('border-slate-200', 'text-slate-700');
+        pill.classList.add('border-azure-500', 'bg-azure-50', 'text-azure-800', 'shadow-sm');
+        const activeIcon = pill.querySelector('i');
+        if (activeIcon) {
+          activeIcon.classList.remove('text-slate-400');
+          activeIcon.classList.add('text-azure-500');
+        }
+
+        quoteState.frequency = pill.getAttribute('data-freq-val');
+        updateWhatsAppPreview();
+      });
+    });
+
+    // Listen to form input changes in real-time
+    ['client-name', 'client-phone', 'client-district', 'client-date', 'client-details'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateWhatsAppPreview);
+      }
+    });
+
+    // Helper: Select service from cards above and smooth scroll to quote simulator
+    function selectServiceAndScroll(serviceKey, serviceFullName) {
+      // Find matching pill
+      const targetPill = Array.from(servicePills).find(pill => 
+        pill.getAttribute('data-service-val').includes(serviceFullName) || 
+        pill.getAttribute('data-service-val').toLowerCase().includes(serviceKey.toLowerCase())
+      );
+
+      if (targetPill) {
+        targetPill.click();
+      } else {
+        quoteState.service = serviceFullName;
+        updateWhatsAppPreview();
+      }
+
+      // Smooth scroll to devis section
+      const devisSection = document.getElementById('devis');
+      if (devisSection) {
+        devisSection.scrollIntoView({ behavior: 'smooth' });
+
+        // Highlight form container briefly
+        const formContainer = document.getElementById('simulator-form-container');
+        if (formContainer) {
+          formContainer.classList.add('ring-4', 'ring-azure-400', 'transition-all');
+          setTimeout(() => {
+            formContainer.classList.remove('ring-4', 'ring-azure-400');
+          }, 1200);
+        }
+      }
+    }
+
+    // Copy Preview Text to Clipboard
+    function copyPreviewText() {
+      const message = 
+`✨ *NOUVELLE DEMANDE DE DEVIS - MR PROPRE LOMÉ* ✨
+👤 Client : ${quoteState.name}
+📍 Quartier : ${quoteState.district}
+📞 Contact : ${quoteState.phone}
+🛠️ Prestation : ${quoteState.service}
+⏱️ Fréquence : ${quoteState.frequency}
+📅 Date : ${quoteState.date}
+📝 Détails : ${quoteState.details}`;
+
+      navigator.clipboard.writeText(message).then(() => {
+        const btn = document.getElementById('copy-text-btn');
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = `<i class="fa-solid fa-check text-emerald-500"></i> <span class="text-emerald-600 font-bold">Texte copié avec succès !</span>`;
+        setTimeout(() => {
+          btn.innerHTML = originalContent;
+        }, 2200);
+      });
+    }
+
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', () => {
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        if (isOpen) {
+          mobileMenu.classList.add('hidden');
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        } else {
+          mobileMenu.classList.remove('hidden');
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-xmark');
+        }
+      });
+
+      // Close menu on nav link click
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        });
+      });
+    }
+
+    // FAQ Accordion Toggle
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('i');
+        const isExpanded = !content.classList.contains('hidden');
+
+        // Close all
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-toggle i').forEach(i => i.classList.remove('rotate-180'));
+
+        if (!isExpanded) {
+          content.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // Initialize Preview on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateWhatsAppPreview();
+
+      // GSAP Animations with ScrollTrigger
+      if (typeof gsap !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Content Fade In
+        gsap.from('.hero-content > *', {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power2.out'
+        });
+
+        // Hero Visual Reveal
+        gsap.from('.hero-visual', {
+          x: 40,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+          delay: 0.2
+        });
+
+        // Service Cards Stagger on Scroll (no opacity to avoid invisible cards)
+        gsap.from('.service-card', {
+          scrollTrigger: {
+            trigger: '#services',
+            start: 'top 75%'
+          },
+          y: 40,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power2.out'
+        });
+
+        // Why Us Cards Stagger (no opacity to avoid invisible cards)
+        gsap.from('#pourquoi-nous .card-3d-hover', {
+          scrollTrigger: {
+            trigger: '#pourquoi-nous',
+            start: 'top 75%'
+          },
+          y: 40,
+          duration: 0.7,
+          stagger: 0.15,
+          ease: 'power2.out'
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
