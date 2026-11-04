@@ -1,1361 +1,528 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NOVA STUDIO Lomé | Agence Digitale • Sites Web Clé en Main & WhatsApp</title>
-  <meta name="description" content="Agence digitale à Lomé spécialisée dans la création de sites web haute conversion connectés à WhatsApp, boutiques e-commerce express et logos HD livrés en 48h.">
-  <meta name="theme-color" content="#090D16">
+  <meta name="google-site-verification" content="QTzAK8WLsPOTwuTMtXdZNBFVSGYJzHXg0_GYtVW4f6Y" />
+  <title>RODIS STUDIO® — Agence Digitale • Lomé</title>
+  <meta name="description" content="RODIS STUDIO — Agence digitale à Lomé. Sites vitrines, boutiques WhatsApp et logos HD livrés en 48h.">
 
-  <!-- Google Fonts : Outfit & Plus Jakarta Sans -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- Tailwind CSS via CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            nova: {
-              bg: '#090D16',
-              surface: '#0E1524',
-              card: '#131B2E',
-              border: 'rgba(255, 255, 255, 0.08)',
-              blue: '#3B82F6',
-              cyan: '#06B6D4',
-              violet: '#8B5CF6',
-              emerald: '#10B981'
-            }
+            forest: { 900: '#0A1910', 800: '#0F2118', 700: '#142E1F', 600: '#1A3D2A' },
+            electric: { DEFAULT: '#22C55E', light: '#38E54D', dim: '#1A9B47' }
           },
           fontFamily: {
-            display: ['"Outfit"', 'sans-serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          },
-          boxShadow: {
-            'glow-blue': '0 0 35px -5px rgba(59, 130, 246, 0.35)',
-            'glow-violet': '0 0 35px -5px rgba(139, 92, 246, 0.35)',
-            'glow-emerald': '0 0 35px -5px rgba(16, 185, 129, 0.35)',
-            'card-glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+            display: ['Syne', 'sans-serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif']
           }
         }
       }
     }
   </script>
 
-  <!-- GSAP CDN -->
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
-    /* Custom Styling for High-End Dark Aesthetic */
-    body {
-      background-color: #090D16;
-      color: #E2E8F0;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0A1910; color: #FFFFFF; overflow-x: hidden; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0A1910; }
+    ::-webkit-scrollbar-thumb { background: #22C55E; border-radius: 3px; }
+
+    /* Selection */
+    ::selection { background: #22C55E; color: #0A1910; }
+
+    /* Diamond shape */
+    .diamond {
+      width: 320px; height: 320px;
+      transform: rotate(45deg);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.06) 0%, rgba(34, 197, 94, 0.02) 100%);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: 0 0 120px rgba(34, 197, 94, 0.08), inset 0 0 60px rgba(34, 197, 94, 0.03);
+      position: absolute;
+      right: 12%;
+      top: 50%;
+      margin-top: -160px;
+    }
+    .diamond::before {
+      content: '';
+      position: absolute;
+      inset: -80px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
     }
 
-    .glass-panel {
-      background: rgba(19, 27, 46, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    @media (max-width: 768px) {
+      .diamond { width: 180px; height: 180px; margin-top: -90px; right: 5%; opacity: 0.4; }
     }
 
-    .glass-panel-hover {
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Nav link hover */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: #22C55E;
+      transition: width 0.3s ease;
     }
-    .glass-panel-hover:hover {
-      border-color: rgba(59, 130, 246, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 15px 35px -10px rgba(59, 130, 246, 0.25);
+    .nav-link:hover::after { width: 100%; }
+
+    /* Card hover */
+    .project-card {
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .project-card:hover { transform: translateY(-8px); }
+
+    /* Service column */
+    .service-col {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.4s ease;
+    }
+    .service-col:hover { background: rgba(34, 197, 94, 0.04); }
+
+    /* Button glow */
+    .btn-electric {
+      background: #22C55E;
+      color: #0A1910;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .btn-electric:hover {
+      background: #38E54D;
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
     }
 
-    .text-gradient-electric {
-      background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 40%, #A855F7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* Ghost button */
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+    .btn-ghost:hover {
+      border-color: #22C55E;
+      color: #22C55E;
     }
 
-    .text-gradient-accent {
-      background: linear-gradient(135deg, #38BDF8 0%, #3B82F6 50%, #10B981 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* Mobile menu */
+    .mobile-menu {
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
+    .mobile-menu.open { transform: translateY(0); }
 
-    .bg-grid-cyber {
-      background-size: 40px 40px;
-      background-image: 
-        linear-gradient(to right, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+    /* Form select/input styling */
+    select, input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      transition: border-color 0.3s;
     }
-
-    .badge-glow {
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    select:focus, input:focus {
+      outline: none;
+      border-color: #22C55E;
     }
-
-    /* Force all critical content cards visible by default */
-    .card-visible {
-      opacity: 1 !important;
-      transform: none !important;
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #090D16;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #1E293B;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #3B82F6;
-    }
+    select option { background: #0F2118; color: #fff; }
   </style>
-  <meta name="google-site-verification" content="QTzAK8WLsPOTwuTMtXdZNBFVSGYJzHXg0_GYtVW4f6Y" />
 </head>
+<body>
 
-<body class="bg-nova-bg text-slate-200 font-sans antialiased overflow-x-hidden selection:bg-nova-blue selection:text-white">
-
-  <!-- ========================================================================= -->
-  <!-- TOP ANNOUNCEMENT BAR -->
-  <!-- ========================================================================= -->
-  <div class="bg-gradient-to-r from-blue-900/60 via-purple-900/40 to-blue-900/60 border-b border-white/5 py-2 px-4 text-xs text-center font-medium relative z-50">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[11px] font-semibold">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-          Disponibilité Immédiate
-        </span>
-        <span class="text-slate-300">Votre site vitrine ou boutique WhatsApp livré en <strong>48 heures</strong> à Lomé.</span>
-      </div>
-      <div class="flex items-center gap-4 text-slate-400">
-        <a href="tel:+22893095094" class="hover:text-white transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-phone text-blue-400"></i> +228 93 09 50 94
-        </a>
-        <a href="https://wa.me/22893095094?text=Bonjour%20NOVA%20STUDIO%2C%20je%20souhaite%20lancer%20un%20projet%20digital." target="_blank" class="text-emerald-400 hover:text-emerald-300 transition-colors font-bold flex items-center gap-1">
-          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Direct
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- HEADER STICKY -->
-  <!-- ========================================================================= -->
-  <header class="sticky top-0 z-40 w-full transition-all duration-300 bg-nova-bg/90 backdrop-blur-xl border-b border-white/5 shadow-2xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      
-      <!-- Logo NOVA STUDIO -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 p-[1.5px] shadow-glow-blue group-hover:scale-105 transition-transform">
-          <div class="w-full h-full bg-nova-bg rounded-[14px] flex items-center justify-center">
-            <span class="font-display font-black text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">N</span>
-            <span class="font-display font-black text-xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-emerald-400">S</span>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <div class="flex items-center gap-1.5">
-            <span class="font-display font-extrabold text-2xl tracking-tight text-white">NOVA</span>
-            <span class="font-display font-medium text-2xl tracking-tight text-blue-400">STUDIO</span>
-          </div>
-          <span class="text-[10px] tracking-widest uppercase font-semibold text-slate-400 -mt-1">
-            Digital Agency • Lomé
-          </span>
-        </div>
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-forest-900/80 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
+      <!-- Logo -->
+      <a href="#" class="font-display font-800 text-2xl lg:text-3xl tracking-tight">
+        Rodis<span class="text-electric">.</span>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden lg:flex items-center gap-8">
-        <a href="#realisations" class="text-sm font-semibold text-slate-300 hover:text-blue-400 transition-colors flex items-center gap-2">
-          <span>Réalisations</span>
-          <span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">En direct</span>
-        </a>
-        <a href="#offres" class="text-sm font-semibold text-slate-300 hover:text-blue-400 transition-colors">
-          Nos 3 Packs
-        </a>
-        <a href="#processus" class="text-sm font-semibold text-slate-300 hover:text-blue-400 transition-colors">
-          Méthode 48h
-        </a>
-        <a href="#simulateur" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-calculator text-xs"></i> Devis WhatsApp
-        </a>
-      </nav>
-
-      <!-- Quick Action CTA -->
-      <div class="hidden sm:flex items-center gap-4">
-        <a href="#simulateur" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:to-indigo-500 text-white font-display font-bold text-sm shadow-glow-blue hover:-translate-y-0.5 transition-all">
-          <i class="fa-solid fa-rocket text-xs"></i>
-          <span>Lancer mon projet</span>
-        </a>
+      <!-- Desktop Links -->
+      <div class="hidden md:flex items-center gap-10 text-sm font-body font-light tracking-wide text-white/70">
+        <a href="#hero" class="nav-link hover:text-white">Accueil</a>
+        <a href="#about" class="nav-link hover:text-white">À propos</a>
+        <a href="#services" class="nav-link hover:text-white">Services</a>
+        <a href="#projects" class="nav-link hover:text-white">Projets</a>
+        <a href="#contact" class="nav-link hover:text-white">Contact</a>
       </div>
 
-      <!-- Mobile Hamburger Button -->
-      <div class="lg:hidden flex items-center gap-2">
-        <a href="https://wa.me/22893095094" target="_blank" class="p-2 text-emerald-400 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-          <i class="fa-brands fa-whatsapp text-xl"></i>
+      <!-- CTA + Burger -->
+      <div class="flex items-center gap-4">
+        <a href="#contact" class="hidden md:inline-flex btn-electric px-6 py-2.5 rounded-full text-sm tracking-wide">
+          DÉMARRER
         </a>
-        <button id="mobile-toggle" aria-label="Menu" class="p-2.5 rounded-xl bg-nova-card border border-white/10 text-slate-200 hover:bg-slate-800 transition-colors">
-          <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
+        <button id="burger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+          <span class="block w-6 h-[1.5px] bg-white transition-all" id="bar1"></span>
+          <span class="block w-6 h-[1.5px] bg-white transition-all" id="bar2"></span>
+          <span class="block w-4 h-[1.5px] bg-white transition-all ml-auto" id="bar3"></span>
         </button>
       </div>
-
     </div>
+  </nav>
 
-    <!-- Mobile Slide-down Menu -->
-    <div id="mobile-menu" class="hidden lg:hidden bg-nova-surface border-b border-white/10 px-6 py-6 space-y-4">
-      <div class="grid gap-2 text-sm">
-        <a href="#realisations" class="mobile-nav-link flex items-center justify-between p-3 rounded-xl bg-nova-card border border-white/5 font-medium text-slate-200">
-          <span class="flex items-center gap-3">
-            <i class="fa-solid fa-layer-group text-blue-400"></i> Nos Réalisations en Direct
-          </span>
-          <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full font-bold">En direct</span>
-        </a>
-        <a href="#offres" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl bg-nova-card border border-white/5 font-medium text-slate-200">
-          <i class="fa-solid fa-boxes-packing text-blue-400"></i> Nos 3 Packs Clé en Main
-        </a>
-        <a href="#processus" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl bg-nova-card border border-white/5 font-medium text-slate-200">
-          <i class="fa-solid fa-bolt text-blue-400"></i> Processus Livraison 48h
-        </a>
-        <a href="#simulateur" class="mobile-nav-link flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-semibold">
-          <i class="fa-brands fa-whatsapp text-emerald-400 text-lg"></i> Simulateur Devis WhatsApp
-        </a>
-      </div>
-      <div class="pt-2">
-        <a href="https://wa.me/22893095094?text=Bonjour%20NOVA%20STUDIO%2C%20je%20veux%20lancer%20mon%20projet." target="_blank" class="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold rounded-xl shadow-glow-emerald">
-          <i class="fa-brands fa-whatsapp text-lg"></i> Discuter sur WhatsApp (+228 93 09 50 94)
-        </a>
-      </div>
-    </div>
-  </header>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-forest-900/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
+    <a href="#hero" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">Accueil</a>
+    <a href="#about" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">À propos</a>
+    <a href="#services" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">Services</a>
+    <a href="#projects" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">Projets</a>
+    <a href="#contact" onclick="closeMenu()" class="btn-electric px-10 py-3 rounded-full text-lg mt-4">DÉMARRER</a>
+  </div>
 
-  <!-- ========================================================================= -->
-  <!-- HERO SECTION -->
-  <!-- ========================================================================= -->
-  <section class="relative pt-12 pb-20 lg:pt-24 lg:pb-32 overflow-hidden bg-grid-cyber">
-    
-    <!-- Background Radial Glows -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-blue-600/20 via-indigo-600/15 to-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-    <div class="absolute -top-32 -right-32 w-96 h-96 bg-purple-600/15 rounded-full blur-[90px] pointer-events-none -z-10"></div>
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="relative min-h-screen flex flex-col justify-between overflow-hidden" style="background: linear-gradient(180deg, #0A1910 0%, #0F2118 50%, #0A1910 100%);">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        
-        <!-- Hero Text -->
-        <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-          
-          <!-- Badge -->
-          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-nova-card border border-blue-500/30 text-xs sm:text-sm font-semibold text-slate-300 badge-glow">
-            <span class="flex h-2.5 w-2.5 relative">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
-            </span>
-            <span class="text-blue-400 font-bold">Agence Digitale Nouvelle Génération</span>
-            <span class="text-slate-600">•</span>
-            <span class="text-slate-300">Lomé, Togo</span>
-          </div>
+    <!-- Diamond -->
+    <div class="diamond hidden md:block"></div>
 
-          <!-- Title -->
-          <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.12]">
-            Transformez vos visiteurs en clients sur 
-            <span class="text-gradient-electric">WhatsApp.</span>
-          </h1>
+    <!-- Middle content -->
+    <div class="flex-1 flex items-center">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center pt-28 md:pt-20">
 
-          <!-- Subtitle -->
-          <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-            Sites vitrines professionnels, boutiques e-commerce rapides et logos sur mesure livrés en <strong>48h chrono</strong>. Des outils de vente puissants sans abonnement mensuel, pensés pour le marché togolais et la conversion directe.
+        <!-- Left -->
+        <div class="relative z-10">
+          <p class="text-white/40 text-sm font-light tracking-widest uppercase mb-8">Agence Digitale — Lomé, Togo</p>
+          <p class="text-lg lg:text-xl font-light leading-relaxed text-white/70 max-w-md mb-10">
+            Nous concevons des solutions digitales percutantes connectées à WhatsApp qui élèvent votre présence et accélèrent vos ventes à Lomé.
           </p>
-
-          <!-- CTAs -->
-          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-            <a href="#realisations" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-display font-bold text-base shadow-glow-blue hover:-translate-y-1 transition-all duration-300 group">
-              <i class="fa-solid fa-eye text-blue-200 group-hover:scale-110 transition-transform"></i>
-              <span>Découvrir nos réalisations</span>
-              <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
-            </a>
-
-            <a href="#simulateur" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-nova-card hover:bg-slate-800 text-white font-display font-bold text-base border border-white/10 hover:border-blue-500/40 hover:-translate-y-1 transition-all duration-300">
-              <i class="fa-solid fa-cart-shopping text-emerald-400"></i>
-              <span>Commander mon site</span>
-            </a>
-          </div>
-
-          <!-- Trust Indicators Bar -->
-          <div class="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/10">
-            <div class="space-y-1 text-left">
-              <div class="flex items-center gap-1.5 text-blue-400 font-display font-bold text-lg">
-                <i class="fa-solid fa-bolt-lightning text-amber-400 text-sm"></i> 48H
-              </div>
-              <p class="text-xs text-slate-400">Livraison record clé en main</p>
-            </div>
-
-            <div class="space-y-1 text-left">
-              <div class="flex items-center gap-1.5 text-emerald-400 font-display font-bold text-lg">
-                <i class="fa-solid fa-ban text-red-400 text-sm"></i> 0 FCFA
-              </div>
-              <p class="text-xs text-slate-400">Zéro abonnement mensuel</p>
-            </div>
-
-            <div class="space-y-1 text-left">
-              <div class="flex items-center gap-1.5 text-white font-display font-bold text-lg">
-                <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> 100%
-              </div>
-              <p class="text-xs text-slate-400">Connecté WhatsApp Direct</p>
-            </div>
-
-            <div class="space-y-1 text-left">
-              <div class="flex items-center gap-1.5 text-indigo-400 font-display font-bold text-lg">
-                <i class="fa-solid fa-mobile-screen text-indigo-400 text-sm"></i> Ultra
-              </div>
-              <p class="text-xs text-slate-400">Optimisé mobile & 4G</p>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Hero Visual Showcase -->
-        <div class="lg:col-span-5 relative flex justify-center">
-          <div class="relative w-full max-w-lg">
-            
-            <!-- Glow background -->
-            <div class="absolute -inset-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 rounded-3xl blur-xl opacity-40 animate-pulse"></div>
-
-            <!-- Central Mockup Card -->
-            <div class="relative rounded-3xl bg-nova-surface border border-white/15 p-6 shadow-2xl space-y-5">
-              
-              <!-- Mockup Header -->
-              <div class="flex items-center justify-between pb-4 border-b border-white/10">
-                <div class="flex items-center gap-2">
-                  <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                  <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
-                  <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
-                  <span class="text-xs font-mono text-slate-400 ml-2">novastudio.tg/preview</span>
-                </div>
-                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
-                  ● EN LIGNE
-                </span>
-              </div>
-
-              <!-- Mini Showcase Screen -->
-              <div class="rounded-2xl bg-gradient-to-br from-slate-900 to-[#101726] p-4 border border-white/5 space-y-4">
-                
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs border border-blue-500/30">
-                      MP
-                    </div>
-                    <div>
-                      <p class="text-xs font-bold text-white">MR PROPRE LOMÉ</p>
-                      <p class="text-[10px] text-slate-400">Propreté & Jardins</p>
-                    </div>
-                  </div>
-                  <span class="text-[10px] font-semibold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">
-                    Site Vitrine Officiel
-                  </span>
-                </div>
-
-                <!-- Simulation WhatsApp Message Card -->
-                <div class="rounded-xl bg-[#0B141A] p-3 border border-emerald-500/30 space-y-2">
-                  <div class="flex items-center justify-between text-[10px] text-emerald-400 font-bold border-b border-white/10 pb-1">
-                    <span>✨ DEVIS WHATSAPP REÇU</span>
-                    <span>Il y a 2 min</span>
-                  </div>
-                  <p class="text-[11px] text-slate-300 leading-snug">
-                    <strong class="text-white">Client :</strong> Villa Résidentielle Lomé II<br>
-                    <strong class="text-white">Service :</strong> Remise au Propre & Jardin<br>
-                    <strong class="text-emerald-400">Statut :</strong> Devis généré instantanément
-                  </p>
-                  <div class="flex justify-end">
-                    <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
-                      <i class="fa-solid fa-check-double text-blue-400"></i> +228 70 16 27 40
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Conversion metrics -->
-                <div class="grid grid-cols-2 gap-2 text-center">
-                  <div class="p-2.5 rounded-xl bg-nova-card border border-white/5">
-                    <p class="text-[10px] text-slate-400">Temps de chargement</p>
-                    <p class="font-display font-bold text-emerald-400 text-sm">0.6s (Ultra-Rapide)</p>
-                  </div>
-                  <div class="p-2.5 rounded-xl bg-nova-card border border-white/5">
-                    <p class="text-[10px] text-slate-400">Taux de clic WhatsApp</p>
-                    <p class="font-display font-bold text-blue-400 text-sm">84.2%</p>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Floating badge under -->
-              <div class="flex items-center justify-between pt-1 text-xs text-slate-400">
-                <span class="flex items-center gap-1.5">
-                  <i class="fa-solid fa-shield-halved text-blue-400"></i> Code propriétaire 100%
-                </span>
-                <a href="./mr-propre/index.html" class="text-blue-400 hover:text-blue-300 font-bold text-xs flex items-center gap-1">
-                  Tester en direct <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================= -->
-  <!-- SECTION : NOS RÉALISATIONS EN DIRECT (PORTFOLIO) -->
-  <!-- ========================================================================= -->
-  <section id="realisations" class="py-20 lg:py-28 bg-nova-surface relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">
-          <i class="fa-solid fa-fire text-amber-400"></i> Portfolio Récent
-        </div>
-        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-          Nos Réalisations en Direct
-        </h2>
-        <p class="text-base sm:text-lg text-slate-400">
-          Découvrez les solutions concrètes déployées par Nova Studio pour des entreprises et commerçants togolais.
-        </p>
-      </div>
-
-      <!-- Portfolio Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        <!-- PROJET 1 : MR PROPRE LOMÉ -->
-        <div class="glass-panel glass-panel-hover rounded-3xl p-6 sm:p-8 flex flex-col justify-between card-visible border border-white/10 group">
-          <div class="space-y-6">
-            
-            <!-- Card Visual Banner -->
-            <div class="relative h-64 sm:h-72 rounded-2xl overflow-hidden bg-slate-900 border border-white/10">
-              <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" 
-                alt="MR PROPRE Lomé - Vitrine digitale" 
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-75"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-nova-bg via-nova-bg/40 to-transparent"></div>
-
-              <!-- Top category pill -->
-              <div class="absolute top-4 left-4 flex flex-wrap gap-2">
-                <span class="px-3 py-1 rounded-full bg-blue-600/90 backdrop-blur-md text-white text-xs font-bold shadow-md">
-                  Services B2B &amp; Entretien
-                </span>
-                <span class="px-3 py-1 rounded-full bg-emerald-600/90 backdrop-blur-md text-white text-xs font-bold shadow-md">
-                  Simulateur Devis Inclus
-                </span>
-              </div>
-
-              <!-- Floating overlay title -->
-              <div class="absolute bottom-4 left-4 right-4">
-                <h3 class="font-display font-extrabold text-2xl text-white">MR PROPRE Lomé</h3>
-                <p class="text-xs text-blue-300 font-medium">Vitrine officielle &amp; Générateur de devis WhatsApp</p>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="space-y-3">
-              <p class="text-sm text-slate-300 leading-relaxed">
-                Site vitrine haute précision pour une entreprise d'entretien professionnel et d'aménagement paysager à Lomé. Intègre un <strong>simulateur interactif de devis WhatsApp</strong> avec pré-remplissage en direct, design glassmorphism moderne et identité visuelle complète.
-              </p>
-
-              <!-- Features tags -->
-              <div class="flex flex-wrap gap-2 pt-1 text-xs">
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-brands fa-whatsapp text-emerald-400"></i> Devis Express WhatsApp
-                </span>
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-solid fa-palette text-blue-400"></i> Logo HD &amp; Charte
-                </span>
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-solid fa-layer-group text-purple-400"></i> 5 Pôles d'intervention
-                </span>
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-solid fa-mobile-screen text-indigo-400"></i> 100% Responsive
-                </span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Action Button -->
-          <div class="pt-6 mt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="text-xs text-slate-400">
-              <span class="text-white font-semibold">Client :</span> MR PROPRE Togo • Lomé
-            </div>
-            <a 
-              href="./mr-propre/index.html" 
-              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-display font-bold text-sm shadow-glow-blue transition-all"
-            >
-              <span>Voir le site en direct</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- PROJET 2 : EMMA BEAUTY MAKEUP -->
-        <div class="glass-panel glass-panel-hover rounded-3xl p-6 sm:p-8 flex flex-col justify-between card-visible border border-white/10 group">
-          <div class="space-y-6">
-            
-            <!-- Card Visual Banner -->
-            <div class="relative h-64 sm:h-72 rounded-2xl overflow-hidden bg-slate-900 border border-white/10">
-              <img 
-                src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=80" 
-                alt="Emma Beauty Makeup - Boutique WhatsApp" 
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-75"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-nova-bg via-nova-bg/40 to-transparent"></div>
-
-              <!-- Top category pill -->
-              <div class="absolute top-4 left-4 flex flex-wrap gap-2">
-                <span class="px-3 py-1 rounded-full bg-pink-600/90 backdrop-blur-md text-white text-xs font-bold shadow-md">
-                  Boutique E-Commerce &amp; Beauté
-                </span>
-                <span class="px-3 py-1 rounded-full bg-amber-600/90 backdrop-blur-md text-white text-xs font-bold shadow-md">
-                  Panier WhatsApp Automatique
-                </span>
-              </div>
-
-              <!-- Floating overlay title -->
-              <div class="absolute bottom-4 left-4 right-4">
-                <h3 class="font-display font-extrabold text-2xl text-white">Emma Beauty Makeup</h3>
-                <p class="text-xs text-pink-300 font-medium">Boutique Express Cosmétiques &amp; Soins</p>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="space-y-3">
-              <p class="text-sm text-slate-300 leading-relaxed">
-                Catalogue interactif ultra-fluide pour marque de cosmétiques et maquillage. Le client sélectionne ses teintes, ajuste ses quantités dans un <strong>panier automatique en FCFA</strong> et envoie sa commande directement sur WhatsApp pour paiement et livraison express.
-              </p>
-
-              <!-- Features tags -->
-              <div class="flex flex-wrap gap-2 pt-1 text-xs">
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-solid fa-cart-shopping text-pink-400"></i> Panier Dynamique FCFA
-                </span>
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-brands fa-whatsapp text-emerald-400"></i> Commande Instantanée
-                </span>
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-solid fa-tags text-amber-400"></i> Gestion des Stocks Facile
-                </span>
-                <span class="px-2.5 py-1 rounded-lg bg-nova-bg text-slate-300 border border-white/10 flex items-center gap-1.5">
-                  <i class="fa-solid fa-gauge-high text-blue-400"></i> Vitesse 99/100
-                </span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Action Button -->
-          <div class="pt-6 mt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="text-xs text-slate-400">
-              <span class="text-white font-semibold">Client :</span> Emma Beauty • Lomé (+228 93 78 97 08)
-            </div>
-            <a 
-              href="https://wa.me/22893789708?text=Bonjour%20Emma%20Beauty%2C%20je%20souhaite%20d%C3%A9couvrir%20vos%20produits%20et%20votre%20catalogue." 
-              target="_blank"
-              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-display font-bold text-sm shadow-glow-violet transition-all"
-            >
-              <span>Voir la boutique WhatsApp</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================= -->
-  <!-- SECTION : NOS 3 PACKS CLÉ EN MAIN -->
-  <!-- ========================================================================= -->
-  <section id="offres" class="py-20 lg:py-28 bg-nova-bg relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-bold uppercase tracking-wider">
-          <i class="fa-solid fa-cubes text-blue-400"></i> Tarifs Clairs &amp; Transparents
-        </div>
-        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-          Nos 3 Packs Clé en Main
-        </h2>
-        <p class="text-base sm:text-lg text-slate-400">
-          Des formules conçues pour propulser votre activité immédiatement, sans frais cachés ni abonnement récurrent.
-        </p>
-      </div>
-
-      <!-- 3 Packs Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- PACK 1 : IDENTITÉ & LOGO HD -->
-        <div class="glass-panel glass-panel-hover rounded-3xl p-7 flex flex-col justify-between card-visible border border-white/10 relative">
-          <div class="space-y-6">
-            
-            <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-2xl">
-              <i class="fa-solid fa-pen-nib"></i>
-            </div>
-
-            <div>
-              <span class="text-xs uppercase tracking-widest text-blue-400 font-bold">Pack 01</span>
-              <h3 class="font-display font-extrabold text-2xl text-white mt-1">Identité &amp; Logo HD</h3>
-              <p class="text-xs text-slate-400 mt-2">Création ou refonte complète de votre identité de marque.</p>
-            </div>
-
-            <div class="pt-4 border-t border-white/10">
-              <span class="text-xs text-slate-400">Livraison :</span>
-              <p class="font-display font-bold text-white text-base">24h à 48h chrono</p>
-            </div>
-
-            <!-- Checklist -->
-            <ul class="space-y-3 text-xs text-slate-300">
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-blue-400"></i>
-                <span>Logo vectoriel HD (PNG transparent, SVG, JPG)</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-blue-400"></i>
-                <span>Formats adaptés pour WhatsApp &amp; Instagram</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-blue-400"></i>
-                <span>Charte graphique (Palette de couleurs &amp; polices)</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-blue-400"></i>
-                <span>Fichiers prêts pour impression (bâches, cartes)</span>
-              </li>
-            </ul>
-
-          </div>
-
-          <div class="pt-8">
-            <button 
-              type="button" 
-              onclick="selectPackAndScroll('Identité & Logo HD')"
-              class="w-full py-3.5 px-4 rounded-xl bg-nova-surface hover:bg-blue-600 text-blue-300 hover:text-white font-display font-bold text-xs uppercase tracking-wider border border-blue-500/30 hover:border-transparent transition-all flex items-center justify-center gap-2"
-            >
-              <span>Choisir ce pack</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- PACK 2 : SITE VITRINE & DEVIS WHATSAPP (POPULAIRE) -->
-        <div class="glass-panel glass-panel-hover rounded-3xl p-7 flex flex-col justify-between card-visible border-2 border-blue-500/50 shadow-glow-blue relative">
-          
-          <!-- Best-Seller Tag -->
-          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-lg">
-            ★ Le Plus Demandé
-          </div>
-
-          <div class="space-y-6">
-            
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">
-              <i class="fa-solid fa-laptop-code"></i>
-            </div>
-
-            <div>
-              <span class="text-xs uppercase tracking-widest text-emerald-400 font-bold">Pack 02 • B2B &amp; Services</span>
-              <h3 class="font-display font-extrabold text-2xl text-white mt-1">Site Vitrine &amp; Devis WhatsApp</h3>
-              <p class="text-xs text-slate-300 mt-2">La vitrine de prestige qui génère des devis qualifiés chaque jour (Ex: Mr Propre).</p>
-            </div>
-
-            <div class="pt-4 border-t border-white/10">
-              <span class="text-xs text-slate-400">Idéal pour :</span>
-              <p class="font-display font-bold text-white text-base">Services, BTP, Nettoyage, Cabinets, Agences</p>
-            </div>
-
-            <!-- Checklist -->
-            <ul class="space-y-3 text-xs text-slate-200">
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span>Site 1 page ultra-moderne &amp; 100% responsive</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span><strong>Générateur de devis WhatsApp en temps réel</strong></span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span>Présentation détaillée de vos prestations &amp; avis</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span>Bouton WhatsApp flottant &amp; appel direct</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span>Nom de domaine &amp; hébergement sécurisé inclus</span>
-              </li>
-            </ul>
-
-          </div>
-
-          <div class="pt-8">
-            <button 
-              type="button" 
-              onclick="selectPackAndScroll('Site Vitrine & Devis WhatsApp')"
-              class="w-full py-4 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-display font-bold text-xs uppercase tracking-wider shadow-glow-blue transition-all flex items-center justify-center gap-2"
-            >
-              <span>Commander ce pack</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- PACK 3 : BOUTIQUE EXPRESS WHATSAPP -->
-        <div class="glass-panel glass-panel-hover rounded-3xl p-7 flex flex-col justify-between card-visible border border-white/10 relative">
-          <div class="space-y-6">
-            
-            <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-2xl">
-              <i class="fa-solid fa-bag-shopping"></i>
-            </div>
-
-            <div>
-              <span class="text-xs uppercase tracking-widest text-purple-400 font-bold">Pack 03 • Commerce &amp; Retail</span>
-              <h3 class="font-display font-extrabold text-2xl text-white mt-1">Boutique Express WhatsApp</h3>
-              <p class="text-xs text-slate-400 mt-2">Vendez vos articles sans barrière technique avec un panier connecté.</p>
-            </div>
-
-            <div class="pt-4 border-t border-white/10">
-              <span class="text-xs text-slate-400">Idéal pour :</span>
-              <p class="font-display font-bold text-white text-base">Prêt-à-porter, Beauté, Restauration, Gadgets</p>
-            </div>
-
-            <!-- Checklist -->
-            <ul class="space-y-3 text-xs text-slate-300">
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-purple-400"></i>
-                <span>Catalogue produits dynamique avec photos &amp; prix FCFA</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-purple-400"></i>
-                <span>Panier d'achat interactif fluide (zéro friction)</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-purple-400"></i>
-                <span>Envoi automatique du récapitulatif de commande sur WhatsApp</span>
-              </li>
-              <li class="flex items-center gap-2.5">
-                <i class="fa-solid fa-circle-check text-purple-400"></i>
-                <span>Interface simple pour ajouter vos futurs articles</span>
-              </li>
-            </ul>
-
-          </div>
-
-          <div class="pt-8">
-            <button 
-              type="button" 
-              onclick="selectPackAndScroll('Boutique Express WhatsApp')"
-              class="w-full py-3.5 px-4 rounded-xl bg-nova-surface hover:bg-purple-600 text-purple-300 hover:text-white font-display font-bold text-xs uppercase tracking-wider border border-purple-500/30 hover:border-transparent transition-all flex items-center justify-center gap-2"
-            >
-              <span>Choisir ce pack</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================= -->
-  <!-- SECTION : PROCESSUS EN 3 ÉTAPES (LIVRAISON 48H) -->
-  <!-- ========================================================================= -->
-  <section id="processus" class="py-20 bg-nova-surface border-y border-white/5">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-          <i class="fa-solid fa-clock text-emerald-400"></i> Efficacité Maximale
-        </div>
-        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-          Votre Projet Prêt en 3 Étapes Simples
-        </h2>
-        <p class="text-slate-400 text-sm sm:text-base">
-          Pas de réunions interminables. Une méthodologie rapide, orientée résultats pour lancer votre site en un temps record.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Étape 1 -->
-        <div class="glass-panel rounded-3xl p-7 border border-white/10 card-visible space-y-4 relative">
-          <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 font-display font-black text-xl flex items-center justify-center">
-            01
-          </div>
-          <h3 class="font-display font-bold text-xl text-white">Brief &amp; Maquette Express</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Vous nous partagez vos textes, photos, logo et vos offres via WhatsApp. Nous structurons l'ergonomie et la charte graphique sous 24h.
-          </p>
-        </div>
-
-        <!-- Étape 2 -->
-        <div class="glass-panel rounded-3xl p-7 border border-white/10 card-visible space-y-4 relative">
-          <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 font-display font-black text-xl flex items-center justify-center">
-            02
-          </div>
-          <h3 class="font-display font-bold text-xl text-white">Développement &amp; WhatsApp</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Intégration du code haute performance, configuration des boutons d'action et connexion directe au simulateur WhatsApp de votre numéro.
-          </p>
-        </div>
-
-        <!-- Étape 3 -->
-        <div class="glass-panel rounded-3xl p-7 border border-white/10 card-visible space-y-4 relative">
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 font-display font-black text-xl flex items-center justify-center">
-            03
-          </div>
-          <h3 class="font-display font-bold text-xl text-white">Mise en Ligne &amp; Ventes</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Votre site est déployé, indexé et prêt à accueillir vos clients. Vous êtes 100% propriétaire du code, sans aucun frais d'abonnement.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================= -->
-  <!-- SECTION : SIMULATEUR DE CONTACT DIRECT SUR WHATSAPP -->
-  <!-- ========================================================================= -->
-  <section id="simulateur" class="py-20 lg:py-28 bg-nova-bg relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-          <i class="fa-brands fa-whatsapp text-emerald-400"></i> Démarrage Immédiat
-        </div>
-        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-          Simulez &amp; Lancez votre Projet
-        </h2>
-        <p class="text-slate-400 text-sm sm:text-base">
-          Sélectionnez vos besoins ci-dessous pour générer votre demande formatée sur WhatsApp et obtenir votre devis sous 30 minutes.
-        </p>
-      </div>
-
-      <!-- Simulator Layout (Form + WhatsApp Live Preview) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- Interactive Form -->
-        <div class="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 card-visible space-y-6" id="form-box">
-          
-          <!-- Besoin principal -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">
-              1. Quel est votre besoin principal ? <span class="text-blue-400">*</span>
-            </label>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="need-picker">
-              
-              <button 
-                type="button" 
-                data-need="Site Vitrine & Devis WhatsApp" 
-                class="need-pill text-left p-3.5 rounded-2xl border text-xs font-bold transition-all border-blue-500 bg-blue-500/20 text-blue-300"
-              >
-                <i class="fa-solid fa-laptop-code text-blue-400 block text-base mb-1"></i>
-                <p>Site Vitrine &amp; Devis</p>
-                <p class="text-[10px] text-slate-400 font-normal">Entreprises de services</p>
-              </button>
-
-              <button 
-                type="button" 
-                data-need="Boutique Express WhatsApp" 
-                class="need-pill text-left p-3.5 rounded-2xl border text-xs font-bold transition-all border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/40"
-              >
-                <i class="fa-solid fa-cart-shopping text-slate-400 block text-base mb-1"></i>
-                <p>Boutique Express</p>
-                <p class="text-[10px] text-slate-400 font-normal">Commerce &amp; Panier</p>
-              </button>
-
-              <button 
-                type="button" 
-                data-need="Identité & Logo HD" 
-                class="need-pill text-left p-3.5 rounded-2xl border text-xs font-bold transition-all border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/40"
-              >
-                <i class="fa-solid fa-pen-nib text-slate-400 block text-base mb-1"></i>
-                <p>Logo &amp; Identité HD</p>
-                <p class="text-[10px] text-slate-400 font-normal">Création / Refonte</p>
-              </button>
-
-            </div>
-          </div>
-
-          <!-- Secteur d'activité -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">
-              2. Votre secteur d'activité <span class="text-blue-400">*</span>
-            </label>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="sector-picker">
-              <button type="button" data-sector="Prestation de Services & BTP" class="sector-pill p-2.5 rounded-xl border text-[11px] font-semibold text-center border-blue-500 bg-blue-500/20 text-blue-300">
-                Services &amp; BTP
-              </button>
-              <button type="button" data-sector="Commerce & Prêt-à-porter" class="sector-pill p-2.5 rounded-xl border text-[11px] font-semibold text-center border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/30">
-                Mode &amp; Retail
-              </button>
-              <button type="button" data-sector="Beauté, Cosmétiques & Bien-être" class="sector-pill p-2.5 rounded-xl border text-[11px] font-semibold text-center border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/30">
-                Beauté &amp; Soins
-              </button>
-              <button type="button" data-sector="Restauration & Événementiel" class="sector-pill p-2.5 rounded-xl border text-[11px] font-semibold text-center border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/30">
-                Food &amp; Events
-              </button>
-              <button type="button" data-sector="Immobilier & Résidences" class="sector-pill p-2.5 rounded-xl border text-[11px] font-semibold text-center border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/30">
-                Immobilier
-              </button>
-              <button type="button" data-sector="Autre activité commerciale" class="sector-pill p-2.5 rounded-xl border text-[11px] font-semibold text-center border-white/10 bg-nova-surface text-slate-300 hover:border-blue-500/30">
-                Autre projet
-              </button>
-            </div>
-          </div>
-
-          <!-- Coordonnées -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="lead-company" class="block text-xs font-medium text-slate-400 mb-1">Nom de votre Société ou Projet</label>
-              <input 
-                type="text" 
-                id="lead-company" 
-                placeholder="Ex: Lomé Clean Services" 
-                class="w-full px-3.5 py-2.5 rounded-xl bg-nova-surface border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label for="lead-name" class="block text-xs font-medium text-slate-400 mb-1">Votre Nom &amp; Prénom</label>
-              <input 
-                type="text" 
-                id="lead-name" 
-                placeholder="Ex: Mensah Koffi" 
-                class="w-full px-3.5 py-2.5 rounded-xl bg-nova-surface border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label for="lead-location" class="block text-xs font-medium text-slate-400 mb-1">Ville / Quartier</label>
-              <input 
-                type="text" 
-                id="lead-location" 
-                placeholder="Ex: Lomé (Tokoin, Bè, Agoè...)" 
-                class="w-full px-3.5 py-2.5 rounded-xl bg-nova-surface border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label for="lead-deadline" class="block text-xs font-medium text-slate-400 mb-1">Délai souhaité</label>
-              <input 
-                type="text" 
-                id="lead-deadline" 
-                placeholder="Ex: Dès cette semaine / 48h" 
-                class="w-full px-3.5 py-2.5 rounded-xl bg-nova-surface border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-
-          <!-- Précisions -->
-          <div>
-            <label for="lead-notes" class="block text-xs font-medium text-slate-400 mb-1">Précisions sur votre projet</label>
-            <textarea 
-              id="lead-notes" 
-              rows="3" 
-              placeholder="Ex: J'aimerais un site vitrine professionnel similaire à Mr Propre avec présentation de mes 3 services et un bouton pour recevoir les commandes directement sur WhatsApp."
-              class="w-full p-3 rounded-xl bg-nova-surface border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-
-        </div>
-
-        <!-- WhatsApp Live Preview Screen -->
-        <div class="lg:col-span-5 sticky top-28 space-y-4">
-          
-          <div class="rounded-3xl bg-[#0B141A] border-4 border-slate-700/60 shadow-2xl overflow-hidden">
-            
-            <!-- WhatsApp Screen Top Bar -->
-            <div class="bg-[#1F2C34] px-4 py-3.5 flex items-center justify-between text-white border-b border-slate-800">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-xs text-white border border-white/20">
-                  NS
-                </div>
-                <div>
-                  <h4 class="font-bold text-sm leading-tight text-white flex items-center gap-1.5">
-                    NOVA STUDIO Lomé
-                    <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
-                  </h4>
-                  <p class="text-[11px] text-emerald-400 font-medium">
-                    ● En ligne • Réponse en 30 min
-                  </p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3 text-slate-400 text-sm">
-                <i class="fa-solid fa-phone"></i>
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-              </div>
-            </div>
-
-            <!-- WhatsApp Message Bubble Body -->
-            <div class="p-4 bg-[#0B141A] min-h-[340px] flex flex-col justify-between space-y-4" style="background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 16px 16px;">
-              
-              <div class="text-center">
-                <span class="inline-block px-3 py-1 bg-[#182229] text-[#8696A0] text-[10px] rounded-lg border border-white/5">
-                  🔒 Message de commande sécurisé direct
-                </span>
-              </div>
-
-              <!-- Live Message Bubble -->
-              <div class="self-end max-w-[95%] bg-[#005C4B] text-[#E9EDEF] rounded-2xl rounded-tr-none p-3.5 shadow-md text-xs leading-relaxed space-y-2 border border-emerald-500/20">
-                
-                <div class="font-bold text-emerald-300 border-b border-emerald-600/40 pb-1 flex items-center justify-between text-[11px]">
-                  <span>🚀 NOUVEAU PROJET • NOVA STUDIO</span>
-                  <span class="text-[9px] uppercase tracking-wider text-emerald-200">LOMÉ</span>
-                </div>
-
-                <div class="space-y-1.5 text-[11px]">
-                  <p><strong class="text-white">🏢 Entreprise / Marque :</strong> <span id="prev-company" class="text-emerald-100 font-semibold">[Non renseigné]</span></p>
-                  <p><strong class="text-white">👤 Contact :</strong> <span id="prev-name" class="text-emerald-100 font-semibold">[Non renseigné]</span></p>
-                  <p><strong class="text-white">📍 Localisation :</strong> <span id="prev-location" class="text-emerald-100">Lomé, Togo</span></p>
-
-                  <div class="pt-1 border-t border-emerald-700/50">
-                    <p><strong class="text-white">📦 Pack souhaité :</strong></p>
-                    <p id="prev-need" class="text-emerald-200 font-bold bg-emerald-900/40 px-2 py-0.5 rounded mt-0.5">
-                      Site Vitrine &amp; Devis WhatsApp
-                    </p>
-                  </div>
-
-                  <p><strong class="text-white">🎯 Secteur :</strong> <span id="prev-sector" class="text-emerald-100 font-medium">Prestation de Services &amp; BTP</span></p>
-                  <p><strong class="text-white">⏱️ Délai souhaité :</strong> <span id="prev-deadline" class="text-emerald-100">Dès cette semaine</span></p>
-
-                  <div class="pt-1 border-t border-emerald-700/50">
-                    <p><strong class="text-white">📝 Détails du projet :</strong></p>
-                    <p id="prev-notes" class="italic text-emerald-100/90 bg-emerald-900/30 p-2 rounded text-[10.5px]">
-                      Demande d'informations et proposition pour lancement rapide.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="flex items-center justify-end gap-1 text-[10px] text-emerald-300/80 pt-1">
-                  <span id="clock-time">12:00</span>
-                  <i class="fa-solid fa-check-double text-blue-400"></i>
-                </div>
-
-              </div>
-
-              <!-- Fake send input -->
-              <div class="flex items-center gap-2 bg-[#1F2C34] p-2 rounded-full border border-slate-700/50">
-                <i class="fa-regular fa-face-smile text-slate-400 ml-2"></i>
-                <span class="text-xs text-slate-400 flex-1 truncate">Message prêt pour WhatsApp...</span>
-                <div class="w-8 h-8 rounded-full bg-[#00A884] text-white flex items-center justify-center shrink-0">
-                  <i class="fa-solid fa-paper-plane text-xs"></i>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-          <!-- Submit Button -->
-          <a 
-            id="whatsapp-btn" 
-            href="https://wa.me/22893095094" 
-            target="_blank" 
-            class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-display font-bold text-base shadow-glow-emerald hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3"
-          >
-            <i class="fa-brands fa-whatsapp text-2xl"></i>
-            <span>Envoyer ma demande sur WhatsApp</span>
-            <i class="fa-solid fa-arrow-right text-xs"></i>
+          <a href="#contact" class="btn-ghost inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-sm tracking-wide">
+            Lancer un projet <span class="text-electric text-lg">↗</span>
           </a>
-
-          <div class="p-4 rounded-2xl bg-nova-surface border border-white/10 text-center text-xs text-slate-400">
-            <span>Vous préférez discuter directement au téléphone ?</span><br>
-            <a href="tel:+22893095094" class="text-blue-400 font-bold hover:underline inline-flex items-center gap-1.5 mt-1">
-              <i class="fa-solid fa-phone"></i> Appelez le +228 93 09 50 94
-            </a>
-          </div>
-
         </div>
 
+        <!-- Right keywords -->
+        <div class="hidden md:flex flex-col items-end gap-4 relative z-10 pr-4">
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/10 tracking-wider">INNOVER</span>
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/10 tracking-wider">GRANDIR</span>
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-electric/20 tracking-wider">CONVERTIR</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Giant title at bottom -->
+    <div class="w-full overflow-hidden pb-6 md:pb-10">
+      <h1 class="font-display font-800 text-[15vw] md:text-[12vw] leading-none tracking-tighter text-center whitespace-nowrap select-none">
+        <span class="text-white">RODIS</span> <span class="text-electric">STUDIO<sup class="text-[3vw] align-super">®</sup></span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- ============ À PROPOS ============ -->
+  <section id="about" class="py-32 lg:py-44" style="background: #0F2118;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div>
+          <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">À propos</p>
+          <h2 class="font-display font-800 text-4xl lg:text-6xl leading-tight">
+            Des sites qui<br>
+            <span class="text-electric">convertissent.</span>
+          </h2>
+        </div>
+        <div class="flex flex-col gap-8">
+          <p class="text-white/50 text-lg font-light leading-relaxed">
+            RODIS STUDIO est une agence digitale nouvelle génération basée à Lomé. Nous créons des sites vitrines, des boutiques en ligne et des identités visuelles pensés pour transformer vos visiteurs en clients — directement sur WhatsApp.
+          </p>
+          <p class="text-white/50 text-lg font-light leading-relaxed">
+            Pas d'abonnement. Pas de complexité. Un site clé en main livré en 48h, connecté à votre WhatsApp Business. Simple, rapide, efficace.
+          </p>
+          <div class="flex gap-16 pt-8 border-t border-white/5">
+            <div>
+              <span class="font-display font-800 text-4xl text-electric">48h</span>
+              <p class="text-white/40 text-sm mt-1">Livraison</p>
+            </div>
+            <div>
+              <span class="font-display font-800 text-4xl text-white">100%</span>
+              <p class="text-white/40 text-sm mt-1">Clé en main</p>
+            </div>
+            <div>
+              <span class="font-display font-800 text-4xl text-white">0</span>
+              <p class="text-white/40 text-sm mt-1">Abonnement</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJETS ============ -->
+  <section id="projects" class="py-32 lg:py-44 bg-forest-900">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <!-- Header -->
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
+        <div>
+          <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">Portfolio</p>
+          <h2 class="font-display font-800 text-4xl lg:text-6xl leading-tight">Projets récents</h2>
+        </div>
+        <p class="text-white/40 text-base font-light max-w-sm">Des réalisations concrètes, en production, qui génèrent des résultats pour nos clients.</p>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+
+        <!-- Card 01 -->
+        <div class="project-card group rounded-2xl overflow-hidden border border-white/5 bg-forest-800/50">
+          <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 to-forest-900 flex items-center justify-center">
+            <div class="text-center">
+              <span class="font-display font-800 text-7xl lg:text-8xl text-white/5 group-hover:text-white/10 transition-colors duration-500">01</span>
+            </div>
+            <div class="absolute top-6 left-6">
+              <span class="text-xs font-medium tracking-widest uppercase text-electric/70 bg-electric/10 px-3 py-1.5 rounded-full">Services B2B & Devis WhatsApp</span>
+            </div>
+          </div>
+          <div class="p-8 lg:p-10">
+            <h3 class="font-display font-800 text-2xl lg:text-3xl mb-3">MR PROPRE Lomé</h3>
+            <p class="text-white/40 font-light leading-relaxed mb-8">Site vitrine professionnel avec simulateur de devis interactif connecté à WhatsApp et identité visuelle complète.</p>
+            <a href="./mr-propre/index.html" class="inline-flex items-center gap-2 text-electric text-sm font-semibold tracking-wide hover:gap-4 transition-all duration-300">
+              Voir le site en direct <span>↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 02 -->
+        <div class="project-card group rounded-2xl overflow-hidden border border-white/5 bg-forest-800/50">
+          <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 to-forest-900 flex items-center justify-center">
+            <div class="text-center">
+              <span class="font-display font-800 text-7xl lg:text-8xl text-white/5 group-hover:text-white/10 transition-colors duration-500">02</span>
+            </div>
+            <div class="absolute top-6 left-6">
+              <span class="text-xs font-medium tracking-widest uppercase text-electric/70 bg-electric/10 px-3 py-1.5 rounded-full">Boutique E-Commerce Cosmétiques</span>
+            </div>
+          </div>
+          <div class="p-8 lg:p-10">
+            <h3 class="font-display font-800 text-2xl lg:text-3xl mb-3">EMMA BEAUTY</h3>
+            <p class="text-white/40 font-light leading-relaxed mb-8">Catalogue interactif avec panier automatique et commande directe sur WhatsApp en FCFA.</p>
+            <a href="https://wa.me/22893789708" target="_blank" class="inline-flex items-center gap-2 text-electric text-sm font-semibold tracking-wide hover:gap-4 transition-all duration-300">
+              Voir la boutique <span>↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" class="py-32 lg:py-44" style="background: linear-gradient(180deg, #0F2118 0%, #0A1910 100%);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <!-- Header -->
+      <div class="mb-20">
+        <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">Ce qu'on fait</p>
+        <h2 class="font-display font-800 text-4xl lg:text-6xl leading-tight max-w-2xl">
+          Trois packs.<br>
+          <span class="text-electric">Zéro abonnement.</span>
+        </h2>
+      </div>
+
+      <!-- 3 Columns -->
+      <div class="grid grid-cols-1 md:grid-cols-3">
+
+        <!-- Service 01 -->
+        <div class="service-col p-8 lg:p-12">
+          <span class="font-display font-800 text-5xl text-electric/20 block mb-8">01</span>
+          <h3 class="font-display font-800 text-xl lg:text-2xl mb-4">Identité & Logo HD</h3>
+          <p class="text-white/40 font-light leading-relaxed mb-8">Création ou refonte de votre marque professionnelle, livrée en 48h avec tous les fichiers sources.</p>
+          <a href="#contact" class="text-electric text-sm font-semibold hover:underline underline-offset-4">Commander ce pack →</a>
+        </div>
+
+        <!-- Service 02 -->
+        <div class="service-col p-8 lg:p-12 md:border-l md:border-r border-white/5">
+          <span class="font-display font-800 text-5xl text-electric/20 block mb-8">02</span>
+          <h3 class="font-display font-800 text-xl lg:text-2xl mb-4">Site Vitrine & Devis WhatsApp</h3>
+          <p class="text-white/40 font-light leading-relaxed mb-8">Idéal pour entreprises de services, BTP, nettoyage et agences. Vos prospects vous contactent en un clic.</p>
+          <a href="#contact" class="text-electric text-sm font-semibold hover:underline underline-offset-4">Commander ce pack →</a>
+        </div>
+
+        <!-- Service 03 -->
+        <div class="service-col p-8 lg:p-12">
+          <span class="font-display font-800 text-5xl text-electric/20 block mb-8">03</span>
+          <h3 class="font-display font-800 text-xl lg:text-2xl mb-4">Boutique Express WhatsApp</h3>
+          <p class="text-white/40 font-light leading-relaxed mb-8">Catalogue interactif avec panier automatique en FCFA. Parfait pour prêt-à-porter, beauté et restaurants.</p>
+          <a href="#contact" class="text-electric text-sm font-semibold hover:underline underline-offset-4">Commander ce pack →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="py-32 lg:py-44 bg-forest-900">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10">
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">Contact</p>
+        <h2 class="font-display font-800 text-4xl lg:text-5xl leading-tight mb-6">
+          Lancez votre projet<span class="text-electric">.</span>
+        </h2>
+        <p class="text-white/40 font-light text-lg max-w-lg mx-auto">Dites-nous ce qu'il vous faut. On vous répond sur WhatsApp en moins de 2h.</p>
+      </div>
+
+      <!-- Form Card -->
+      <div class="rounded-2xl border border-white/5 bg-forest-800/40 p-8 lg:p-12">
+        <form id="contactForm" class="flex flex-col gap-6">
+
+          <!-- Nom -->
+          <div>
+            <label class="text-white/50 text-xs font-medium tracking-widest uppercase mb-2 block">Votre nom</label>
+            <input type="text" id="clientName" placeholder="Ex : Kofi Mensah" required
+              class="w-full px-5 py-4 rounded-xl text-sm font-light placeholder:text-white/20">
+          </div>
+
+          <!-- Service -->
+          <div>
+            <label class="text-white/50 text-xs font-medium tracking-widest uppercase mb-2 block">Service souhaité</label>
+            <select id="serviceType" required class="w-full px-5 py-4 rounded-xl text-sm font-light appearance-none cursor-pointer">
+              <option value="" disabled selected>Choisir un service</option>
+              <option value="Logo & Identité Visuelle">Logo & Identité Visuelle</option>
+              <option value="Site Vitrine & Devis WhatsApp">Site Vitrine & Devis WhatsApp</option>
+              <option value="Boutique Express WhatsApp">Boutique Express WhatsApp</option>
+            </select>
+          </div>
+
+          <!-- Secteur -->
+          <div>
+            <label class="text-white/50 text-xs font-medium tracking-widest uppercase mb-2 block">Secteur d'activité</label>
+            <select id="sector" required class="w-full px-5 py-4 rounded-xl text-sm font-light appearance-none cursor-pointer">
+              <option value="" disabled selected>Choisir un secteur</option>
+              <option value="Nettoyage & Entretien">Nettoyage & Entretien</option>
+              <option value="Beauté & Cosmétiques">Beauté & Cosmétiques</option>
+              <option value="Restauration & Food">Restauration & Food</option>
+              <option value="Mode & Prêt-à-porter">Mode & Prêt-à-porter</option>
+              <option value="BTP & Construction">BTP & Construction</option>
+              <option value="Santé & Bien-être">Santé & Bien-être</option>
+              <option value="Commerce Général">Commerce Général</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-electric w-full py-4 rounded-xl text-sm tracking-wide mt-2">
+            Envoyer sur WhatsApp ↗
+          </button>
+        </form>
       </div>
 
     </div>
   </section>
 
-  <!-- ========================================================================= -->
-  <!-- FOOTER PROFESSIONNEL -->
-  <!-- ========================================================================= -->
-  <footer class="bg-[#05080F] text-slate-400 pt-16 pb-12 border-t border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/5">
-        
-        <!-- Agency Brand Column -->
-        <div class="lg:col-span-5 space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-display font-black text-white text-base shadow-glow-blue">
-              NS
-            </div>
-            <div>
-              <span class="font-display font-extrabold text-xl text-white tracking-tight">NOVA STUDIO</span>
-              <p class="text-[10px] text-blue-400 uppercase tracking-wider font-semibold">Agence Digitale • Lomé, Togo</p>
-            </div>
-          </div>
-          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
-            Nous concevons des sites vitrines haute performance, des boutiques express connectées à WhatsApp et des identités visuelles fortes pour faire décoller votre chiffre d'affaires.
-          </p>
-          <div class="flex items-center gap-3 pt-2">
-            <a href="https://wa.me/22893095094" target="_blank" class="w-9 h-9 rounded-xl bg-nova-surface hover:bg-emerald-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
-            <a href="tel:+22893095094" class="w-9 h-9 rounded-xl bg-nova-surface hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
-              <i class="fa-solid fa-phone"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="lg:col-span-3 space-y-3">
-          <h4 class="font-bold text-white text-xs uppercase tracking-wider">Nos Réalisations</h4>
-          <ul class="space-y-2 text-xs">
-            <li>
-              <a href="./mr-propre/index.html" class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                <i class="fa-solid fa-arrow-right text-[10px] text-blue-500"></i> MR PROPRE Lomé (Vitrine &amp; Devis)
-              </a>
-            </li>
-            <li>
-              <a href="https://wa.me/22893789708?text=Bonjour%20Emma%20Beauty%2C%20je%20d%C3%A9couvre%20votre%20boutique." target="_blank" class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                <i class="fa-solid fa-arrow-right text-[10px] text-pink-500"></i> Emma Beauty (+228 93 78 97 08)
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Contact Lomé -->
-        <div class="lg:col-span-4 space-y-3">
-          <h4 class="font-bold text-white text-xs uppercase tracking-wider">Contact Direct</h4>
-          <div class="space-y-2.5 text-xs">
-            <p class="flex items-start gap-2.5">
-              <i class="fa-solid fa-location-dot text-blue-400 mt-0.5"></i>
-              <span>Lomé, Togo (Interventions dans tout le Togo &amp; International)</span>
-            </p>
-            <p class="flex items-center gap-2.5">
-              <i class="fa-solid fa-phone text-blue-400"></i>
-              <a href="tel:+22893095094" class="hover:text-white">+228 93 09 50 94</a>
-            </p>
-            <p class="flex items-center gap-2.5">
-              <i class="fa-brands fa-whatsapp text-emerald-400"></i>
-              <a href="https://wa.me/22893095094" target="_blank" class="hover:text-white text-emerald-400 font-bold">WhatsApp : +228 93 09 50 94</a>
-            </p>
-          </div>
-        </div>
-
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-white/5" style="background: #081410;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="font-display font-800 text-xl">Rodis<span class="text-electric">.</span></span>
+        <span class="text-white/20 text-sm">—</span>
+        <span class="text-white/30 text-sm font-light">Agence Digitale • Lomé, Togo</span>
       </div>
-
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-        <p>© 2026 NOVA STUDIO. Tous droits réservés. Agence Digitale à Lomé.</p>
-        <p>Sites Web Clé en Main • E-Commerce Express • Logos HD</p>
+      <div class="flex items-center gap-8">
+        <a href="https://wa.me/22893095094" target="_blank" class="text-white/40 text-sm font-light hover:text-electric transition-colors">+228 93 09 50 94</a>
+        <span class="text-white/10 text-sm">© 2024 RODIS STUDIO®</span>
       </div>
-
     </div>
   </footer>
 
-  <!-- ========================================================================= -->
-  <!-- FLOATING WHATSAPP BUTTON -->
-  <!-- ========================================================================= -->
-  <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-    <div class="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-nova-surface border border-white/10 text-xs font-bold text-white shadow-xl">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-      <span>Projet en 48h ? Écrivez-nous</span>
-    </div>
-
-    <a 
-      href="https://wa.me/22893095094?text=Bonjour%20NOVA%20STUDIO%2C%20je%20souhaite%20des%20informations%20pour%20cr%C3%A9er%20un%20site%20web." 
-      target="_blank" 
-      aria-label="WhatsApp Nova Studio" 
-      class="relative w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-3xl shadow-glow-emerald hover:scale-110 active:scale-95 transition-all group"
-    >
-      <i class="fa-brands fa-whatsapp group-hover:rotate-12 transition-transform"></i>
-    </a>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- JAVASCRIPT : SIMULATEUR & INTERACTIONS -->
-  <!-- ========================================================================= -->
+  <!-- ============ SCRIPTS ============ -->
   <script>
-    // State of the Quote Simulator
-    const simState = {
-      need: "Site Vitrine & Devis WhatsApp",
-      sector: "Prestation de Services & BTP",
-      company: "",
-      name: "",
-      location: "",
-      deadline: "",
-      notes: "",
-      phone: "22893095094"
-    };
+    // ── Mobile menu ──
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
 
-    function updateSimulatorPreview() {
-      const companyVal = document.getElementById('lead-company').value.trim();
-      const nameVal = document.getElementById('lead-name').value.trim();
-      const locationVal = document.getElementById('lead-location').value.trim();
-      const deadlineVal = document.getElementById('lead-deadline').value.trim();
-      const notesVal = document.getElementById('lead-notes').value.trim();
+    burger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    });
 
-      simState.company = companyVal || "[Non renseigné]";
-      simState.name = nameVal || "[Non renseigné]";
-      simState.location = locationVal || "Lomé, Togo";
-      simState.deadline = deadlineVal || "Dès cette semaine";
-      simState.notes = notesVal || "Demande d'informations et proposition pour lancement rapide.";
-
-      // DOM updates
-      document.getElementById('prev-company').innerText = simState.company;
-      document.getElementById('prev-name').innerText = simState.name;
-      document.getElementById('prev-location').innerText = simState.location;
-      document.getElementById('prev-deadline').innerText = simState.deadline;
-      document.getElementById('prev-need').innerText = simState.need;
-      document.getElementById('prev-sector').innerText = simState.sector;
-      document.getElementById('prev-notes').innerText = simState.notes;
-
-      // Clock
-      const now = new Date();
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById('clock-time').innerText = `${hh}:${mm}`;
-
-      // Formatted WhatsApp Message
-      const message = 
-`🚀 *NOUVEAU PROJET WEB • NOVA STUDIO LOMÉ* 🚀
-━━━━━━━━━━━━━━━━━━━━━
-🏢 *Société / Marque :* ${simState.company}
-👤 *Contact :* ${simState.name}
-📍 *Localisation :* ${simState.location}
-
-📦 *Pack souhaité :*
-👉 ${simState.need}
-
-🎯 *Secteur d'activité :* ${simState.sector}
-⏱️ *Délai souhaité :* ${simState.deadline}
-
-📝 *Précisions sur le projet :*
-${simState.notes}
-━━━━━━━━━━━━━━━━━━━━━
-💬 _Demande transmise depuis novastudio.tg. Merci de me contacter avec une proposition clé en main._`;
-
-      const targetUrl = `https://wa.me/${simState.phone}?text=${encodeURIComponent(message)}`;
-      document.getElementById('whatsapp-btn').setAttribute('href', targetUrl);
+    function closeMenu() {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
     }
 
-    // Need Pills click handler
-    const needPills = document.querySelectorAll('.need-pill');
-    needPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        needPills.forEach(p => {
-          p.classList.remove('border-blue-500', 'bg-blue-500/20', 'text-blue-300');
-          p.classList.add('border-white/10', 'bg-nova-surface', 'text-slate-300');
-          const icon = p.querySelector('i');
-          if (icon) icon.className = icon.className.replace('text-blue-400', 'text-slate-400');
-        });
+    // ── WhatsApp form ──
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('clientName').value.trim();
+      const service = document.getElementById('serviceType').value;
+      const sector = document.getElementById('sector').value;
 
-        pill.classList.remove('border-white/10', 'bg-nova-surface', 'text-slate-300');
-        pill.classList.add('border-blue-500', 'bg-blue-500/20', 'text-blue-300');
-        const activeIcon = pill.querySelector('i');
-        if (activeIcon) activeIcon.className = activeIcon.className.replace('text-slate-400', 'text-blue-400');
+      if (!name || !service || !sector) return;
 
-        simState.need = pill.getAttribute('data-need');
-        updateSimulatorPreview();
-      });
+      const msg = `Bonjour RODIS STUDIO 👋\n\nJe suis *${name}*.\nSecteur : ${sector}\nService souhaité : ${service}\n\nMerci de me recontacter !`;
+      const url = `https://wa.me/22893095094?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
     });
 
-    // Sector Pills click handler
-    const sectorPills = document.querySelectorAll('.sector-pill');
-    sectorPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        sectorPills.forEach(p => {
-          p.classList.remove('border-blue-500', 'bg-blue-500/20', 'text-blue-300');
-          p.classList.add('border-white/10', 'bg-nova-surface', 'text-slate-300');
-        });
+    // ── GSAP Animations ──
+    gsap.registerPlugin(ScrollTrigger);
 
-        pill.classList.remove('border-white/10', 'bg-nova-surface', 'text-slate-300');
-        pill.classList.add('border-blue-500', 'bg-blue-500/20', 'text-blue-300');
-
-        simState.sector = pill.getAttribute('data-sector');
-        updateSimulatorPreview();
-      });
-    });
-
-    // Inputs listeners
-    ['lead-company', 'lead-name', 'lead-location', 'lead-deadline', 'lead-notes'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', updateSimulatorPreview);
-    });
-
-    // Pack Selector from Pricing Cards
-    function selectPackAndScroll(packName) {
-      const matchPill = Array.from(needPills).find(pill => 
-        pill.getAttribute('data-need').toLowerCase().includes(packName.toLowerCase()) ||
-        packName.toLowerCase().includes(pill.getAttribute('data-need').toLowerCase())
-      );
-
-      if (matchPill) {
-        matchPill.click();
-      } else {
-        simState.need = packName;
-        updateSimulatorPreview();
-      }
-
-      const simSection = document.getElementById('simulateur');
-      if (simSection) {
-        simSection.scrollIntoView({ behavior: 'smooth' });
-        const formBox = document.getElementById('form-box');
-        if (formBox) {
-          formBox.classList.add('ring-2', 'ring-blue-500');
-          setTimeout(() => formBox.classList.remove('ring-2', 'ring-blue-500'), 1500);
-        }
-      }
-    }
-
-    // Mobile Menu Toggle
-    const mobileBtn = document.getElementById('mobile-toggle');
-    const mobileDrawer = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
-
-    if (mobileBtn && mobileDrawer) {
-      mobileBtn.addEventListener('click', () => {
-        const isClosed = mobileDrawer.classList.contains('hidden');
-        if (isClosed) {
-          mobileDrawer.classList.remove('hidden');
-          menuIcon.className = "fa-solid fa-xmark text-lg";
-        } else {
-          mobileDrawer.classList.add('hidden');
-          menuIcon.className = "fa-solid fa-bars text-lg";
+    // Fade-in on scroll
+    document.querySelectorAll('#about, #projects, #services, #contact').forEach(section => {
+      gsap.from(section.querySelectorAll('h2, p, .project-card, .service-col, form'), {
+        y: 40,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          once: true
         }
       });
+    });
 
-      document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileDrawer.classList.add('hidden');
-          menuIcon.className = "fa-solid fa-bars text-lg";
-        });
-      });
-    }
+    // Hero title scale
+    gsap.from('#hero h1', {
+      scale: 0.9,
+      duration: 1.2,
+      ease: 'power4.out',
+      delay: 0.3
+    });
 
-    // Initial Load & Gentle GSAP Entrance (Safe: No opacity 0 locking on scroll!)
-    document.addEventListener('DOMContentLoaded', () => {
-      updateSimulatorPreview();
+    // Hero left content
+    gsap.from('#hero p, #hero a', {
+      y: 30,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      delay: 0.6
+    });
 
-      if (typeof gsap !== 'undefined') {
-        // Entrance on hero elements only
-        gsap.from('header', { y: -20, opacity: 0, duration: 0.8, ease: 'power2.out' });
-        gsap.from('h1', { y: 25, opacity: 0, duration: 0.9, delay: 0.2, ease: 'power2.out' });
+    // Diamond float
+    gsap.to('.diamond', {
+      y: -20,
+      rotation: 50,
+      duration: 6,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1
+    });
+
+    // Nav background on scroll
+    const nav = document.querySelector('nav');
+    ScrollTrigger.create({
+      start: 'top -80',
+      onUpdate: self => {
+        nav.style.borderBottomColor = self.progress > 0 ? 'rgba(34, 197, 94, 0.1)' : 'rgba(255,255,255,0.05)';
       }
     });
   </script>
