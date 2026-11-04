@@ -67,38 +67,80 @@
     /* Selection */
     ::selection { background: #39E51B; color: #142E12; }
 
-    /* Diamond shape Ovilix Style */
-    .diamond {
+    /* Hero Portrait Central Styling */
+    .hero-portrait-container {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .hero-portrait-img {
+      height: 52vh;
+      max-height: 540px;
+      width: auto;
+      object-fit: cover;
+      mix-blend-mode: screen;
+      -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 48%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 78%);
+      mask-image: radial-gradient(ellipse 72% 70% at 50% 48%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 78%);
+    }
+
+    @media (min-width: 768px) {
+      .hero-portrait-img {
+        height: 72vh;
+        max-height: 760px;
+      }
+    }
+
+    .portrait-halo {
+      position: absolute;
       width: 320px;
       height: 320px;
-      transform: rotate(45deg);
-      border: 1.5px solid rgba(57, 229, 27, 0.45);
-      background: linear-gradient(135deg, rgba(53, 116, 46, 0.55) 0%, rgba(36, 82, 31, 0.35) 100%);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      box-shadow: 0 0 100px rgba(57, 229, 27, 0.28), inset 0 0 60px rgba(57, 229, 27, 0.18);
-      position: absolute;
-      right: 10%;
-      top: 50%;
-      margin-top: -160px;
-      z-index: 1;
-    }
-    .diamond::before {
-      content: '';
-      position: absolute;
-      inset: -60px;
-      background: radial-gradient(circle, rgba(57, 229, 27, 0.35) 0%, rgba(45, 100, 39, 0.2) 45%, transparent 70%);
       border-radius: 50%;
+      background: radial-gradient(circle, rgba(57, 229, 27, 0.42) 0%, rgba(45, 100, 39, 0.22) 50%, transparent 72%);
+      filter: blur(55px);
       z-index: -1;
+      pointer-events: none;
+    }
+
+    @media (min-width: 768px) {
+      .portrait-halo {
+        width: 480px;
+        height: 480px;
+      }
+    }
+
+    /* Diamond shape Ovilix Style */
+    .diamond {
+      width: 300px;
+      height: 300px;
+      transform: rotate(45deg);
+      border: 1.5px solid rgba(57, 229, 27, 0.35);
+      background: linear-gradient(135deg, rgba(53, 116, 46, 0.4) 0%, rgba(36, 82, 31, 0.2) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 0 90px rgba(57, 229, 27, 0.2), inset 0 0 50px rgba(57, 229, 27, 0.12);
+      position: absolute;
+      right: 8%;
+      top: 50%;
+      margin-top: -150px;
+      z-index: 2;
     }
 
     @media (max-width: 768px) {
       .diamond {
-        width: 160px;
-        height: 160px;
-        margin-top: -80px;
-        right: 4%;
-        opacity: 0.35;
+        width: 140px;
+        height: 140px;
+        margin-top: -70px;
+        right: 3%;
+        opacity: 0.25;
       }
     }
 
@@ -120,7 +162,7 @@
     }
     .project-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(20, 46, 18, 0.6);
+      box-shadow: 0 20px 45px rgba(20, 46, 18, 0.7);
       border-color: rgba(57, 229, 27, 0.4);
     }
 
@@ -229,54 +271,62 @@
   <!-- ============ HERO (100vh) ============ -->
   <section id="hero" class="relative min-h-screen flex flex-col justify-between overflow-x-hidden" style="background: radial-gradient(circle at 65% 40%, #2D6427 0%, #24521F 45%, #1B3F17 100%);">
 
-    <!-- Diamond Shape -->
+    <!-- Diamond Shape (Background) -->
     <div class="diamond hidden md:block"></div>
 
-    <!-- Middle content -->
-    <div class="flex-1 flex items-center">
+    <!-- Portrait Artistique Central (Style Ovilix / Rexton) -->
+    <div class="hero-portrait-container">
+      <div class="portrait-halo"></div>
+      <img src="./hero-portrait.png" 
+           alt="RODIS STUDIO — Création Digitale Artistique" 
+           class="hero-portrait-img">
+    </div>
+
+    <!-- Middle content (Foreground) -->
+    <div class="flex-1 flex items-center relative z-20">
       <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 w-full grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12 items-center pt-28 md:pt-24 pb-6">
 
         <!-- Left -->
-        <div class="relative z-10">
-          <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6">
+        <div class="relative z-20">
+          <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6 drop-shadow-md">
             Agence Digitale • Lomé, Togo
           </p>
-          <p class="text-base sm:text-lg lg:text-xl font-normal leading-relaxed text-[#F0FDF4] max-w-lg mb-8 sm:mb-10">
+          <p class="text-base sm:text-lg lg:text-xl font-normal leading-relaxed text-[#F0FDF4] max-w-lg mb-8 sm:mb-10 drop-shadow-[0_2px_10px_rgba(20,46,18,0.7)]">
             Nous concevons des solutions digitales percutantes connectées à WhatsApp qui élèvent votre présence et accélèrent vos ventes à Lomé.
           </p>
-          <a href="#contact" class="btn-ghost inline-flex items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full text-base font-semibold tracking-wide">
+          <a href="#contact" class="btn-ghost inline-flex items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full text-base font-semibold tracking-wide backdrop-blur-sm bg-forest-950/30">
             Lancer un projet <span class="text-lime text-xl font-bold">↗</span>
           </a>
         </div>
 
         <!-- Right keywords -->
-        <div class="hidden md:flex flex-col items-end gap-5 relative z-10 pr-4 select-none">
-          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/30 tracking-wider">INNOVER</span>
-          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/30 tracking-wider">GRANDIR</span>
-          <span class="font-display font-800 text-4xl lg:text-5xl italic text-lime/80 tracking-wider">CONVERTIR</span>
+        <div class="hidden md:flex flex-col items-end gap-5 relative z-20 pr-4 select-none">
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/40 tracking-wider drop-shadow-md">INNOVER</span>
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/40 tracking-wider drop-shadow-md">GRANDIR</span>
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-lime tracking-wider drop-shadow-[0_0_20px_rgba(57,229,27,0.5)]">CONVERTIR</span>
         </div>
       </div>
     </div>
 
-    <!-- Giant Title at Bottom (Responsive 375px Fix) -->
-    <div class="w-full overflow-hidden pb-6 md:pb-10 px-4 sm:px-6 lg:px-10">
+    <!-- Giant Title at Bottom (Responsive 375px Fix & Foreground z-20) -->
+    <div class="w-full overflow-hidden pb-6 md:pb-10 px-4 sm:px-6 lg:px-10 relative z-20">
       <!-- Mobile (< md) : 2 lignes 100% lisibles sans coupure -->
       <div class="block md:hidden text-center select-none font-display font-800 leading-[0.92] tracking-tighter">
-        <div class="text-white text-[17vw]">RODIS</div>
-        <div class="text-lime text-[17vw] flex items-center justify-center">
+        <div class="text-white text-[17vw] drop-shadow-[0_4px_16px_rgba(20,46,18,0.8)]">RODIS</div>
+        <div class="text-lime text-[17vw] flex items-center justify-center drop-shadow-[0_0_25px_rgba(57,229,27,0.4)]">
           STUDIO<sup class="text-[5vw] align-super ml-1 font-bold">®</sup>
         </div>
       </div>
 
       <!-- Desktop (>= md) : Pleine largeur en une ligne -->
-      <h1 class="hidden md:block font-display font-800 text-[11.8vw] leading-none tracking-tighter text-center whitespace-nowrap select-none">
+      <h1 class="hidden md:block font-display font-800 text-[11.8vw] leading-none tracking-tighter text-center whitespace-nowrap select-none drop-shadow-[0_4px_20px_rgba(20,46,18,0.8)]">
         <span class="text-white">RODIS</span> <span class="text-lime">STUDIO<sup class="text-[3vw] align-super font-bold">®</sup></span>
       </h1>
     </div>
   </section>
 
   <!-- ============ À PROPOS ============ -->
-  <section id="about" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: linear-gradient(180deg, #1B3F17 0%, #24521F 50%, #2D6427 100%);">
+  <section id="about" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden relative z-20" style="background: linear-gradient(180deg, #1B3F17 0%, #24521F 50%, #2D6427 100%);">
     <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
         <div>
@@ -315,7 +365,7 @@
   </section>
 
   <!-- ============ PROJETS RÉCENTS ============ -->
-  <section id="projects" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: #1B3F17;">
+  <section id="projects" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden relative z-20" style="background: #1B3F17;">
     <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
 
       <!-- Header -->
@@ -332,12 +382,13 @@
 
         <!-- Card 01 : MR PROPRE -->
         <div class="project-card group rounded-2xl overflow-hidden border border-white/15 bg-forest-800/80 shadow-lg">
-          <div class="aspect-[16/10] sm:aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 via-forest-800 to-forest-900 flex items-center justify-center">
-            <div class="text-center">
-              <span class="font-display font-800 text-8xl lg:text-9xl text-lime/15 group-hover:text-lime/25 transition-colors duration-500">01</span>
-            </div>
-            <div class="absolute top-5 left-5">
-              <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-lime bg-forest-950/80 border border-lime/40 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+          <div class="h-52 md:h-64 w-full relative overflow-hidden bg-forest-900">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" 
+                 alt="MR PROPRE Lomé - Architecture et Entretien" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-transparent to-black/20"></div>
+            <div class="absolute top-4 left-4 z-10">
+              <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-lime bg-forest-950/85 border border-lime/40 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-md">
                 Services B2B & Devis WhatsApp
               </span>
             </div>
@@ -355,12 +406,13 @@
 
         <!-- Card 02 : EMMA BEAUTY -->
         <div class="project-card group rounded-2xl overflow-hidden border border-white/15 bg-forest-800/80 shadow-lg">
-          <div class="aspect-[16/10] sm:aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 via-forest-800 to-forest-900 flex items-center justify-center">
-            <div class="text-center">
-              <span class="font-display font-800 text-8xl lg:text-9xl text-lime/15 group-hover:text-lime/25 transition-colors duration-500">02</span>
-            </div>
-            <div class="absolute top-5 left-5">
-              <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-lime bg-forest-950/80 border border-lime/40 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+          <div class="h-52 md:h-64 w-full relative overflow-hidden bg-forest-900">
+            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" 
+                 alt="EMMA BEAUTY - Cosmétiques et Beauté" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-transparent to-black/20"></div>
+            <div class="absolute top-4 left-4 z-10">
+              <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-lime bg-forest-950/85 border border-lime/40 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-md">
                 Boutique E-Commerce Cosmétiques
               </span>
             </div>
@@ -381,7 +433,7 @@
   </section>
 
   <!-- ============ SERVICES (TROIS PACKS) ============ -->
-  <section id="services" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: linear-gradient(180deg, #24521F 0%, #1B3F17 100%);">
+  <section id="services" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden relative z-20" style="background: linear-gradient(180deg, #24521F 0%, #1B3F17 100%);">
     <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
 
       <!-- Header -->
@@ -437,7 +489,7 @@
   </section>
 
   <!-- ============ CONTACT & SIMULATEUR ============ -->
-  <section id="contact" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: #1B3F17;">
+  <section id="contact" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden relative z-20" style="background: #1B3F17;">
     <div class="max-w-3xl mx-auto px-5 sm:px-6 lg:px-10">
 
       <!-- Header -->
@@ -500,7 +552,7 @@
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="border-t border-white/10" style="background: #142E12;">
+  <footer class="border-t border-white/10 relative z-20" style="background: #142E12;">
     <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-12 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
       <div class="flex flex-col sm:flex-row items-center gap-3">
         <span class="font-display font-800 text-xl text-white">Rodis<span class="text-lime">.</span></span>
@@ -567,12 +619,21 @@
       });
     });
 
+    // Hero portrait animation
+    gsap.from('.hero-portrait-img', {
+      scale: 0.92,
+      opacity: 0,
+      duration: 1.4,
+      ease: 'power3.out',
+      delay: 0.1
+    });
+
     // Hero title scale
     gsap.from('#hero h1, #hero .block.md\\:hidden', {
       scale: 0.94,
       duration: 1.1,
       ease: 'power4.out',
-      delay: 0.2
+      delay: 0.3
     });
 
     // Hero left content
