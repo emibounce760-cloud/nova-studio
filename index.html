@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="overflow-x-hidden">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,8 +19,18 @@
       theme: {
         extend: {
           colors: {
-            forest: { 900: '#0A1910', 800: '#0F2118', 700: '#142E1F', 600: '#1A3D2A' },
-            electric: { DEFAULT: '#22C55E', light: '#38E54D', dim: '#1A9B47' }
+            forest: {
+              950: '#142E12',
+              900: '#1B3F17',
+              800: '#24521F',
+              700: '#2D6427',
+              600: '#35742E'
+            },
+            lime: {
+              DEFAULT: '#39E51B',
+              light: '#53F339',
+              dark: '#2EC214'
+            }
           },
           fontFamily: {
             display: ['Syne', 'sans-serif'],
@@ -37,42 +47,59 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0A1910; color: #FFFFFF; overflow-x: hidden; }
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #1B3F17;
+      color: #FFFFFF;
+    }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0A1910; }
-    ::-webkit-scrollbar-thumb { background: #22C55E; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #1B3F17; }
+    ::-webkit-scrollbar-thumb { background: #39E51B; border-radius: 3px; }
 
     /* Selection */
-    ::selection { background: #22C55E; color: #0A1910; }
+    ::selection { background: #39E51B; color: #142E12; }
 
-    /* Diamond shape */
+    /* Diamond shape Ovilix Style */
     .diamond {
-      width: 320px; height: 320px;
+      width: 320px;
+      height: 320px;
       transform: rotate(45deg);
-      border: 1px solid rgba(34, 197, 94, 0.25);
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.06) 0%, rgba(34, 197, 94, 0.02) 100%);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
-      box-shadow: 0 0 120px rgba(34, 197, 94, 0.08), inset 0 0 60px rgba(34, 197, 94, 0.03);
+      border: 1.5px solid rgba(57, 229, 27, 0.45);
+      background: linear-gradient(135deg, rgba(53, 116, 46, 0.55) 0%, rgba(36, 82, 31, 0.35) 100%);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      box-shadow: 0 0 100px rgba(57, 229, 27, 0.28), inset 0 0 60px rgba(57, 229, 27, 0.18);
       position: absolute;
-      right: 12%;
+      right: 10%;
       top: 50%;
       margin-top: -160px;
+      z-index: 1;
     }
     .diamond::before {
       content: '';
       position: absolute;
-      inset: -80px;
-      background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
+      inset: -60px;
+      background: radial-gradient(circle, rgba(57, 229, 27, 0.35) 0%, rgba(45, 100, 39, 0.2) 45%, transparent 70%);
       border-radius: 50%;
       z-index: -1;
     }
 
     @media (max-width: 768px) {
-      .diamond { width: 180px; height: 180px; margin-top: -90px; right: 5%; opacity: 0.4; }
+      .diamond {
+        width: 160px;
+        height: 160px;
+        margin-top: -80px;
+        right: 4%;
+        opacity: 0.35;
+      }
     }
 
     /* Nav link hover */
@@ -81,46 +108,55 @@
       content: '';
       position: absolute;
       bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: #22C55E;
+      width: 0; height: 2px;
+      background: #39E51B;
       transition: width 0.3s ease;
     }
     .nav-link:hover::after { width: 100%; }
 
     /* Card hover */
     .project-card {
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease, border-color 0.4s ease;
     }
-    .project-card:hover { transform: translateY(-8px); }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(20, 46, 18, 0.6);
+      border-color: rgba(57, 229, 27, 0.4);
+    }
 
-    /* Service column */
+    /* Service column hover */
     .service-col {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      transition: background 0.4s ease;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
-    .service-col:hover { background: rgba(34, 197, 94, 0.04); }
+    .service-col:hover {
+      background: rgba(57, 229, 27, 0.08);
+      border-color: #39E51B;
+    }
 
-    /* Button glow */
-    .btn-electric {
-      background: #22C55E;
-      color: #0A1910;
-      font-weight: 700;
-      transition: all 0.3s ease;
+    /* Button Lime Vif */
+    .btn-lime {
+      background: #39E51B;
+      color: #142E12;
+      font-weight: 800;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .btn-electric:hover {
-      background: #38E54D;
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+    .btn-lime:hover {
+      background: #53F339;
+      box-shadow: 0 0 35px rgba(57, 229, 27, 0.5);
+      transform: translateY(-2px);
     }
 
     /* Ghost button */
     .btn-ghost {
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
       color: #FFFFFF;
       transition: all 0.3s ease;
     }
     .btn-ghost:hover {
-      border-color: #22C55E;
-      color: #22C55E;
+      border-color: #39E51B;
+      color: #39E51B;
+      background: rgba(57, 229, 27, 0.1);
     }
 
     /* Mobile menu */
@@ -132,30 +168,34 @@
 
     /* Form select/input styling */
     select, input {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #fff;
-      transition: border-color 0.3s;
+      background: rgba(20, 46, 18, 0.65);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      transition: border-color 0.3s, background 0.3s;
     }
     select:focus, input:focus {
       outline: none;
-      border-color: #22C55E;
+      border-color: #39E51B;
+      background: rgba(20, 46, 18, 0.9);
     }
-    select option { background: #0F2118; color: #fff; }
+    select option {
+      background: #1B3F17;
+      color: #FFFFFF;
+    }
   </style>
 </head>
-<body>
+<body class="overflow-x-hidden selection:bg-lime selection:text-forest-950">
 
   <!-- ============ NAVIGATION ============ -->
-  <nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-forest-900/80 border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
+  <nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-forest-900/85 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
       <!-- Logo -->
-      <a href="#" class="font-display font-800 text-2xl lg:text-3xl tracking-tight">
-        Rodis<span class="text-electric">.</span>
+      <a href="#" class="font-display font-800 text-2xl lg:text-3xl tracking-tight text-white">
+        Rodis<span class="text-lime">.</span>
       </a>
 
       <!-- Desktop Links -->
-      <div class="hidden md:flex items-center gap-10 text-sm font-body font-light tracking-wide text-white/70">
+      <div class="hidden md:flex items-center gap-10 text-sm font-body font-medium tracking-wide text-[#F0FDF4]">
         <a href="#hero" class="nav-link hover:text-white">Accueil</a>
         <a href="#about" class="nav-link hover:text-white">À propos</a>
         <a href="#services" class="nav-link hover:text-white">Services</a>
@@ -165,95 +205,108 @@
 
       <!-- CTA + Burger -->
       <div class="flex items-center gap-4">
-        <a href="#contact" class="hidden md:inline-flex btn-electric px-6 py-2.5 rounded-full text-sm tracking-wide">
+        <a href="#contact" class="hidden md:inline-flex btn-lime px-6 py-2.5 rounded-full text-sm tracking-wide">
           DÉMARRER
         </a>
-        <button id="burger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
-          <span class="block w-6 h-[1.5px] bg-white transition-all" id="bar1"></span>
-          <span class="block w-6 h-[1.5px] bg-white transition-all" id="bar2"></span>
-          <span class="block w-4 h-[1.5px] bg-white transition-all ml-auto" id="bar3"></span>
+        <button id="burger" class="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none" aria-label="Menu">
+          <span class="block w-6 h-[2px] bg-white transition-all" id="bar1"></span>
+          <span class="block w-6 h-[2px] bg-white transition-all" id="bar2"></span>
+          <span class="block w-4 h-[2px] bg-lime transition-all ml-auto" id="bar3"></span>
         </button>
       </div>
     </div>
   </nav>
 
   <!-- Mobile Menu -->
-  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-forest-900/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
-    <a href="#hero" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">Accueil</a>
-    <a href="#about" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">À propos</a>
-    <a href="#services" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">Services</a>
-    <a href="#projects" onclick="closeMenu()" class="text-3xl font-display font-800 text-white/80 hover:text-electric">Projets</a>
-    <a href="#contact" onclick="closeMenu()" class="btn-electric px-10 py-3 rounded-full text-lg mt-4">DÉMARRER</a>
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-forest-950/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 px-6">
+    <a href="#hero" onclick="closeMenu()" class="text-3xl font-display font-800 text-white hover:text-lime">Accueil</a>
+    <a href="#about" onclick="closeMenu()" class="text-3xl font-display font-800 text-white hover:text-lime">À propos</a>
+    <a href="#services" onclick="closeMenu()" class="text-3xl font-display font-800 text-white hover:text-lime">Services</a>
+    <a href="#projects" onclick="closeMenu()" class="text-3xl font-display font-800 text-white hover:text-lime">Projets</a>
+    <a href="#contact" onclick="closeMenu()" class="btn-lime px-10 py-3.5 rounded-full text-lg mt-4 w-full max-w-xs text-center">DÉMARRER</a>
   </div>
 
-  <!-- ============ HERO ============ -->
-  <section id="hero" class="relative min-h-screen flex flex-col justify-between overflow-hidden" style="background: linear-gradient(180deg, #0A1910 0%, #0F2118 50%, #0A1910 100%);">
+  <!-- ============ HERO (100vh) ============ -->
+  <section id="hero" class="relative min-h-screen flex flex-col justify-between overflow-x-hidden" style="background: radial-gradient(circle at 65% 40%, #2D6427 0%, #24521F 45%, #1B3F17 100%);">
 
-    <!-- Diamond -->
+    <!-- Diamond Shape -->
     <div class="diamond hidden md:block"></div>
 
     <!-- Middle content -->
     <div class="flex-1 flex items-center">
-      <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center pt-28 md:pt-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 w-full grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12 items-center pt-28 md:pt-24 pb-6">
 
         <!-- Left -->
         <div class="relative z-10">
-          <p class="text-white/40 text-sm font-light tracking-widest uppercase mb-8">Agence Digitale — Lomé, Togo</p>
-          <p class="text-lg lg:text-xl font-light leading-relaxed text-white/70 max-w-md mb-10">
+          <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6">
+            Agence Digitale • Lomé, Togo
+          </p>
+          <p class="text-base sm:text-lg lg:text-xl font-normal leading-relaxed text-[#F0FDF4] max-w-lg mb-8 sm:mb-10">
             Nous concevons des solutions digitales percutantes connectées à WhatsApp qui élèvent votre présence et accélèrent vos ventes à Lomé.
           </p>
-          <a href="#contact" class="btn-ghost inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-sm tracking-wide">
-            Lancer un projet <span class="text-electric text-lg">↗</span>
+          <a href="#contact" class="btn-ghost inline-flex items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full text-base font-semibold tracking-wide">
+            Lancer un projet <span class="text-lime text-xl font-bold">↗</span>
           </a>
         </div>
 
         <!-- Right keywords -->
-        <div class="hidden md:flex flex-col items-end gap-4 relative z-10 pr-4">
-          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/10 tracking-wider">INNOVER</span>
-          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/10 tracking-wider">GRANDIR</span>
-          <span class="font-display font-800 text-4xl lg:text-5xl italic text-electric/20 tracking-wider">CONVERTIR</span>
+        <div class="hidden md:flex flex-col items-end gap-5 relative z-10 pr-4 select-none">
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/30 tracking-wider">INNOVER</span>
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-white/30 tracking-wider">GRANDIR</span>
+          <span class="font-display font-800 text-4xl lg:text-5xl italic text-lime/80 tracking-wider">CONVERTIR</span>
         </div>
       </div>
     </div>
 
-    <!-- Giant title at bottom -->
-    <div class="w-full overflow-hidden pb-6 md:pb-10">
-      <h1 class="font-display font-800 text-[15vw] md:text-[12vw] leading-none tracking-tighter text-center whitespace-nowrap select-none">
-        <span class="text-white">RODIS</span> <span class="text-electric">STUDIO<sup class="text-[3vw] align-super">®</sup></span>
+    <!-- Giant Title at Bottom (Responsive 375px Fix) -->
+    <div class="w-full overflow-hidden pb-6 md:pb-10 px-4 sm:px-6 lg:px-10">
+      <!-- Mobile (< md) : 2 lignes 100% lisibles sans coupure -->
+      <div class="block md:hidden text-center select-none font-display font-800 leading-[0.92] tracking-tighter">
+        <div class="text-white text-[17vw]">RODIS</div>
+        <div class="text-lime text-[17vw] flex items-center justify-center">
+          STUDIO<sup class="text-[5vw] align-super ml-1 font-bold">®</sup>
+        </div>
+      </div>
+
+      <!-- Desktop (>= md) : Pleine largeur en une ligne -->
+      <h1 class="hidden md:block font-display font-800 text-[11.8vw] leading-none tracking-tighter text-center whitespace-nowrap select-none">
+        <span class="text-white">RODIS</span> <span class="text-lime">STUDIO<sup class="text-[3vw] align-super font-bold">®</sup></span>
       </h1>
     </div>
   </section>
 
   <!-- ============ À PROPOS ============ -->
-  <section id="about" class="py-32 lg:py-44" style="background: #0F2118;">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-start">
+  <section id="about" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: linear-gradient(180deg, #1B3F17 0%, #24521F 50%, #2D6427 100%);">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
         <div>
-          <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">À propos</p>
-          <h2 class="font-display font-800 text-4xl lg:text-6xl leading-tight">
+          <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6">À propos</p>
+          <h2 class="font-display font-800 text-3xl sm:text-4xl lg:text-6xl leading-tight text-white">
             Des sites qui<br>
-            <span class="text-electric">convertissent.</span>
+            <span class="text-lime">convertissent.</span>
           </h2>
         </div>
-        <div class="flex flex-col gap-8">
-          <p class="text-white/50 text-lg font-light leading-relaxed">
+        <div class="flex flex-col gap-6 sm:gap-8">
+          <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed">
             RODIS STUDIO est une agence digitale nouvelle génération basée à Lomé. Nous créons des sites vitrines, des boutiques en ligne et des identités visuelles pensés pour transformer vos visiteurs en clients — directement sur WhatsApp.
           </p>
-          <p class="text-white/50 text-lg font-light leading-relaxed">
+          <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed">
             Pas d'abonnement. Pas de complexité. Un site clé en main livré en 48h, connecté à votre WhatsApp Business. Simple, rapide, efficace.
           </p>
-          <div class="flex gap-16 pt-8 border-t border-white/5">
-            <div>
-              <span class="font-display font-800 text-4xl text-electric">48h</span>
-              <p class="text-white/40 text-sm mt-1">Livraison</p>
+
+          <!-- Statistiques Responsive 3 Colonnes Équilibrées -->
+          <div class="grid grid-cols-3 gap-2 sm:gap-6 pt-8 border-t border-white/20 px-2 sm:px-5 text-center">
+            <div class="flex flex-col items-center">
+              <span class="font-display font-800 text-3xl sm:text-4xl lg:text-5xl text-lime">48h</span>
+              <p class="text-[#F0FDF4] text-sm sm:text-base font-medium mt-1">Livraison</p>
             </div>
-            <div>
-              <span class="font-display font-800 text-4xl text-white">100%</span>
-              <p class="text-white/40 text-sm mt-1">Clé en main</p>
+            <div class="flex flex-col items-center">
+              <span class="font-display font-800 text-3xl sm:text-4xl lg:text-5xl text-lime">100%</span>
+              <p class="text-[#F0FDF4] text-sm sm:text-base font-medium mt-1">Clé en main</p>
             </div>
-            <div>
-              <span class="font-display font-800 text-4xl text-white">0</span>
-              <p class="text-white/40 text-sm mt-1">Abonnement</p>
+            <div class="flex flex-col items-center">
+              <span class="font-display font-800 text-3xl sm:text-4xl lg:text-5xl text-lime">0</span>
+              <p class="text-[#F0FDF4] text-sm sm:text-base font-medium mt-1">Abonnement</p>
             </div>
           </div>
         </div>
@@ -261,56 +314,64 @@
     </div>
   </section>
 
-  <!-- ============ PROJETS ============ -->
-  <section id="projects" class="py-32 lg:py-44 bg-forest-900">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+  <!-- ============ PROJETS RÉCENTS ============ -->
+  <section id="projects" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: #1B3F17;">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
 
       <!-- Header -->
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 sm:mb-20">
         <div>
-          <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">Portfolio</p>
-          <h2 class="font-display font-800 text-4xl lg:text-6xl leading-tight">Projets récents</h2>
+          <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6">Portfolio</p>
+          <h2 class="font-display font-800 text-3xl sm:text-4xl lg:text-6xl leading-tight text-white">Projets récents</h2>
         </div>
-        <p class="text-white/40 text-base font-light max-w-sm">Des réalisations concrètes, en production, qui génèrent des résultats pour nos clients.</p>
+        <p class="text-[#F0FDF4] text-base sm:text-lg font-normal max-w-sm">Des réalisations concrètes, en production, qui génèrent des résultats pour nos clients.</p>
       </div>
 
       <!-- Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
 
-        <!-- Card 01 -->
-        <div class="project-card group rounded-2xl overflow-hidden border border-white/5 bg-forest-800/50">
-          <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 to-forest-900 flex items-center justify-center">
+        <!-- Card 01 : MR PROPRE -->
+        <div class="project-card group rounded-2xl overflow-hidden border border-white/15 bg-forest-800/80 shadow-lg">
+          <div class="aspect-[16/10] sm:aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 via-forest-800 to-forest-900 flex items-center justify-center">
             <div class="text-center">
-              <span class="font-display font-800 text-7xl lg:text-8xl text-white/5 group-hover:text-white/10 transition-colors duration-500">01</span>
+              <span class="font-display font-800 text-8xl lg:text-9xl text-lime/15 group-hover:text-lime/25 transition-colors duration-500">01</span>
             </div>
-            <div class="absolute top-6 left-6">
-              <span class="text-xs font-medium tracking-widest uppercase text-electric/70 bg-electric/10 px-3 py-1.5 rounded-full">Services B2B & Devis WhatsApp</span>
+            <div class="absolute top-5 left-5">
+              <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-lime bg-forest-950/80 border border-lime/40 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                Services B2B & Devis WhatsApp
+              </span>
             </div>
           </div>
-          <div class="p-8 lg:p-10">
-            <h3 class="font-display font-800 text-2xl lg:text-3xl mb-3">MR PROPRE Lomé</h3>
-            <p class="text-white/40 font-light leading-relaxed mb-8">Site vitrine professionnel avec simulateur de devis interactif connecté à WhatsApp et identité visuelle complète.</p>
-            <a href="./mr-propre/index.html" class="inline-flex items-center gap-2 text-electric text-sm font-semibold tracking-wide hover:gap-4 transition-all duration-300">
+          <div class="p-6 sm:p-8 lg:p-10">
+            <h3 class="font-display font-800 text-2xl sm:text-3xl text-white mb-3">MR PROPRE Lomé</h3>
+            <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed mb-6 sm:mb-8">
+              Site vitrine professionnel avec simulateur de devis interactif connecté à WhatsApp, identité visuelle complète et application mobile PWA.
+            </p>
+            <a href="./mr-propre/index.html" class="inline-flex items-center gap-2 text-lime hover:text-lime-light text-base sm:text-lg font-bold tracking-wide transition-all duration-300">
               Voir le site en direct <span>↗</span>
             </a>
           </div>
         </div>
 
-        <!-- Card 02 -->
-        <div class="project-card group rounded-2xl overflow-hidden border border-white/5 bg-forest-800/50">
-          <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 to-forest-900 flex items-center justify-center">
+        <!-- Card 02 : EMMA BEAUTY -->
+        <div class="project-card group rounded-2xl overflow-hidden border border-white/15 bg-forest-800/80 shadow-lg">
+          <div class="aspect-[16/10] sm:aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-forest-700 via-forest-800 to-forest-900 flex items-center justify-center">
             <div class="text-center">
-              <span class="font-display font-800 text-7xl lg:text-8xl text-white/5 group-hover:text-white/10 transition-colors duration-500">02</span>
+              <span class="font-display font-800 text-8xl lg:text-9xl text-lime/15 group-hover:text-lime/25 transition-colors duration-500">02</span>
             </div>
-            <div class="absolute top-6 left-6">
-              <span class="text-xs font-medium tracking-widest uppercase text-electric/70 bg-electric/10 px-3 py-1.5 rounded-full">Boutique E-Commerce Cosmétiques</span>
+            <div class="absolute top-5 left-5">
+              <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-lime bg-forest-950/80 border border-lime/40 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                Boutique E-Commerce Cosmétiques
+              </span>
             </div>
           </div>
-          <div class="p-8 lg:p-10">
-            <h3 class="font-display font-800 text-2xl lg:text-3xl mb-3">EMMA BEAUTY</h3>
-            <p class="text-white/40 font-light leading-relaxed mb-8">Catalogue interactif avec panier automatique et commande directe sur WhatsApp en FCFA.</p>
-            <a href="https://wa.me/22893789708" target="_blank" class="inline-flex items-center gap-2 text-electric text-sm font-semibold tracking-wide hover:gap-4 transition-all duration-300">
-              Voir la boutique <span>↗</span>
+          <div class="p-6 sm:p-8 lg:p-10">
+            <h3 class="font-display font-800 text-2xl sm:text-3xl text-white mb-3">EMMA BEAUTY</h3>
+            <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed mb-6 sm:mb-8">
+              Catalogue interactif de soins et maquillage avec panier automatique et commande directe sur WhatsApp en FCFA.
+            </p>
+            <a href="https://wa.me/22893789708" target="_blank" class="inline-flex items-center gap-2 text-lime hover:text-lime-light text-base sm:text-lg font-bold tracking-wide transition-all duration-300">
+              Voir la boutique (+228 93 78 97 08) <span>↗</span>
             </a>
           </div>
         </div>
@@ -319,89 +380,103 @@
     </div>
   </section>
 
-  <!-- ============ SERVICES ============ -->
-  <section id="services" class="py-32 lg:py-44" style="background: linear-gradient(180deg, #0F2118 0%, #0A1910 100%);">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+  <!-- ============ SERVICES (TROIS PACKS) ============ -->
+  <section id="services" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: linear-gradient(180deg, #24521F 0%, #1B3F17 100%);">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
 
       <!-- Header -->
-      <div class="mb-20">
-        <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">Ce qu'on fait</p>
-        <h2 class="font-display font-800 text-4xl lg:text-6xl leading-tight max-w-2xl">
+      <div class="mb-16 sm:mb-20">
+        <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6">Ce qu'on fait</p>
+        <h2 class="font-display font-800 text-3xl sm:text-4xl lg:text-6xl leading-tight text-white max-w-2xl">
           Trois packs.<br>
-          <span class="text-electric">Zéro abonnement.</span>
+          <span class="text-lime">Zéro abonnement.</span>
         </h2>
       </div>
 
       <!-- 3 Columns -->
-      <div class="grid grid-cols-1 md:grid-cols-3">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0">
 
         <!-- Service 01 -->
-        <div class="service-col p-8 lg:p-12">
-          <span class="font-display font-800 text-5xl text-electric/20 block mb-8">01</span>
-          <h3 class="font-display font-800 text-xl lg:text-2xl mb-4">Identité & Logo HD</h3>
-          <p class="text-white/40 font-light leading-relaxed mb-8">Création ou refonte de votre marque professionnelle, livrée en 48h avec tous les fichiers sources.</p>
-          <a href="#contact" class="text-electric text-sm font-semibold hover:underline underline-offset-4">Commander ce pack →</a>
+        <div class="service-col p-6 sm:p-8 lg:p-12 bg-forest-800/40 md:bg-transparent rounded-2xl md:rounded-none">
+          <span class="font-display font-800 text-5xl lg:text-6xl text-lime block mb-6">01</span>
+          <h3 class="font-display font-800 text-2xl text-white mb-4">Identité & Logo HD</h3>
+          <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed mb-8">
+            Création ou refonte complète de votre marque professionnelle, livrée en 48h avec tous les fichiers sources HD.
+          </p>
+          <a href="#contact" class="inline-flex items-center gap-2 text-lime hover:text-lime-light text-base font-bold underline underline-offset-4">
+            Commander ce pack →
+          </a>
         </div>
 
         <!-- Service 02 -->
-        <div class="service-col p-8 lg:p-12 md:border-l md:border-r border-white/5">
-          <span class="font-display font-800 text-5xl text-electric/20 block mb-8">02</span>
-          <h3 class="font-display font-800 text-xl lg:text-2xl mb-4">Site Vitrine & Devis WhatsApp</h3>
-          <p class="text-white/40 font-light leading-relaxed mb-8">Idéal pour entreprises de services, BTP, nettoyage et agences. Vos prospects vous contactent en un clic.</p>
-          <a href="#contact" class="text-electric text-sm font-semibold hover:underline underline-offset-4">Commander ce pack →</a>
+        <div class="service-col p-6 sm:p-8 lg:p-12 bg-forest-800/40 md:bg-transparent rounded-2xl md:rounded-none md:border-l md:border-r border-white/15">
+          <span class="font-display font-800 text-5xl lg:text-6xl text-lime block mb-6">02</span>
+          <h3 class="font-display font-800 text-2xl text-white mb-4">Site Vitrine & Devis WhatsApp</h3>
+          <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed mb-8">
+            Idéal pour entreprises de services, BTP, nettoyage et agences. Vos prospects calculent et commandent en un clic.
+          </p>
+          <a href="#contact" class="inline-flex items-center gap-2 text-lime hover:text-lime-light text-base font-bold underline underline-offset-4">
+            Commander ce pack →
+          </a>
         </div>
 
         <!-- Service 03 -->
-        <div class="service-col p-8 lg:p-12">
-          <span class="font-display font-800 text-5xl text-electric/20 block mb-8">03</span>
-          <h3 class="font-display font-800 text-xl lg:text-2xl mb-4">Boutique Express WhatsApp</h3>
-          <p class="text-white/40 font-light leading-relaxed mb-8">Catalogue interactif avec panier automatique en FCFA. Parfait pour prêt-à-porter, beauté et restaurants.</p>
-          <a href="#contact" class="text-electric text-sm font-semibold hover:underline underline-offset-4">Commander ce pack →</a>
+        <div class="service-col p-6 sm:p-8 lg:p-12 bg-forest-800/40 md:bg-transparent rounded-2xl md:rounded-none">
+          <span class="font-display font-800 text-5xl lg:text-6xl text-lime block mb-6">03</span>
+          <h3 class="font-display font-800 text-2xl text-white mb-4">Boutique Express WhatsApp</h3>
+          <p class="text-[#F0FDF4] text-base sm:text-lg font-normal leading-relaxed mb-8">
+            Catalogue interactif avec panier automatique en FCFA. Parfait pour prêt-à-porter, cosmétiques, beauté et restaurants.
+          </p>
+          <a href="#contact" class="inline-flex items-center gap-2 text-lime hover:text-lime-light text-base font-bold underline underline-offset-4">
+            Commander ce pack →
+          </a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============ CONTACT ============ -->
-  <section id="contact" class="py-32 lg:py-44 bg-forest-900">
-    <div class="max-w-3xl mx-auto px-6 lg:px-10">
+  <!-- ============ CONTACT & SIMULATEUR ============ -->
+  <section id="contact" class="py-24 sm:py-32 lg:py-40 overflow-x-hidden" style="background: #1B3F17;">
+    <div class="max-w-3xl mx-auto px-5 sm:px-6 lg:px-10">
 
       <!-- Header -->
-      <div class="text-center mb-16">
-        <p class="text-electric text-sm font-medium tracking-widest uppercase mb-6">Contact</p>
-        <h2 class="font-display font-800 text-4xl lg:text-5xl leading-tight mb-6">
-          Lancez votre projet<span class="text-electric">.</span>
+      <div class="text-center mb-12 sm:mb-16">
+        <p class="text-lime text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4 sm:mb-6">Contact direct</p>
+        <h2 class="font-display font-800 text-3xl sm:text-4xl lg:text-5xl leading-tight text-white mb-4 sm:mb-6">
+          Lancez votre projet<span class="text-lime">.</span>
         </h2>
-        <p class="text-white/40 font-light text-lg max-w-lg mx-auto">Dites-nous ce qu'il vous faut. On vous répond sur WhatsApp en moins de 2h.</p>
+        <p class="text-[#F0FDF4] font-normal text-base sm:text-lg max-w-lg mx-auto">
+          Dites-nous ce qu'il vous faut. On vous répond directement sur WhatsApp en moins de 2h.
+        </p>
       </div>
 
       <!-- Form Card -->
-      <div class="rounded-2xl border border-white/5 bg-forest-800/40 p-8 lg:p-12">
+      <div class="rounded-2xl border border-white/20 bg-forest-800/80 p-6 sm:p-8 lg:p-12 shadow-2xl">
         <form id="contactForm" class="flex flex-col gap-6">
 
           <!-- Nom -->
           <div>
-            <label class="text-white/50 text-xs font-medium tracking-widest uppercase mb-2 block">Votre nom</label>
+            <label class="text-[#F0FDF4] text-xs font-bold tracking-widest uppercase mb-2 block">Votre nom</label>
             <input type="text" id="clientName" placeholder="Ex : Kofi Mensah" required
-              class="w-full px-5 py-4 rounded-xl text-sm font-light placeholder:text-white/20">
+              class="w-full px-5 py-4 rounded-xl text-base font-normal placeholder:text-white/40">
           </div>
 
           <!-- Service -->
           <div>
-            <label class="text-white/50 text-xs font-medium tracking-widest uppercase mb-2 block">Service souhaité</label>
-            <select id="serviceType" required class="w-full px-5 py-4 rounded-xl text-sm font-light appearance-none cursor-pointer">
+            <label class="text-[#F0FDF4] text-xs font-bold tracking-widest uppercase mb-2 block">Service souhaité</label>
+            <select id="serviceType" required class="w-full px-5 py-4 rounded-xl text-base font-normal appearance-none cursor-pointer">
               <option value="" disabled selected>Choisir un service</option>
-              <option value="Logo & Identité Visuelle">Logo & Identité Visuelle</option>
-              <option value="Site Vitrine & Devis WhatsApp">Site Vitrine & Devis WhatsApp</option>
-              <option value="Boutique Express WhatsApp">Boutique Express WhatsApp</option>
+              <option value="Logo & Identité Visuelle">01 — Logo & Identité Visuelle</option>
+              <option value="Site Vitrine & Devis WhatsApp">02 — Site Vitrine & Devis WhatsApp</option>
+              <option value="Boutique Express WhatsApp">03 — Boutique Express WhatsApp</option>
             </select>
           </div>
 
           <!-- Secteur -->
           <div>
-            <label class="text-white/50 text-xs font-medium tracking-widest uppercase mb-2 block">Secteur d'activité</label>
-            <select id="sector" required class="w-full px-5 py-4 rounded-xl text-sm font-light appearance-none cursor-pointer">
+            <label class="text-[#F0FDF4] text-xs font-bold tracking-widest uppercase mb-2 block">Secteur d'activité</label>
+            <select id="sector" required class="w-full px-5 py-4 rounded-xl text-base font-normal appearance-none cursor-pointer">
               <option value="" disabled selected>Choisir un secteur</option>
               <option value="Nettoyage & Entretien">Nettoyage & Entretien</option>
               <option value="Beauté & Cosmétiques">Beauté & Cosmétiques</option>
@@ -415,8 +490,8 @@
           </div>
 
           <!-- Submit -->
-          <button type="submit" class="btn-electric w-full py-4 rounded-xl text-sm tracking-wide mt-2">
-            Envoyer sur WhatsApp ↗
+          <button type="submit" class="btn-lime w-full py-4 rounded-xl text-base font-extrabold tracking-wide mt-2">
+            Envoyer sur WhatsApp (+228 93 09 50 94) ↗
           </button>
         </form>
       </div>
@@ -425,16 +500,18 @@
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="border-t border-white/5" style="background: #081410;">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-3">
-        <span class="font-display font-800 text-xl">Rodis<span class="text-electric">.</span></span>
-        <span class="text-white/20 text-sm">—</span>
-        <span class="text-white/30 text-sm font-light">Agence Digitale • Lomé, Togo</span>
+  <footer class="border-t border-white/10" style="background: #142E12;">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-12 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <span class="font-display font-800 text-xl text-white">Rodis<span class="text-lime">.</span></span>
+        <span class="hidden sm:inline text-white/30 text-sm">—</span>
+        <span class="text-[#F0FDF4] text-sm font-medium">RODIS STUDIO® — Agence Digitale • Lomé, Togo</span>
       </div>
-      <div class="flex items-center gap-8">
-        <a href="https://wa.me/22893095094" target="_blank" class="text-white/40 text-sm font-light hover:text-electric transition-colors">+228 93 09 50 94</a>
-        <span class="text-white/10 text-sm">© 2024 RODIS STUDIO®</span>
+      <div class="flex items-center gap-6 sm:gap-8">
+        <a href="https://wa.me/22893095094" target="_blank" class="text-lime text-base font-bold hover:underline underline-offset-4">
+          +228 93 09 50 94
+        </a>
+        <span class="text-white/40 text-sm">© 2024 RODIS STUDIO®</span>
       </div>
     </div>
   </footer>
@@ -478,40 +555,40 @@
     // Fade-in on scroll
     document.querySelectorAll('#about, #projects, #services, #contact').forEach(section => {
       gsap.from(section.querySelectorAll('h2, p, .project-card, .service-col, form'), {
-        y: 40,
+        y: 35,
         duration: 0.8,
         stagger: 0.1,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: section,
-          start: 'top 80%',
+          start: 'top 85%',
           once: true
         }
       });
     });
 
     // Hero title scale
-    gsap.from('#hero h1', {
-      scale: 0.9,
-      duration: 1.2,
+    gsap.from('#hero h1, #hero .block.md\\:hidden', {
+      scale: 0.94,
+      duration: 1.1,
       ease: 'power4.out',
-      delay: 0.3
+      delay: 0.2
     });
 
     // Hero left content
     gsap.from('#hero p, #hero a', {
-      y: 30,
+      y: 25,
       duration: 0.8,
-      stagger: 0.15,
+      stagger: 0.12,
       ease: 'power3.out',
-      delay: 0.6
+      delay: 0.5
     });
 
     // Diamond float
     gsap.to('.diamond', {
-      y: -20,
-      rotation: 50,
-      duration: 6,
+      y: -18,
+      rotation: 48,
+      duration: 5,
       ease: 'sine.inOut',
       yoyo: true,
       repeat: -1
@@ -522,7 +599,7 @@
     ScrollTrigger.create({
       start: 'top -80',
       onUpdate: self => {
-        nav.style.borderBottomColor = self.progress > 0 ? 'rgba(34, 197, 94, 0.1)' : 'rgba(255,255,255,0.05)';
+        nav.style.borderBottomColor = self.progress > 0 ? 'rgba(57, 229, 27, 0.25)' : 'rgba(255,255,255,0.1)';
       }
     });
   </script>
