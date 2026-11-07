@@ -1,725 +1,215 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr" class="overflow-x-hidden">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FITTED BY BUZZ® — Showroom Officiel | Lomé & Expédition Mondiale</title>
-    <meta name="description" content="Boutique officielle FITTED BY BUZZ par Le Buzzmatik. Lunettes de luxe, Ensembles Streetwear, Casquettes Fitted et Sneakers. Commande directe sur WhatsApp.">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        display: ['Syne', 'sans-serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        buzz: {
-                            bg: '#F4F3EF',
-                            card: '#EBEAE4',
-                            dark: '#0A0A0A',
-                            accent: '#E62E1B', // Rouge Vermillon Streetwear
-                            gold: '#C5A059'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            background-color: #F4F3EF;
-            color: #0A0A0A;
-            overflow-x: hidden;
-        }
-        .brutal-border {
-            border: 2px solid #0A0A0A;
-        }
-        .brutal-shadow {
-            box-shadow: 4px 4px 0px #0A0A0A;
-        }
-        .brutal-shadow-sm {
-            box-shadow: 2px 2px 0px #0A0A0A;
-        }
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            animation: marquee 25s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FITTED BY BUZZ® — Boutique officielle, Lomé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@1&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<style>
+:root{--bg:#F4F3EF;--ink:#0A0A0A;--red:#E62E1B;--m:radial-gradient(circle 9px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
+html,body{overflow-x-hidden;max-width:100vw}
+body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");color:var(--ink);font-family:'DM Sans',sans-serif}
+.f{font-family:Syne,sans-serif;font-weight:800;letter-spacing:-.04em}
+.s{font-family:'Instrument Serif',serif;font-style:italic}
+.bd{border:2px solid var(--ink)}
+.card{transition:transform .15s,box-shadow .15s}.card:hover{transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--ink)}
+.tk{background:var(--ink);color:var(--bg);font-family:Syne,sans-serif;font-weight:800;padding:.9rem 1.6rem;font-size:.82rem;line-height:1.2;text-align:center;text-transform:uppercase;display:inline-flex;gap:.5rem;align-items:center;justify-content:center;max-width:100%;-webkit-mask:var(--m);mask:var(--m);transition:background .2s}
+.tk:hover{background:var(--red)}
+.h-giant{font-size:clamp(2.1rem,8.5vw,4.5rem);line-height:.92;overflow-wrap:anywhere;word-break:break-word}
+.h-prod{font-size:clamp(1.5rem,6vw,3rem);line-height:.98;overflow-wrap:anywhere;word-break:break-word}
+.mq{animation:mq 28s linear infinite;width:max-content}@keyframes mq{to{transform:translateX(-50%)}}
+.drop{animation:drop .9s cubic-bezier(.2,.8,.2,1) both}@keyframes drop{from{transform:translateY(-60px) rotate(-8deg);opacity:0}}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.mq,.drop{animation:none}.card{transition:none}}
+</style>
 </head>
-<body class="antialiased selection:bg-buzz-accent selection:text-white">
+<body>
+<header class="sticky top-0 z-40 bg-[#F4F3EF] border-b-2 border-black">
+<div class="flex items-center justify-between px-3 py-3 gap-2">
+<button onclick="go('home')" class="f text-xl sm:text-2xl md:text-3xl text-left truncate">FITTED BY BUZZ®</button>
+<button onclick="tc()" class="bd bg-[#E62E1B] text-white px-3.5 py-2 flex gap-2 items-center font-bold shrink-0" aria-label="Ouvrir le panier"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cn">0</span></button>
+</div>
+<nav id="nv" class="flex overflow-x-auto border-t-2 border-black f text-xs whitespace-nowrap"></nav>
+</header>
 
-    <!-- TOP BAR : EXPÉDITION MONDIALE -->
-    <div class="bg-buzz-dark text-buzz-bg py-2.5 overflow-hidden font-bold text-xs uppercase tracking-widest border-b-2 border-buzz-dark">
-        <div class="marquee-track">
-            <span class="mx-6">🌍 FITTED BY BUZZ® — EXPÉDITION PARTOUT DANS LE MONDE (LOMÉ, UEMOA, EUROPE, USA)</span>
-            <span class="mx-6">🔥 SHOWROOM OFFICIEL • LUNETTES DE LUXE • ENSEMBLES • FITTED CAPS • SNEAKERS</span>
-            <span class="mx-6">⚡ COMMANDE DIRECTE SUR WHATSAPP : +228 98 58 54 02</span>
-            <span class="mx-6">🌍 FITTED BY BUZZ® — EXPÉDITION PARTOUT DANS LE MONDE (LOMÉ, UEMOA, EUROPE, USA)</span>
-            <span class="mx-6">🔥 SHOWROOM OFFICIEL • LUNETTES DE LUXE • ENSEMBLES • FITTED CAPS • SNEAKERS</span>
-            <span class="mx-6">⚡ COMMANDE DIRECTE SUR WHATSAPP : +228 98 58 54 02</span>
-        </div>
+<main id="v" class="overflow-x-hidden"></main>
+
+<footer class="bg-black text-[#F4F3EF] p-6 md:p-10 mt-6 grid md:grid-cols-2 gap-6">
+<div><p class="f text-3xl sm:text-4xl">FITTED BY BUZZ®</p><p class="s text-xl mt-2">Géré par Le Buzzmatik, Lomé. Expédition partout dans le monde 🌍</p></div>
+<p class="md:text-right self-end text-sm sm:text-base">Conçu par <a class="underline text-[#E62E1B] font-bold" href="https://rodis-studio.github.io/" target="_blank" rel="noopener">RODIS STUDIO®</a> — Lomé, Togo (<a class="underline text-[#E62E1B] font-bold" href="https://wa.me/22893095094" target="_blank" rel="noopener">+228 93 09 50 94</a>)</p>
+</footer>
+
+<div id="ov" onclick="tc()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+<aside id="cd" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#F4F3EF] border-l-2 border-black z-50 translate-x-full transition-transform duration-300 flex flex-col" aria-label="Panier">
+<div class="flex justify-between items-center p-4 border-b-2 border-black"><h2 class="f text-2xl sm:text-3xl">Panier</h2><button onclick="tc()" aria-label="Fermer"><i data-lucide="x" class="w-7 h-7"></i></button></div>
+<div id="ci" class="flex-1 overflow-y-auto p-4 grid gap-3 content-start"></div>
+<div class="p-4 border-t-2 border-black grid gap-2 bg-white">
+<input id="fn" placeholder="Prénom" class="bd p-2 bg-transparent"><input id="vl" placeholder="Ville" class="bd p-2 bg-transparent">
+<select id="zn" class="bd p-2 bg-transparent"><option>Lomé — Coursier</option><option>Intérieur du Togo</option><option>Afrique de l'Ouest</option><option>International — DHL</option></select>
+<p class="flex justify-between font-bold text-xl"><span>Total articles</span><span id="ct">0 FCFA</span></p>
+<p class="text-xs opacity-70">Les frais de livraison sont confirmés sur WhatsApp selon la zone.</p>
+<button onclick="wa()" class="tk w-full">Commander sur WhatsApp</button>
+</div>
+</aside>
+
+<script>
+const $=s=>document.querySelector(s),fm=n=>String(n).replace(/\B(?=(\d{3})+$)/g,' ')+' FCFA';
+const U=i=>`https://images.unsplash.com/photo-${i}?auto=format&fit=crop&w=900&q=80`;
+const C=[
+  ['lun','Lunettes',25,'Montures de luxe, livrées avec leur coffret.'],
+  ['ens','Ensembles',20,'Looks complets du S au XXL.'],
+  ['pan','Pantalons & Shorts',20,'Jeans baggy, cargos et shorts.'],
+  ['tee','T-Shirts & Hauts',20,'Coupes oversize du M au XXL.'],
+  ['cas','Casquettes',20,'Fitted et casquettes street, 7 1/8 à 7 1/2.'],
+  ['sne','Sneakers',20,'Customs faits main, pointures 40 à 45.'],
+  ['sac','Sacoches',20,'Sacoches bandoulière et double zip.'],
+  ['che','Chemises',20,'Chemises streetwear à porter ouvertes.'],
+  ['col','Colliers',20,'Chaînes et perles pour finir le look.'],
+  ['bra','Bracelets',20,'Mailles argentées et cuir tressé.']
+];
+const SZ={lun:['Unique'],ens:['S','M','L','XL','XXL'],pan:['S','M','L','XL'],tee:['M','L','XL','XXL'],cas:['7 1/8','7 1/4','7 3/8','7 1/2'],sne:['40','41','42','43','44','45'],sac:['Unique'],che:['S','M','L','XL'],col:['Unique'],bra:['Unique']};
+
+const P=[
+  ['lun','Balenciaga Rectangular Black BB','Monture noire épaisse, double B argenté. Coffret inclus.',15000,'10-29 14.44.36','1572635196237-14b3f281503f'],
+  ['lun','Bottega Veneta Oval Silver','Monture argentée, coffret vert et étui tressé.',16000,'10-29 14.45.43','1511499767150-a48a237f0083'],
+  ['lun','Louis Vuitton Gold Engraved','Monture ovale dorée gravée LV, coffret orange.',18000,'10-29 14.46.32','1508296695146-257a814070b4'],
+  ['lun','Chrome Hearts Rimless Clear','Lunettes percées sans monture, croix argentées.',15000,'10-29 16.00.37','1574258495973-f010dfbb5371'],
+  ['lun','Chrome Hearts Crystal Frame','Monture carrée transparente, détails argentés.',16000,'10-29 16.00.57','1591076482161-42ce6da69f67'],
+  ['lun','Balenciaga Rimless Shield Dark','Monture profilée sans bord, verres fumés noirs.',17000,'10-29 20.27.28','1509695507497-903c140c43b0'],
+  ['ens','Ensemble Rose Y2K Layered','Haut rose à manches longues blanches étoilées + short jean rose.',26000,'10-31 13.23.20','1515886657613-9f3515b0c78f'],
+  ['ens','Pack 3 Pièces Satoshi Moutarde','T-shirt crème à strass + bermuda jaune SATOSH + tongs Diesel.',32000,'11-04 16.33.43','1523398002811-999ca8dec234'],
+  ['ens','Pack 3 Pièces Satoshi Bleu','T-shirt blanc à strass + bermuda bleu SATOSI + tongs Abercrombie.',32000,'11-04 16.34.01','1490481651871-ab68de25d43d'],
+  ['ens','Ensemble Acne Studios Noir & Racing','Manches longues noir Stockholm 1996 + short gris voitures.',28000,'11-04 16.57.28','1578587018452-892bacefd3f2'],
+  ['ens','Ensemble Grunge Camo Brainer Mcconn','Sweat noir délavé + cargo camouflage branches zippé.',30000,'11-04 16.59.43','1548883354-7622d03aca27'],
+  ['ens','Ensemble Acne Studios Olive & Cargo Noir','Manches longues olive + cargo large noir à cordon blanc.',29000,'11-04 17.36.06','1516257984-b1b4d707412e'],
+  ['ens','Ensemble Polo Fuchsia & Cargo Blanc','Polo court rose à col blanc + jean cargo blanc effiloché.',27000,'11-04 19.29.28','1503342217505-b0a15ec3261c'],
+  ['ens','Ensemble Red & Trackpant Adidas','T-shirt rouge Circle of modes + jogging large Adidas bleu/rouge.',28000,'11-04 19.29.38','1512436991641-6745cdb1723f'],
+  ['pan','Jean Baggy Paint Splatter','Denim bleu coupe large à éclaboussures de peinture.',16000,'10-28 23.54.58','1541099649105-f69ad21f3246'],
+  ['pan','Jean Baggy Flare Shadow Flame','Denim bleu foncé à empiècements noirs contrastés.',18000,'10-28 23.54.50','1604176354204-9268737828e4'],
+  ['pan','Short Denim Cargo Distressed','Short en jean bleu déchiré à poches cargo.',13000,'10-29 22.57.57','1591195853828-11db59a44f6b'],
+  ['pan','Short Carpenter Denim Rose','Short large rose à poches avant délavées blanches.',12000,'10-29 22.58.10','1562157873-818bc0726f68'],
+  ['pan','Short Molleton Gris Vintage Racing','Short gris à cordon blanc, imprimé voitures de sport.',12000,'10-30 08.29.25','1583496661160-fb5886a0aaaa'],
+  ['pan','Short Supreme Léopard Kaki','Short coton motif léopard vert kaki brodé Supreme.',13000,'11-03 16.22.03','1517445312882-bc9910d016b7'],
+  ['tee','T-Shirt Blanc Skyline Architecture','Coupe boxy à imprimé gratte-ciels multicolore.',12000,'10-29 22.57.47','1521572267360-ee0c2909d518'],
+  ['tee','T-Shirt Manches Longues Rose Layered','Haut rose effet superposé à manches blanches étoilées.',13000,'10-31 13.23.33','1618354691373-d851c5c3a990'],
+  ['tee','T-Shirt Blanc Mixed Emotion Strass','Visuel grunge jaune et lettrage rose en strass.',12000,'10-31 13.23.43','1583743814966-8936f5b7be1a'],
+  ['tee','Muscle Tee Blanc St. Wicked','Sans manches blanc usé, imprimé rouge et jaune.',11000,'11-05 15.39.57','1503341455253-b2e723bb3dbb'],
+  ['tee','T-Shirt Bleu Majestik World','Oversize bleu roi, strass et aigle Silence Before Storms.',14000,'11-05 15.53.48','1576566588028-4147f3842f27'],
+  ['cas','Sélection Casquettes Fitted & Street','New Era 59FIFTY Padres Rose, Yankees, Dodgers, Supreme, Sex Records, Ronflex.',15000,'10-30 09.17.57','1588850561407-ed78c282e89b'],
+  ['sne','Sneakers Vans Custom Satoshi Nakamoto','Strass multicolores, perles et semelle imprimée.',28000,'11-01 17.44.20','1525966222134-fcfa99b8ae77'],
+  ['sac','Sacoche Guess Monogramme Gris','Sacoche bandoulière monogramme gris.',14000,'10-30 09.17.41','1553062407-98eeb64c6a62'],
+  ['sac','Sacoche Louis Vuitton Double Zip','Sacoche double zip, finition monogramme.',18000,'10-30 09.17.48','1548036328-c9fa89d128fa'],
+  ['che','Chemise Cuban Flame Noire','Chemise noire à col cubain et flammes rouges.',16000,'u:1596755094514-f87e34085b2c','1596755094514-f87e34085b2c'],
+  ['che','Chemise Oversize Route 66','Chemise boxy rayée, esprit US Route 66.',15000,'u:1602810318383-e386cc2a3ccf','1602810318383-e386cc2a3ccf'],
+  ['col','Chaîne Cuban Argent Croix','Maille cubaine argentée et pendentif croix.',9000,'u:1599643478518-a784e5dc4c8f','1599643478518-a784e5dc4c8f'],
+  ['col','Collier Perles Streetwear','Collier de perles façon rue, fermoir argenté.',8000,'u:1611591437281-460bfbe1220a','1611591437281-460bfbe1220a'],
+  ['bra','Bracelet Chaîne Argent','Bracelet maille argentée, fermoir mousqueton.',7000,'u:1611652022419-a9419f74343d','1611652022419-a9419f74343d'],
+  ['bra','Bracelet Cuir Tressé Noir','Cuir noir tressé, boucle métal.',6000,'u:1573408301185-9146fe634ad0','1573408301185-9146fe634ad0']
+].map((a,i)=>{
+  const d=C.find(c=>c[0]==a[0])[2];
+  return{
+    id:i,c:a[0],n:a[1],t:a[2],p:a[3],d,
+    o:Math.round(a[3]/(1-d/100)/500)*500,
+    src:a[4][0]=='u'?U(a[4].slice(2)):`WhatsApp Image 2026-${a[4].replace(' ',' at ')}.jpeg`,
+    fb:U(a[5]),
+    z:a[1].startsWith('Jean')?['30','32','34','36']:SZ[a[0]]
+  }
+});
+
+const cat=k=>C.find(c=>c[0]==k),pr=k=>P.filter(p=>p.c==k);
+const im=(p,c,s='')=>`<img src="${p.src}" alt="${p.n}" loading="lazy" class="${c}" style="${s}" onerror="this.onerror=null;this.src='${p.fb}'">`;
+const A=['','transform:scale(1.65);transform-origin:20% 20%','transform:scale(1.65);transform-origin:80% 80%'];
+let sel=null,ang=0,cart=[];
+const mqt=('Lomé → le monde 🌍 ✦ Soldes jusqu\'à -25% ✦ Fitted by Buzz® ✦ Le Buzzmatik ✦ ').repeat(6);
+
+const home=()=>`
+<section class="grid md:grid-cols-12 gap-3 p-3">
+  <div class="md:col-span-8 min-w-0 bd relative overflow-hidden min-h-[480px] md:min-h-[640px] bg-[#EDEDEB] flex items-center justify-center px-2">
+    <h1 class="f absolute top-4 inset-x-0 text-center text-[15vw] md:text-[9.5rem] leading-[.85] select-none">FITTED</h1>
+    <div class="drop relative z-10 my-14 w-52 sm:w-60 md:w-72 aspect-[3/4] bd -rotate-3 shadow-[8px_8px_0_#0A0A0A] overflow-hidden bg-white">${im(P[7],'w-full h-full object-cover')}</div>
+    <p class="s absolute z-30 left-3 sm:left-4 bottom-24 md:bottom-40 text-xl sm:text-2xl md:text-4xl bg-[#F4F3EF] bd px-3 py-0.5 -rotate-6">Route 66 × Lomé</p>
+    <h1 aria-hidden="true" class="f absolute z-20 bottom-3 inset-x-0 text-center text-[14.5vw] md:text-[9rem] leading-[.85] text-[#E62E1B] select-none" style="-webkit-text-stroke:1.5px #0A0A0A">BUZZ®</h1>
+  </div>
+  <div class="md:col-span-4 min-w-0 grid gap-3 content-stretch">
+    <div class="bd bg-[#E62E1B] text-[#F4F3EF] p-5 sm:p-6"><p class="s text-2xl sm:text-3xl">Soldes en cours</p><p class="f text-6xl sm:text-7xl">-25%</p><p class="font-medium mt-1">Lunettes, ensembles, sneakers et plus. Jusqu'à épuisement du stock.</p></div>
+    <div class="bd bg-white p-5 sm:p-6"><p class="f text-2xl sm:text-3xl">Expédié partout 🌍</p><p class="mt-2 text-sm sm:text-base">Coursier à Lomé, Togo, Afrique de l'Ouest et DHL international. Commande et suivi sur WhatsApp.</p></div>
+    <div class="bd p-5 sm:p-6 flex flex-col gap-4 justify-between"><p class="s text-2xl">Dix rayons, une seule adresse : la boutique officielle du Buzzmatik.</p><button class="tk w-full sm:w-auto sm:self-start" onclick="document.getElementById('cats').scrollIntoView({behavior:'smooth'})">Voir les rayons <i data-lucide="arrow-down" class="w-4 h-4 shrink-0"></i></button></div>
+  </div>
+</section>
+<div class="border-y-2 border-black bg-black text-[#F4F3EF] overflow-hidden py-2 f text-lg sm:text-xl"><div class="mq flex whitespace-nowrap"><span>${mqt}</span><span>${mqt}</span></div></div>
+<section id="cats" class="p-3 pt-8"><h2 class="f text-4xl sm:text-5xl md:text-7xl mb-4">Les rayons</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 [grid-auto-flow:dense]">${C.map((c,i)=>{const p=pr(c[0])[0];return`<button onclick="go('vit','${c[0]}')" class="card bd relative overflow-hidden h-52 sm:h-60 md:h-72 text-left min-w-0 ${i==0||i==5?'col-span-2':''}">${im(p,'absolute inset-0 w-full h-full object-cover')}<span class="absolute top-2 left-2 bg-[#E62E1B] text-white text-xs font-bold px-2 py-1">-${c[2]}%</span><span class="absolute bottom-0 inset-x-0 bg-[#F4F3EF] border-t-2 border-black px-2.5 py-2 flex justify-between items-center gap-1"><b class="f text-xs sm:text-base md:text-lg truncate">${c[1]}</b><span class="text-[11px] sm:text-xs font-bold shrink-0">${pr(c[0]).length} art.</span></span></button>`}).join('')}</div>
+</section>`;
+
+const vit=k=>{const c=cat(k),a=pr(k),m=Math.min(...a.map(p=>p.p));return`
+<section class="p-3 grid md:grid-cols-12 gap-3">
+  <div class="md:col-span-7 min-w-0 bd relative overflow-hidden min-h-[360px] sm:min-h-[420px] md:min-h-[75vh] bg-white">${im(a[0],'absolute inset-0 w-full h-full object-cover')}<span class="drop absolute top-4 left-4 bg-[#E62E1B] text-white f text-3xl sm:text-5xl px-3.5 py-1.5 bd -rotate-6">-${c[2]}%</span></div>
+  <div class="md:col-span-5 min-w-0 bd bg-white p-5 sm:p-8 md:p-10 flex flex-col justify-between gap-8">
+    <div>
+      <button onclick="go('home')" class="flex gap-1 items-center font-bold text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i>Accueil</button>
+      <p class="s text-2xl sm:text-3xl text-[#E62E1B] mt-6 sm:mt-10">Vitrine soldes</p>
+      <h2 class="f h-giant uppercase mt-1">${c[1]}</h2>
+      <p class="mt-4 text-base sm:text-lg">${c[3]} Jusqu'à -${c[2]}% sur le rayon, dès <b>${fm(m)}</b>.</p>
     </div>
+    <button class="tk w-full sm:w-auto sm:self-start" onclick="go('shop','${k}')">Accéder à la boutique ${c[1]}</button>
+  </div>
+</section>`};
 
-    <!-- HEADER NAVIGATION -->
-    <header class="sticky top-0 z-40 bg-[#F4F3EF]/90 backdrop-blur-md border-b-2 border-buzz-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" onclick="showHome()" class="flex items-center gap-3 group">
-                <div class="w-12 h-12 bg-buzz-dark text-white brutal-border rounded-full flex items-center justify-center font-display font-extrabold text-lg group-hover:bg-buzz-accent transition">
-                    FB
-                </div>
-                <div>
-                    <span class="font-display font-extrabold text-xl tracking-tight block leading-none">FITTED BY BUZZ®</span>
-                    <span class="text-[10px] uppercase font-bold tracking-widest text-zinc-600 block mt-1">Le Buzzmatik • Lomé</span>
-                </div>
-            </a>
+const price=p=>`<span class="font-bold">${fm(p.p)}</span> <s class="opacity-50 text-xs sm:text-sm">${fm(p.o)}</s>`;
 
-            <div class="flex items-center gap-4">
-                <button onclick="showHome()" class="hidden md:inline-flex text-xs font-extrabold uppercase tracking-wider px-4 py-2 rounded-full hover:bg-buzz-card transition">
-                    Accueil
-                </button>
-                <button onclick="toggleCart()" class="relative bg-buzz-dark text-white brutal-border brutal-shadow-sm px-5 py-2.5 rounded-full flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider hover:bg-buzz-accent transition">
-                    <i data-lucide="shopping-bag" class="w-4 h-4"><span>Panier</span></i>
-                    <span id="cart-count" class="bg-buzz-accent text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
-                </button>
-            </div>
-        </div>
-    </header>
+const shop=k=>{const c=cat(k),a=pr(k);return`
+<section class="p-3">
+  <div class="bd bg-white p-4 sm:p-6 md:p-8 flex flex-wrap items-end justify-between gap-3 mb-3">
+    <div class="min-w-0"><button onclick="go('vit','${k}')" class="flex gap-1 items-center font-bold text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i>Vitrine soldes</button><h2 class="f h-giant uppercase mt-2">${c[1]}</h2></div>
+    <p class="s text-3xl sm:text-4xl text-[#E62E1B]">${a.length} New Arrival${a.length>1?'s':''}</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">${a.map(p=>`<button onclick="go('prod',${p.id})" class="card bd bg-white text-left flex flex-col min-w-0 overflow-hidden"><div class="relative aspect-[4/5] w-full overflow-hidden border-b-2 border-black bg-[#EDEDEB]">${im(p,'w-full h-full object-cover')}<span class="absolute top-2 left-2 bg-[#E62E1B] text-white text-xs font-bold px-2 py-0.5">-${p.d}%</span></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col justify-between"><h3 class="f text-xs sm:text-sm uppercase leading-snug break-words line-clamp-2">${p.n}</h3><p class="mt-2 flex flex-wrap items-baseline gap-x-1.5 text-sm sm:text-base">${price(p)}</p></div></button>`).join('')}</div>
+</section>`};
 
-    <!-- CONTAINER DYNAMIQUE (VUES : ACCUEIL, ÉCRAN SOLDE CATÉGORIE, BOUTIQUE CATÉGORIE, FICHE PRODUIT) -->
-    <main id="main-container">
-        <!-- Rempli par JavaScript -->
-    </main>
-
-    <!-- FOOTER + SIGNATURE RODIS STUDIO -->
-    <footer class="bg-buzz-dark text-white border-t-4 border-buzz-dark pt-16 pb-10 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 pb-12 border-b border-zinc-800">
-                <div>
-                    <h3 class="font-display font-extrabold text-3xl uppercase text-buzz-bg">FITTED BY BUZZ®</h3>
-                    <p class="text-zinc-400 text-sm mt-2 max-w-md">
-                        Showroom streetwear et pièces de créateurs exclusives, géré par Le Buzzmatik. Basé à Lomé, expédition sécurisée partout dans le monde.
-                    </p>
-                </div>
-                <div class="flex flex-col items-start md:items-end justify-center">
-                    <a href="https://wa.me/22898585402" target="_blank" class="bg-buzz-accent hover:bg-white hover:text-buzz-dark text-white font-display font-extrabold uppercase text-sm px-8 py-4 rounded-full transition flex items-center gap-3 brutal-border">
-                        <i data-lucide="message-circle" class="w-5 h-5"></i>
-                        Contacter Le Buzzmatik (+228 98 58 54 02)
-                    </a>
-                </div>
-            </div>
-
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
-                <p>© 2026 FITTED BY BUZZ. Tous droits réservés.</p>
-                <p class="font-medium">
-                    Conçu par <a href="https://wa.me/22893095094" target="_blank" class="text-buzz-accent hover:underline font-bold">RODIS STUDIO®</a> — Lomé, Togo (+228 93 09 50 94)
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- DRAWER PANIER WHATSAPP -->
-    <div id="cart-modal" class="fixed inset-0 z-50 hidden">
-        <div onclick="toggleCart()" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-[#F4F3EF] brutal-border flex flex-col justify-between p-6">
-            <div class="flex items-center justify-between pb-4 border-b-2 border-buzz-dark">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="shopping-bag" class="w-5 h-5 text-buzz-accent"></i>
-                    <h3 class="font-display font-extrabold text-lg uppercase">Ton Panier Fitted</h3>
-                </div>
-                <button onclick="toggleCart()" class="p-2 rounded-full bg-buzz-dark text-white hover:bg-buzz-accent transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div id="cart-items" class="flex-1 overflow-y-auto py-4 space-y-4">
-                <!-- Items injectés -->
-            </div>
-
-            <div class="pt-4 border-t-2 border-buzz-dark space-y-3">
-                <div>
-                    <label class="text-[11px] uppercase font-extrabold text-zinc-700 block mb-1">Zone de livraison 🌍</label>
-                    <select id="delivery-zone" class="w-full bg-white brutal-border rounded-xl px-3.5 py-2.5 text-sm font-bold focus:outline-none focus:border-buzz-accent">
-                        <option value="Lomé (Coursier Express)">🇹🇬 Lomé — Coursier Express</option>
-                        <option value="Intérieur du Togo">🇹🇬 Intérieur du Togo (Bus / Colis)</option>
-                        <option value="Afrique de l'Ouest (UEMOA)">🌍 Afrique de l'Ouest (Bénin, CI, Sénégal...)</option>
-                        <option value="Europe / USA / International">✈️ International / Europe / USA (DHL / Suivi)</option>
-                    </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="client-name" placeholder="Ton Prénom" class="bg-white brutal-border rounded-xl px-3 py-2 text-sm font-bold focus:outline-none focus:border-buzz-accent">
-                    <input type="text" id="client-city" placeholder="Ville / Pays" class="bg-white brutal-border rounded-xl px-3 py-2 text-sm font-bold focus:outline-none focus:border-buzz-accent">
-                </div>
-
-                <div class="flex items-center justify-between pt-2">
-                    <span class="text-sm font-bold text-zinc-600">Total :</span>
-                    <span id="cart-total" class="font-display font-extrabold text-2xl text-buzz-accent">0 FCFA</span>
-                </div>
-
-                <button onclick="checkoutWhatsApp()" class="w-full bg-buzz-dark hover:bg-buzz-accent text-white font-display font-extrabold uppercase text-sm py-4 rounded-full transition flex items-center justify-center gap-2 brutal-border brutal-shadow-sm">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                    Commander sur WhatsApp
-                </button>
-            </div>
-        </div>
+const prod=id=>{const p=PR(id);return`
+<section class="p-3 grid md:grid-cols-12 gap-3">
+  <div class="md:col-span-7 min-w-0 grid grid-cols-1 md:grid-cols-[88px_1fr] gap-3 items-start">
+    <div class="bd relative overflow-hidden aspect-[4/5] w-full bg-white order-1 md:order-2">${im(p,'w-full h-full object-cover transition-transform duration-500',A[ang])}<span class="absolute top-3 left-3 bg-[#E62E1B] text-white text-xs sm:text-sm font-bold px-3 py-1">${p.d}% OFF</span></div>
+    <div class="grid grid-cols-3 md:grid-cols-1 gap-3 order-2 md:order-1">${A.map((s,i)=>`<button onclick="ang=${i};go('prod',${id},1)" aria-label="Angle ${i+1}" class="bd aspect-square overflow-hidden bg-white ${ang==i?'ring-4 ring-[#E62E1B]':''}">${im(p,'w-full h-full object-cover',s)}</button>`).join('')}</div>
+  </div>
+  <div class="md:col-span-5 min-w-0 bd bg-white p-5 sm:p-6 md:p-8 flex flex-col gap-5">
+    <button onclick="go('shop','${p.c}')" class="flex gap-1 items-center font-bold text-sm self-start"><i data-lucide="arrow-left" class="w-4 h-4"></i>${cat(p.c)[1]}</button>
+    <h2 class="f h-prod uppercase">${p.n}</h2>
+    <p class="s text-xl sm:text-2xl leading-snug">${p.t}</p>
+    <p class="text-2xl sm:text-3xl">${price(p)}</p>
+    <div>
+      <p class="font-bold mb-2 text-sm sm:text-base">Taille <span class="text-[#E62E1B]">(obligatoire)</span></p>
+      <div class="flex flex-wrap gap-2">${p.z.map(z=>`<button onclick="sel='${z}';go('prod',${id},1)" class="bd px-4 py-2 font-bold text-sm ${sel==z?'bg-black text-white':'bg-transparent'}">${z}</button>`).join('')}</div>
+      <p id="er" class="text-[#E62E1B] font-bold mt-2 text-sm hidden" role="alert">Choisis une taille pour ajouter l'article au panier.</p>
     </div>
+    <button class="tk w-full" onclick="add(${id})">Ajouter au panier</button>
+    <p class="text-xs sm:text-sm opacity-70">Expédition depuis Lomé, partout dans le monde.</p>
+  </div>
+</section>`};
 
-    <!-- LOGIQUE JAVASCRIPT ET CATALOGUE COMPLET -->
-    <script>
-        const WHATSAPP_NUMBER = "22898585402";
-
-        // Catalogue structuré par catégories avec les 23 photos de ton showroom
-        const categoriesData = {
-            lunettes: {
-                title: "Lunettes de Luxe & Créateurs",
-                subtitle: "Sélection exclusive avec boîtes, étuis et cartes d'authenticité",
-                saleBanner: {
-                    title: "LUNETTES DE CRÉATEURS",
-                    tagline: "Le summum du style urbain — Balenciaga, Bottega, Louis Vuitton & Chrome Hearts.",
-                    discount: "PROMO -25%",
-                    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 'l1', name: 'Balenciaga Rectangular Black BB', price: 15000, oldPrice: 20000, category: 'lunettes', image: 'WhatsApp Image 2026-10-29 at 14.44.36.jpeg', fallback: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80', badge: 'Best-Seller', sizes: ['Unique'], desc: 'Monture épaisse noire avec double B métallique sur les branches. Livré avec étui et boîte rigide.' },
-                    { id: 'l2', name: 'Bottega Veneta Oval Silver', price: 15000, oldPrice: 20000, category: 'lunettes', image: 'WhatsApp Image 2026-10-29 at 14.45.43.jpeg', fallback: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80', badge: 'Coffret Vert', sizes: ['Unique'], desc: 'Monture fine argentée à verres dégradés, coffret vert Bottega et étui cuir tressé.' },
-                    { id: 'l3', name: 'Louis Vuitton Gold Engraved', price: 16000, oldPrice: 22000, category: 'lunettes', image: 'WhatsApp Image 2026-10-29 at 14.46.32.jpeg', fallback: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80', badge: 'Luxe Doré', sizes: ['Unique'], desc: 'Monture ovale dorée à branches sculptées LV et coffret de maison orange.' },
-                    { id: 'l4', name: 'Chrome Hearts Rimless Clear', price: 18000, oldPrice: 25000, category: 'lunettes', image: 'WhatsApp Image 2026-10-29 at 16.00.37.jpeg', fallback: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80', badge: 'Collector', sizes: ['Unique'], desc: 'Modèle percé sans monture à verres géométriques et croix gothiques argentées.' },
-                    { id: 'l5', name: 'Chrome Hearts Crystal Frame', price: 18000, oldPrice: 25000, category: 'lunettes', image: 'WhatsApp Image 2026-10-29 at 16.00.57.jpeg', fallback: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80', badge: 'Transparent', sizes: ['Unique'], desc: 'Monture carrée transparente translucide avec ferrures en argent massif Chrome Hearts.' },
-                    { id: 'l6', name: 'Balenciaga Shield Dark', price: 16000, oldPrice: 22000, category: 'lunettes', image: 'WhatsApp Image 2026-10-29 at 20.27.28.jpeg', fallback: 'https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=800&q=80', badge: 'Shield', sizes: ['Unique'], desc: 'Modèle profilé sans monture à verres fumés sombres et charnières BB.' }
-                ]
-            },
-            ensembles: {
-                title: "Ensembles Streetwear Complets",
-                subtitle: "Looks 2 et 3 pièces assortis par Le Buzzmatik",
-                saleBanner: {
-                    title: "LOOKS COMPLETS",
-                    tagline: "Des ensembles pensés pour marquer les esprits dans les rues de Lomé et d'ailleurs.",
-                    discount: "PROMO -20%",
-                    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 'e1', name: 'Ensemble Rose Y2K (Polo + Cargo Blanc)', price: 30000, oldPrice: 38000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 19.29.28.jpeg', fallback: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80', badge: 'Pop Y2K', sizes: ['S', 'M', 'L', 'XL'], desc: 'Polo court rose fuchsia à col blanc et pantalon cargo en jean blanc effiloché.' },
-                    { id: 'e2', name: 'Ensemble Satoshi Moutarde + Tongs Diesel', price: 28000, oldPrice: 35000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 16.33.43.jpeg', fallback: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80', badge: 'Pack 3 Pièces', sizes: ['M', 'L', 'XL'], desc: 'T-shirt crème effet usé à strass, bermuda molleton jaune moutarde et tongs Diesel.' },
-                    { id: 'e3', name: 'Ensemble Satoshi Bleu + Tongs Abercrombie', price: 28000, oldPrice: 35000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 16.34.01.jpeg', fallback: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80', badge: 'Pack 3 Pièces', sizes: ['M', 'L', 'XL'], desc: 'T-shirt blanc à strass, bermuda molleton bleu délavé et tongs rouges Abercrombie.' },
-                    { id: 'e4', name: 'Ensemble Acne Studios Noir & Racing', price: 28000, oldPrice: 35000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 16.57.28.jpeg', fallback: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=800&q=80', badge: 'Stockholm 1996', sizes: ['M', 'L', 'XL', 'XXL'], desc: 'Manches longues noir Acne Studios et short gris à voitures empilées.' },
-                    { id: 'e5', name: 'Ensemble Grunge Camo Brainer Mcconn', price: 32000, oldPrice: 40000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 16.59.43.jpeg', fallback: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=800&q=80', badge: 'Cargo Zippé', sizes: ['S', 'M', 'L', 'XL'], desc: 'Sweat noir délavé Brainer Mcconn et pantalon cargo camouflage branches zippé.' },
-                    { id: 'e6', name: 'Ensemble Acne Studios Olive & Cargo Noir', price: 32000, oldPrice: 40000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 17.36.06.jpeg', fallback: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=800&q=80', badge: 'Rick Owens Vibe', sizes: ['M', 'L', 'XL'], desc: 'Manches longues vert olive et pantalon cargo large noir à cordon blanc.' },
-                    { id: 'e7', name: 'Ensemble Red & Trackpant Adidas', price: 28000, oldPrice: 35000, category: 'ensembles', image: 'WhatsApp Image 2026-11-04 at 19.29.38.jpeg', fallback: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80', badge: 'Sport Luxe', sizes: ['S', 'M', 'L', 'XL'], desc: 'T-shirt rouge Don’t Fuck et pantalon de survêtement large Adidas bleu roi.' },
-                    { id: 'e8', name: 'Ensemble Rose Y2K (Top + Short Jean)', price: 26000, oldPrice: 32000, category: 'ensembles', image: 'WhatsApp Image 2026-10-31 at 13.23.20.jpeg', fallback: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=80', badge: 'Pink Edition', sizes: ['S', 'M', 'L'], desc: 'T-shirt rose superposé à manches blanches graphiques et short carpenter rose.' }
-                ]
-            },
-            pantalons: {
-                title: "Pantalons, Jeans & Shorts",
-                subtitle: "Coupes baggy, flare et carpenter haut de gamme",
-                saleBanner: {
-                    title: "DENIM & SHORTS",
-                    tagline: "Des pièces maîtresses aux détails uniques (délavage, éclaboussures et imprimés).",
-                    discount: "PROMO -15%",
-                    image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 'p1', name: 'Jean Baggy "Paint Splatter"', price: 18000, oldPrice: 23000, category: 'pantalons', image: 'WhatsApp Image 2026-10-28 at 23.54.58.jpeg', fallback: 'https://images.unsplash.com/photo-1542272604-787c96355353?auto=format&fit=crop&w=800&q=80', badge: 'Paint Drip', sizes: ['30', '32', '34', '36'], desc: 'Coupe large bleu délavé avec éclaboussures de peinture blanche et effets grunge.' },
-                    { id: 'p2', name: 'Jean Baggy Flare "Shadow Flame"', price: 18000, oldPrice: 23000, category: 'pantalons', image: 'WhatsApp Image 2026-10-28 at 23.54.50.jpeg', fallback: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80', badge: 'Flare', sizes: ['30', '32', '34', '36'], desc: 'Denim bleu foncé avec empiècements et imprimés noirs contrastés sur les jambes.' },
-                    { id: 'p3', name: 'Short Denim Cargo Distressed', price: 13000, oldPrice: 17000, category: 'pantalons', image: 'WhatsApp Image 2026-10-29 at 22.57.57.jpeg', fallback: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=800&q=80', badge: 'Cargo Short', sizes: ['M', 'L', 'XL'], desc: 'Short en jean bleu déchiré avec larges poches cargo latérales et finitions brutes.' },
-                    { id: 'p4', name: 'Short Carpenter Denim Rose', price: 13000, oldPrice: 17000, category: 'pantalons', image: 'WhatsApp Image 2026-10-30 at 08.29.25.jpeg', fallback: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80', badge: 'Pink Denim', sizes: ['S', 'M', 'L', 'XL'], desc: 'Coupe large rose avec délavage blanc sur les poches avant rivetées.' },
-                    { id: 'p5', name: 'Short Molleton Gris "Vintage Racing"', price: 12000, oldPrice: 16000, category: 'pantalons', image: 'WhatsApp Image 2026-10-30 at 09.17.41.jpeg', fallback: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&w=800&q=80', badge: 'Molleton', sizes: ['M', 'L', 'XL'], desc: 'Short gris à cordon blanc avec imprimé de voitures de sport empilées.' },
-                    { id: 'p6', name: 'Short Supreme Léopard Kaki', price: 14000, oldPrice: 18000, category: 'pantalons', image: 'WhatsApp Image 2026-11-03 at 16.22.03.jpeg', fallback: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=800&q=80', badge: 'Supreme', sizes: ['M', 'L', 'XL'], desc: 'Modèle en coton vert kaki motif léopard, ceinture élastique et broderie Supreme.' }
-                ]
-            },
-            tshirts: {
-                title: "T-Shirts & Hauts Oversize",
-                subtitle: "Grammages lourds, graphismes strass et coupes boxy",
-                saleBanner: {
-                    title: "TOPS & T-SHIRTS",
-                    tagline: "Des imprimés audacieux et des finitions délavées pour un style underground affirmé.",
-                    discount: "PROMO -20%",
-                    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 't1', name: 'T-Shirt Blanc "Skyline Architecture"', price: 12000, oldPrice: 15000, category: 'tshirts', image: 'WhatsApp Image 2026-10-29 at 22.57.47.jpeg', fallback: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80', badge: 'Boxy Fit', sizes: ['M', 'L', 'XL', 'XXL'], desc: 'Coupe boxy blanche avec imprimé graphique gratte-ciels détaillé au dos.' },
-                    { id: 't2', name: 'T-Shirt Manches Longues Rose Layered', price: 14000, oldPrice: 18000, category: 'tshirts', image: 'WhatsApp Image 2026-10-31 at 13.23.33.jpeg', fallback: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80', badge: 'Double Manches', sizes: ['S', 'M', 'L', 'XL'], desc: 'Haut rose fuchsia avec faux t-shirt blanc à manches longues imprimées d’étoiles.' },
-                    { id: 't3', name: 'T-Shirt Blanc "Mixed Emotion" Strass', price: 13000, oldPrice: 17000, category: 'tshirts', image: 'WhatsApp Image 2026-10-31 at 13.23.43.jpeg', fallback: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80', badge: 'Strass Glitz', sizes: ['M', 'L', 'XL'], desc: 'Imprimé grunge encadré de jaune avec lettrage rose serti de strass brillants.' },
-                    { id: 't4', name: 'Muscle Tee Blanc "St. Wicked"', price: 11000, oldPrice: 14000, category: 'tshirts', image: 'WhatsApp Image 2026-11-05 at 15.39.57.jpeg', fallback: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80', badge: 'Sleeveless', sizes: ['M', 'L', 'XL'], desc: 'T-shirt sans manches blanc effet usé avec imprimé rouge et jaune Worldwide Dept.' },
-                    { id: 't5', name: 'T-Shirt Bleu Électrique "Majestik World"', price: 13000, oldPrice: 17000, category: 'tshirts', image: 'WhatsApp Image 2026-11-05 at 15.53.48.jpeg', fallback: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80', badge: 'Aigle Strass', sizes: ['M', 'L', 'XL', 'XXL'], desc: 'Coupe oversize bleu roi, lettrage en strass et visuel aigle Silence Before Storms.' }
-                ]
-            },
-            casquettes: {
-                title: "Casquettes Fitted & Street",
-                subtitle: "New Era 59FIFTY, 9FORTY, Supreme et éditions collector",
-                saleBanner: {
-                    title: "CASQUETTES FITTED",
-                    tagline: "L'art de porter la casquette au millimètre près. Modèles exclusifs et sides patches.",
-                    discount: "PROMO -20%",
-                    image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 'c1', name: 'Collection Casquettes Fitted & Street', price: 15000, oldPrice: 19000, category: 'casquettes', image: 'WhatsApp Image 2026-10-30 at 09.17.57.jpeg', fallback: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80', badge: 'Assortiment', sizes: ['7 1/8', '7 1/4', '7 3/8', '7 1/2', 'Unique'], desc: 'Sélection comprenant New Era San Diego Rose, NY Yankees, Dodgers Jaune, Supreme et Ronflex.' }
-                ]
-            },
-            sneakers: {
-                title: "Sneakers & Chaussures Custom",
-                subtitle: "Paires collectors et personnalisations exclusives",
-                saleBanner: {
-                    title: "SNEAKERS COLLECTOR",
-                    tagline: "Des pièces rares customisées avec perles, strass et semelles vieillies.",
-                    discount: "PROMO -15%",
-                    image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 's1', name: 'Vans Custom "Satoshi Nakamoto"', price: 28000, oldPrice: 35000, category: 'sneakers', image: 'WhatsApp Image 2026-11-01 at 17.44.20.jpeg', fallback: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80', badge: 'Custom Unique', sizes: ['40', '41', '42', '43', '44', '45'], desc: 'Modèle bas noir serti de strass multicolores, perles sur les lacets et semelle Satoshi Nakamoto.' }
-                ]
-            },
-            accessoires: {
-                title: "Sacoches & Maroquinerie de Luxe",
-                subtitle: "Trousses zippées Guess et Louis Vuitton",
-                saleBanner: {
-                    title: "ACCESSOIRES & SACOCHES",
-                    tagline: "L'élégance quotidienne avec les monogrammes les plus prisés de la maroquinerie.",
-                    discount: "PROMO -20%",
-                    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 'a1', name: 'Trousse / Sacoche Guess Monogramme', price: 14000, oldPrice: 18000, category: 'accessoires', image: 'WhatsApp Image 2026-10-30 at 09.17.48.jpeg', fallback: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80', badge: 'Guess Monogram', sizes: ['Unique'], desc: 'Modèle zippé gris anthracite à motif G répété, idéal pour un usage quotidien.' },
-                    { id: 'a2', name: 'Trousse / Sacoche Louis Vuitton Double Zip', price: 18000, oldPrice: 24000, category: 'accessoires', image: 'WhatsApp Image 2026-10-30 at 09.17.48.jpeg', fallback: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80', badge: 'LV Classic', sizes: ['Unique'], desc: 'Toile monogramme marron classique à double fermeture éclair et bordures claires.' }
-                ]
-            },
-            chemises: {
-                title: "Chemises & Rayons Dédiés",
-                subtitle: "Chemises, colliers et bracelets exclusifs",
-                saleBanner: {
-                    title: "CHEMISES & BIJOUX",
-                    tagline: "Élégance et détails soignés pour compléter chaque tenue streetwear.",
-                    discount: "PROMO -20%",
-                    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80"
-                },
-                items: [
-                    { id: 'ch1', name: 'Chemise Oversize Signature Print', price: 16000, oldPrice: 20000, category: 'chemises', image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80', fallback: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80', badge: 'Nouveau', sizes: ['S', 'M', 'L', 'XL'], desc: 'Chemise fluide coupe ample, idéale à porter ouverte sur un t-shirt white boxy.' }
-                ]
-            }
-        };
-
-        let cart = [];
-        let selectedProductSizes = {};
-
-        function formatFCFA(amount) {
-            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " FCFA";
-        }
-
-        // ==========================================
-        // GESTION DES VUES (TUNNEL EN 3 ÉCRANS)
-        // ==========================================
-
-        function showHome() {
-            const container = document.getElementById('main-container');
-            container.innerHTML = `
-                <!-- HERO SECTION ÉDITORIAL -->
-                <section class="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                        <div class="lg:col-span-7 space-y-6">
-                            <div class="inline-flex items-center gap-2 bg-buzz-card brutal-border px-4 py-2 rounded-full text-xs uppercase font-extrabold tracking-widest">
-                                <span class="w-2.5 h-2.5 rounded-full bg-buzz-accent animate-ping"></span>
-                                Showroom Officiel • Le Buzzmatik Lomé
-                            </div>
-                            
-                            <h1 class="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl tracking-tighter uppercase leading-[0.9]">
-                                LE STYLE <br>
-                                <span class="text-buzz-accent underline decoration-buzz-dark">SANS LIMITE</span>
-                            </h1>
-
-                            <p class="text-zinc-700 text-base sm:text-lg max-w-xl font-medium leading-relaxed">
-                                Explorez la sélection pointue de <strong class="text-buzz-dark">FITTED BY BUZZ</strong>. Lunettes de créateurs, ensembles complets, casquettes et pièces rares. Commandez en direct sur WhatsApp 🌍.
-                            </p>
-
-                            <div class="flex flex-wrap items-center gap-4 pt-4">
-                                <a href="#categories" class="bg-buzz-dark text-white font-display font-extrabold uppercase text-sm px-8 py-4 rounded-full hover:bg-buzz-accent transition flex items-center gap-2 brutal-border brutal-shadow">
-                                    Explorer les Catégories
-                                    <i data-lucide="arrow-down" class="w-4 h-4"></i>
-                                </a>
-                                <a href="https://wa.me/22898585402?text=Salut%20Le%20Buzzmatik%20!%20Je%20viens%20de%20visiter%20le%20site%20de%20la%20boutique." target="_blank" class="bg-white hover:bg-buzz-card text-buzz-dark font-display font-extrabold uppercase text-sm px-8 py-4 rounded-full transition flex items-center gap-2 brutal-border">
-                                    <i data-lucide="message-circle" class="w-4 h-4 text-buzz-accent"></i>
-                                    WhatsApp Direct
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="lg:col-span-5">
-                            <div class="relative bg-buzz-card brutal-border brutal-shadow p-4 rounded-3xl">
-                                <span class="absolute top-6 left-6 z-10 bg-buzz-dark text-white text-xs font-extrabold uppercase px-3 py-1 rounded-full">
-                                    PIÈCE PHARE DU SHOWROOM
-                                </span>
-                                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80" alt="Showroom Fitted" class="w-full h-80 sm:h-96 object-cover rounded-2xl brutal-border">
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- GRILLE BENTO BRUTALISTE DES CATÉGORIES -->
-                <section id="categories" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="mb-12">
-                        <span class="text-xs font-extrabold uppercase tracking-widest text-buzz-accent block mb-2">Navigation Rapide</span>
-                        <h2 class="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight">CHOISISSEZ UN RAYON</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        ${Object.keys(categoriesData).map(key => {
-                            const cat = categoriesData[key];
-                            return `
-                                <div onclick="showCategorySale('${key}')" class="group bg-buzz-card brutal-border brutal-shadow p-6 sm:p-8 rounded-3xl cursor-pointer hover:-translate-y-1 transition duration-300 flex flex-col justify-between h-72">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-xs font-extrabold uppercase bg-buzz-dark text-white px-3 py-1 rounded-full">${cat.items.length} Articles</span>
-                                        <div class="w-10 h-10 rounded-full bg-white brutal-border flex items-center justify-center group-hover:bg-buzz-accent group-hover:text-white transition">
-                                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 class="font-display font-extrabold text-2xl uppercase group-hover:text-buzz-accent transition">${cat.title}</h3>
-                                        <p class="text-zinc-600 text-xs mt-1 font-medium">${cat.subtitle}</p>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                </section>
-            `;
-            lucide.createIcons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ==========================================
-        // ÉCRAN 1 : VITRINE SOLDES DE LA CATÉGORIE
-        // ==========================================
-        function showCategorySale(catKey) {
-            const cat = categoriesData[catKey];
-            const banner = cat.saleBanner;
-            const container = document.getElementById('main-container');
-
-            container.innerHTML = `
-                <div class="max-w-5xl mx-auto px-4 py-12">
-                    <button onclick="showHome()" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider mb-8 bg-buzz-card brutal-border px-4 py-2 rounded-full hover:bg-buzz-dark hover:text-white transition">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Retour aux catégories
-                    </button>
-
-                    <div class="bg-buzz-card brutal-border brutal-shadow rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-8 sm:p-12 flex flex-col justify-between space-y-6">
-                            <div>
-                                <span class="bg-buzz-accent text-white text-xs font-extrabold uppercase px-3.5 py-1.5 rounded-full inline-block mb-4">
-                                    ${banner.discount}
-                                </span>
-                                <h1 class="font-display font-extrabold text-4xl sm:text-6xl uppercase tracking-tighter leading-none">
-                                    ${banner.title}
-                                </h1>
-                                <p class="text-zinc-700 text-base mt-4 font-medium">
-                                    ${banner.tagline}
-                                </p>
-                            </div>
-
-                            <button onclick="showCategoryShop('${catKey}')" class="bg-buzz-dark hover:bg-buzz-accent text-white font-display font-extrabold uppercase text-sm px-8 py-4 rounded-full transition flex items-center justify-center gap-3 brutal-border">
-                                Accéder à la boutique ${cat.title}
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="relative h-72 md:h-auto bg-zinc-200">
-                            <img src="${banner.image}" alt="${banner.title}" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ==========================================
-        // ÉCRAN 2 : BOUTIQUE 100% DÉDIÉE À LA CATÉGORIE
-        // ==========================================
-        function showCategoryShop(catKey) {
-            const cat = categoriesData[catKey];
-            const container = document.getElementById('main-container');
-
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 pb-6 border-b-2 border-buzz-dark">
-                        <div>
-                            <button onclick="showCategorySale('${catKey}')" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider mb-2 bg-buzz-card brutal-border px-3 py-1 rounded-full">
-                                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Retour soldes
-                            </button>
-                            <h1 class="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight">${cat.title}</h1>
-                        </div>
-                        <span class="bg-buzz-dark text-white text-xs font-extrabold uppercase px-4 py-2 rounded-full self-start sm:self-center">
-                            ${cat.items.length} Articles Disponibles
-                        </span>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        ${cat.items.map(item => `
-                            <div class="bg-buzz-card brutal-border brutal-shadow rounded-3xl overflow-hidden flex flex-col justify-between group">
-                                <div>
-                                    <div class="relative h-80 bg-white overflow-hidden cursor-pointer" onclick="showProductDetail('${catKey}', '${item.id}')">
-                                        <span class="absolute top-4 left-4 z-10 bg-buzz-accent text-white text-[11px] font-extrabold uppercase px-3 py-1 rounded-full brutal-border">
-                                            ${item.badge}
-                                        </span>
-                                        <img src="${item.image}" alt="${item.name}" onerror="this.src='${item.fallback}'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                    </div>
-
-                                    <div class="p-6">
-                                        <div class="flex items-center justify-between mb-2">
-                                            <span class="text-xs font-bold text-zinc-500 uppercase">En stock</span>
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-xs font-bold text-zinc-400 line-through">${formatFCFA(item.oldPrice)}</span>
-                                                <span class="font-display font-extrabold text-xl text-buzz-accent">${formatFCFA(item.price)}</span>
-                                            </div>
-                                        </div>
-                                        <h3 onclick="showProductDetail('${catKey}', '${item.id}')" class="font-display font-bold text-lg text-buzz-dark cursor-pointer hover:text-buzz-accent transition line-clamp-1">${item.name}</h3>
-                                        <p class="text-xs text-zinc-600 mt-2 line-clamp-2">${item.desc}</p>
-                                    </div>
-                                </div>
-
-                                <div class="p-6 pt-0">
-                                    <button onclick="showProductDetail('${catKey}', '${item.id}')" class="w-full bg-buzz-dark hover:bg-buzz-accent text-white font-display font-extrabold uppercase text-xs py-3.5 rounded-full transition flex items-center justify-center gap-2 brutal-border">
-                                        Voir les détails & Tailles
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ==========================================
-        // ÉCRAN 3 : FICHE PRODUIT DÉTAILLÉE
-        // ==========================================
-        function showProductDetail(catKey, itemId) {
-            const cat = categoriesData[catKey];
-            const item = cat.items.find(p => p.id === itemId);
-            const container = document.getElementById('main-container');
-
-            if (!selectedProductSizes[item.id]) {
-                selectedProductSizes[item.id] = item.sizes[0];
-            }
-            const currentSize = selectedProductSizes[item.id];
-
-            container.innerHTML = `
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <button onclick="showCategoryShop('${catKey}')" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider mb-8 bg-buzz-card brutal-border px-4 py-2 rounded-full hover:bg-buzz-dark hover:text-white transition">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Retour à la boutique ${cat.title}
-                    </button>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                        <!-- Image Principale & Miniatures -->
-                        <div class="lg:col-span-7 space-y-4">
-                            <div class="bg-buzz-card brutal-border brutal-shadow rounded-3xl overflow-hidden h-[450px] sm:h-[550px]">
-                                <img id="main-product-img" src="${item.image}" alt="${item.name}" onerror="this.src='${item.fallback}'" class="w-full h-full object-cover">
-                            </div>
-                            <!-- Miniatures fictives ou secondaires -->
-                            <div class="grid grid-cols-3 gap-3">
-                                <div onclick="changeMainImage('${item.image}')" class="h-24 bg-buzz-card brutal-border rounded-2xl overflow-hidden cursor-pointer hover:opacity-80 transition">
-                                    <img src="${item.image}" onerror="this.src='${item.fallback}'" class="w-full h-full object-cover">
-                                </div>
-                                <div onclick="changeMainImage('${item.fallback}')" class="h-24 bg-buzz-card brutal-border rounded-2xl overflow-hidden cursor-pointer hover:opacity-80 transition">
-                                    <img src="${item.fallback}" class="w-full h-full object-cover">
-                                </div>
-                                <div class="h-24 bg-buzz-dark text-white brutal-border rounded-2xl flex flex-col items-center justify-center p-2 text-center">
-                                    <span class="font-display font-extrabold text-xs text-buzz-accent">AUTHENTIQUE</span>
-                                    <span class="text-[10px] text-zinc-400">Garanti Showroom</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Informations Produit & Commande -->
-                        <div class="lg:col-span-5 space-y-6 bg-buzz-card brutal-border brutal-shadow p-8 rounded-3xl">
-                            <div>
-                                <span class="bg-buzz-accent text-white text-xs font-extrabold uppercase px-3.5 py-1.5 rounded-full inline-block mb-3 brutal-border">
-                                    ${item.badge}
-                                </span>
-                                <h1 class="font-display font-extrabold text-3xl uppercase tracking-tight">${item.name}</h1>
-                                
-                                <div class="flex items-center gap-4 mt-3">
-                                    <span class="font-display font-extrabold text-3xl text-buzz-accent">${formatFCFA(item.price)}</span>
-                                    <span class="text-sm font-bold text-zinc-400 line-through">${formatFCFA(item.oldPrice)}</span>
-                                </div>
-                            </div>
-
-                            <p class="text-zinc-700 text-sm font-medium leading-relaxed">
-                                ${item.desc}
-                            </p>
-
-                            <!-- Sélecteur de Taille -->
-                            <div>
-                                <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-700 block mb-2">Sélectionner la taille :</span>
-                                <div class="flex flex-wrap gap-2">
-                                    ${item.sizes.map(size => `
-                                        <button onclick="selectProductSize('${item.id}', '${size}', '${catKey}')" 
-                                            class="px-4 py-2.5 rounded-xl text-xs font-extrabold brutal-border transition ${size === currentSize ? 'bg-buzz-dark text-white' : 'bg-white text-buzz-dark hover:bg-zinc-100'}">
-                                            ${size}
-                                        </button>
-                                    `).join('')}
-                                </div>
-                            </div>
-
-                            <hr class="border-zinc-300">
-
-                            <button onclick="addToCartFromDetail('${catKey}', '${item.id}')" class="w-full bg-buzz-accent hover:bg-buzz-dark text-white font-display font-extrabold uppercase text-sm py-4 rounded-full transition flex items-center justify-center gap-2 brutal-border brutal-shadow-sm">
-                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                                Ajouter au panier & Commander
-                            </button>
-
-                            <div class="bg-white brutal-border p-4 rounded-2xl flex items-center gap-3">
-                                <i data-lucide="shield-check" class="w-6 h-6 text-buzz-accent flex-shrink-0"></i>
-                                <p class="text-xs text-zinc-600 font-medium">
-                                    Validé par Le Buzzmatik. Paiement sécurisé à la livraison ou par mobile money (Flooz/TMoney).
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function changeMainImage(imgSrc) {
-            document.getElementById('main-product-img').src = imgSrc;
-        }
-
-        function selectProductSize(itemId, size, catKey) {
-            selectedProductSizes[itemId] = size;
-            showProductDetail(catKey, itemId);
-        }
-
-        function addToCartFromDetail(catKey, itemId) {
-            const cat = categoriesData[catKey];
-            const item = cat.items.find(p => p.id === itemId);
-            const size = selectedProductSizes[item.id] || item.sizes[0];
-            const cartKey = `${itemId}-${size}`;
-
-            const existing = cart.find(c => c.cartKey === cartKey);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({
-                    cartKey,
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    size: size,
-                    image: item.image,
-                    fallback: item.fallback,
-                    qty: 1
-                });
-            }
-
-            updateCartUI();
-            toggleCart(true);
-        }
-
-        // ==========================================
-        // GESTION DU PANIER ET WHATSAPP
-        // ==========================================
-
-        function removeFromCart(cartKey) {
-            cart = cart.filter(c => c.cartKey !== cartKey);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const countEl = document.getElementById('cart-count');
-            const itemsEl = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-
-            const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
-            const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-
-            countEl.textContent = totalQty;
-            totalEl.textContent = formatFCFA(totalPrice);
-
-            if (cart.length === 0) {
-                itemsEl.innerHTML = `
-                    <div class="text-center py-16 text-zinc-500">
-                        <p class="text-sm font-bold">Ton panier est vide.</p>
-                        <p class="text-xs mt-1">Choisis tes pièces dans les rayons du showroom.</p>
-                    </div>
-                `;
-            } else {
-                itemsEl.innerHTML = cart.map(item => `
-                    <div class="flex items-center justify-between bg-white brutal-border p-3 rounded-2xl gap-3">
-                        <img src="${item.image}" onerror="this.src='${item.fallback}'" class="w-16 h-16 rounded-xl object-cover brutal-border">
-                        <div class="flex-1">
-                            <h4 class="font-bold text-xs text-buzz-dark line-clamp-1">${item.name}</h4>
-                            <p class="text-[11px] text-zinc-500 mt-0.5">Taille : <strong class="text-buzz-dark">${item.size}</strong> • Qté : ${item.qty}</p>
-                            <p class="text-xs font-extrabold text-buzz-accent mt-1">${formatFCFA(item.price * item.qty)}</p>
-                        </div>
-                        <button onclick="removeFromCart('${item.cartKey}')" class="text-zinc-400 hover:text-buzz-accent p-2">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                `).join('');
-            }
-            lucide.createIcons();
-        }
-
-        function toggleCart(forceOpen = null) {
-            const modal = document.getElementById('cart-modal');
-            if (forceOpen === true) modal.classList.remove('hidden');
-            else if (forceOpen === false) modal.classList.add('hidden');
-            else modal.classList.toggle('hidden');
-        }
-
-        function checkoutWhatsApp() {
-            if (cart.length === 0) {
-                alert("Ton panier est vide.");
-                return;
-            }
-
-            const name = document.getElementById('client-name').value.trim() || "Client";
-            const city = document.getElementById('client-city').value.trim() || "Lomé";
-            const zone = document.getElementById('delivery-zone').value;
-            const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-
-            let message = `🔥 *NOUVELLE COMMANDE — FITTED BY BUZZ®*\n\n`;
-            message += `👤 *Client :* ${name}\n`;
-            message += `🌍 *Zone :* ${zone} (${city})\n\n`;
-            message += `📦 *ARTICLES COMMANDÉS :*\n`;
-
-            cart.forEach((item, idx) => {
-                message += `${idx + 1}. *${item.name}*\n   • Taille : ${item.size} | Qté : ${item.qty} | Prix : ${formatFCFA(item.price * item.qty)}\n`;
-            });
-
-            message += `\n💰 *TOTAL ARTICLES : ${formatFCFA(total)}*\n`;
-            message += `_(Hors frais de livraison)_\n\n`;
-            message += `Merci de me confirmer la disponibilité et les modalités de paiement !`;
-
-            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
-        }
-
-        // Initialisation de la page d'accueil
-        document.addEventListener('DOMContentLoaded', () => {
-            showHome();
-            lucide.createIcons();
-        });
-    </script>
+const PR=i=>P[i];
+function go(v,a,keep){if(v=='prod'&&!keep){sel=null;ang=0}$('#v').innerHTML=({home,vit,shop,prod})[v](a);if(!keep)scrollTo({top:0});lucide.createIcons()}
+$('#nv').innerHTML=C.map(c=>`<button onclick="go('vit','${c[0]}')" class="px-4 py-2.5 uppercase border-r-2 border-black hover:bg-[#E62E1B] hover:text-white shrink-0">${c[1]}</button>`).join('');
+function tc(o){const d=$('#cd'),op=o===true||(o===undefined&&d.classList.contains('translate-x-full'));d.classList.toggle('translate-x-full',!op);$('#ov').classList.toggle('hidden',!op)}
+const tot=()=>cart.reduce((s,x)=>s+P[x.id].p*x.q,0);
+function rc(){
+  $('#cn').textContent=cart.reduce((s,x)=>s+x.q,0);$('#ct').textContent=fm(tot());
+  $('#ci').innerHTML=cart.length?cart.map((x,i)=>{const p=P[x.id];return`<div class="bd bg-white flex gap-3 p-2"><div class="w-20 h-24 shrink-0 overflow-hidden bd">${im(p,'w-full h-full object-cover')}</div><div class="flex-1 min-w-0"><p class="f text-xs uppercase leading-tight break-words">${p.n}</p><p class="text-xs mt-0.5">Taille ${x.z}</p><p class="font-bold text-sm mt-0.5">${fm(p.p*x.q)}</p><div class="flex items-center gap-2 mt-1.5"><button onclick="ch(${i},-1)" class="bd p-1" aria-label="Moins"><i data-lucide="minus" class="w-3.5 h-3.5"></i></button><b class="text-sm">${x.q}</b><button onclick="ch(${i},1)" class="bd p-1" aria-label="Plus"><i data-lucide="plus" class="w-3.5 h-3.5"></i></button><button onclick="ch(${i},-99)" class="ml-auto p-1" aria-label="Retirer"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div></div>`}).join(''):'<p class="s text-2xl p-4">Ton panier est vide. Choisis un rayon pour commencer.</p>';
+  lucide.createIcons()
+}
+function ch(i,d){cart[i].q+=d;if(cart[i].q<1)cart.splice(i,1);rc()}
+function add(id){if(!sel){$('#er').classList.remove('hidden');return}const x=cart.find(c=>c.id==id&&c.z==sel);x?x.q++:cart.push({id,z:sel,q:1});rc();tc(true)}
+function wa(){
+  const n=$('#fn').value.trim(),v=$('#vl').value.trim();
+  if(!cart.length)return alert('Ton panier est vide.');if(!n||!v)return alert('Indique ton prénom et ta ville pour envoyer la commande.');
+  const l=cart.map(x=>`• ${P[x.id].n} — Taille ${x.z} × ${x.q} = ${fm(P[x.id].p*x.q)}`).join('\n');
+  const t=`🛍️ *COMMANDE FITTED BY BUZZ®*\n\n👤 Prénom : ${n}\n📍 Ville : ${v}\n🚚 Zone : ${$('#zn').value}\n\n${l}\n\n💰 *Total articles : ${fm(tot())}*\n_(Frais de livraison à confirmer)_`;
+  window.open('https://wa.me/22898585402?text='+encodeURIComponent(t),'_blank')
+}
+go('home');rc();
+</script>
 </body>
 </html>
